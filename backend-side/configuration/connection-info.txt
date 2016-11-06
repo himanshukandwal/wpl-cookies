@@ -1,0 +1,4 @@
+Endpoint:	 wpl.chrfbxvqqnvz.us-west-2.rds.amazonaws.com:1521
+Username: 	Cookies
+Password: 	Cookies123
+SID	: 	ORCL
