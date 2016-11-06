@@ -1,0 +1,36 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/data/mongo
+						http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+           				
+    <context:component-scan base-package="me.hxkandwal.spring_mongo.dao"/>
+    
+    <context:property-placeholder location="classpath:/${spring.profiles.active}/app.properties" />
+    
+	<!-- Activate annotation configured components -->
+	<context:annotation-config />
+
+	<!-- Use this post processor to translate any MongoExceptions thrown in @Repository annotated classes -->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<!-- Define the MongoTemplate which handles connectivity with MongoDB -->
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+	  <constructor-arg name="mongo" ref="mongo"/>
+	  <constructor-arg name="databaseName" value="${mongo.database}"/>
+	</bean>
+	  
+	<!-- Factory bean that creates the Mongo instance -->
+	<mongo:mongo id="mongo" host="${mongo.host}" port="${mongo.port}" write-concern="SAFE" />
+	
+	<mongo:db-factory dbname="${mongo.database}" />
+	
+	<mongo:repositories base-package="me.hxkandwal.spring_mongo.dao.repository" />
+	
+</beans> 
