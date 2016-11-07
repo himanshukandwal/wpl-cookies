@@ -1,0 +1,44 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+
+       xsi:schemaLocation="http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-4.2.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.2.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
+
+    <import resource="classpath:testBusinessContext.xml"/>
+
+    <context:property-placeholder order="1" ignore-unresolvable="true" location="classpath:/dev/locationConfiguration.properties"/>
+
+    <context:component-scan base-package="edu.utdallas.wpl.cookies.spring.services"/>
+
+    <mvc:annotation-driven>
+	    <mvc:message-converters register-defaults="true">
+	        <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	            <property name="objectMapper">
+	                <bean id="jacksonMapper" class="edu.utdallas.wpl.cookies.spring.services.config.CustomizedJacksonMapper"/>
+	            </property>
+	        </bean>
+	    </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- Enables the caching through annotations -->
+    <cache:annotation-driven />
+
+    <bean id="cacheManager"  class="org.springframework.cache.caffeine.CaffeineCacheManager"/>
+
+	<util:properties id="kafkaConfigProperties" location="classpath:local/kafkaConfiguration.properties"/>
+
+</beans>
