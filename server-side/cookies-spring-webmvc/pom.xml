@@ -100,6 +100,7 @@
 
 	<dependencyManagement>
 		<dependencies>
+		
 			<!-- SPRING -->
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -144,6 +145,7 @@
 				<artifactId>commons-pool</artifactId>
 				<version>1.4</version>
 			</dependency>
+			
 			<!-- JACKSON -->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
@@ -157,6 +159,11 @@
 			</dependency>
 
 			<!-- UTILITIES -->
+		    <dependency>
+				<groupId>org.hamcrest</groupId>
+				<artifactId>hamcrest-all</artifactId>
+				<version>1.3</version>
+			</dependency>
 			<dependency>
 				<groupId>commons-validator</groupId>
 				<artifactId>commons-validator</artifactId>
