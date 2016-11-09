@@ -12,7 +12,7 @@ import edu.utdallas.wpl.cookies.spring.biz.manager.EventServiceManager;
 import edu.utdallas.wpl.cookies.spring.biz.manager.utils.DozerHelper;
 import edu.utdallas.wpl.cookies.spring.common.dto.Event;
 import edu.utdallas.wpl.cookies.spring.dao.orm.EventModel;
-import edu.utdallas.wpl.cookies.spring.dao.repository.EventRepository;
+import edu.utdallas.wpl.cookies.spring.dao.repository.GenericDAORepositoryImpl;
 
 /**
  * @author Heman
@@ -26,7 +26,7 @@ public class EventServiceManagerImpl implements EventServiceManager {
 	private Mapper mapper;
 
 	@Autowired
-	private EventRepository eventRepository;
+	private GenericDAORepositoryImpl eventRepository;
 
 	@Override
 	public List<Event> getEvents() {

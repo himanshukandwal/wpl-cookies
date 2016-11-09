@@ -1,36 +1,55 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 						http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/context 
 						http://www.springframework.org/schema/context/spring-context.xsd
-						http://www.springframework.org/schema/data/mongo
-						http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
+						http://www.springframework.org/schema/tx
+     					http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
            				
     <context:component-scan base-package="edu.utdallas.wpl.cookies.spring.dao"/>
     
-    <context:property-placeholder location="classpath:/${spring.profiles.active}/app.properties" />
+    <context:property-placeholder location="classpath:app.properties" />
     
 	<!-- Activate annotation configured components -->
 	<context:annotation-config />
+  
+	<!-- Transaction Management -->
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true" />
 
-	<!-- Use this post processor to translate any MongoExceptions thrown in @Repository annotated classes -->
-	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
-	<!-- Define the MongoTemplate which handles connectivity with MongoDB -->
-	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
-	  <constructor-arg name="mongo" ref="mongo"/>
-	  <constructor-arg name="databaseName" value="${mongo.database}"/>
+    <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <!-- DB Configuration -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
 	</bean>
-	  
-	<!-- Factory bean that creates the Mongo instance -->
-	<mongo:mongo id="mongo" host="${mongo.host}" port="${mongo.port}" write-concern="SAFE" />
-	
-	<mongo:db-factory dbname="${mongo.database}" />
-	
-	<mongo:repositories base-package="edu.utdallas.wpl.cookies.spring.dao.repository" />
-	
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="edu.utdallas.wpl.cookies.spring.dao.orm" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.orm.hibernate4.HibernateTemplate" id="hibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 </beans> 

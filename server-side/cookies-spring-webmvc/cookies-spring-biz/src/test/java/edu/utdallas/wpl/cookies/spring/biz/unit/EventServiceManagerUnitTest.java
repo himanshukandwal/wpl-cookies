@@ -4,8 +4,8 @@ import static edu.utdallas.wpl.cookies.spring.common.dto.builders.Events.CREATE_
 import static edu.utdallas.wpl.cookies.spring.common.dto.builders.Events.PERSISTED_EVENT_1;
 import static edu.utdallas.wpl.cookies.spring.common.dto.builders.Events.PERSISTED_EVENT_2;
 import static edu.utdallas.wpl.cookies.spring.common.dto.builders.Events.PERSISTED_EVENT_3;
-import static edu.utdallas.wpl.cookies.spring.dao.orm.builders.EventModels.PERSISTED_EVENT_MODELS;
-import static edu.utdallas.wpl.cookies.spring.dao.orm.builders.EventModels.PERSISTED_EVENT_MODEL_1;
+import static edu.utdallas.wpl.cookies.spring.dao.orm.builders.Addresses.PERSISTED_EVENT_MODELS;
+import static edu.utdallas.wpl.cookies.spring.dao.orm.builders.Addresses.PERSISTED_EVENT_MODEL_1;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,7 +32,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import edu.utdallas.wpl.cookies.spring.biz.manager.EventServiceManager;
 import edu.utdallas.wpl.cookies.spring.common.dto.Event;
 import edu.utdallas.wpl.cookies.spring.dao.orm.EventModel;
-import edu.utdallas.wpl.cookies.spring.dao.repository.EventRepository;
+import edu.utdallas.wpl.cookies.spring.dao.repository.GenericDAORepositoryImpl;
 
 
 /**
@@ -52,7 +52,7 @@ public class EventServiceManagerUnitTest {
 	private EventServiceManager eventServiceManager;
 
 	@Mock
-	private EventRepository eventRepository;
+	private GenericDAORepositoryImpl eventRepository;
 
 	@Before
 	public void setup() {
