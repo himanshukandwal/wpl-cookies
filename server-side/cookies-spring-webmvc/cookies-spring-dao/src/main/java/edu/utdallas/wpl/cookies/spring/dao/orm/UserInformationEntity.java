@@ -13,14 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
-/**
- * 
- * @author Himanshu
- *
- */
 @Entity(name = "userinfo")
-public class UserInfomation
-{
+public class UserInformationEntity {
+	
     @Id
     @Basic(optional = false)
     @Column(name = "user_id", nullable = false)
@@ -45,7 +40,7 @@ public class UserInfomation
    
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn (name = "address_id")
-    private Address address;
+    private AddressEntity address;
     
     @Column(name = "registration_date", nullable = false, length = 20)
     private Date registrationDate;
@@ -107,11 +102,11 @@ public class UserInfomation
 		this.password = password;
 	}
 
-	public Address getAddress() {
+	public AddressEntity getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
+	public void setAddress(AddressEntity address) {
 		this.address = address;
 	}
 

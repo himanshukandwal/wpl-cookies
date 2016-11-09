@@ -1,6 +1,6 @@
-package edu.utdallas.wpl.cookies.spring.dao.orm.builders;
+package edu.utdallas.wpl.cookies.spring.common.dto.builders;
 
-import edu.utdallas.wpl.cookies.spring.dao.orm.Address;
+import edu.utdallas.wpl.cookies.spring.common.dto.Address;
 
 public class AddressBuilder {
 	
@@ -10,11 +10,6 @@ public class AddressBuilder {
 		address = new Address();
 	}
 	
-    public  AddressBuilder withId(Integer id) {
-		address.setId(id);
-		return this;
-	}
-    
 	public  AddressBuilder withLine1(String line1) {
 		address.setLine1(line1);
 		return this;

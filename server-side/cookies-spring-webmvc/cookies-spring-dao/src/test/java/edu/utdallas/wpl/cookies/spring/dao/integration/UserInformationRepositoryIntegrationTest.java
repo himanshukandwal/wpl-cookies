@@ -22,7 +22,7 @@ public class UserInformationRepositoryIntegrationTest {
 	
 	@Test
 	public void testGetAddresses() {
-//		UserInfomation userInfomation = userInformationRepository.get(1);
+//		UserInfomationEntity userInfomation = userInformationRepository.get(1);
 //		
 //		assertNotNull(userInfomation);
 //		assertEquals(userInfomation.getId(), 1);

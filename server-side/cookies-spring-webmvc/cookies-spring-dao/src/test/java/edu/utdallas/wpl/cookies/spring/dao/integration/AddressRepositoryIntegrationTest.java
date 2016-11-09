@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import edu.utdallas.wpl.cookies.spring.dao.orm.Address;
+import edu.utdallas.wpl.cookies.spring.dao.orm.AddressEntity;
 import edu.utdallas.wpl.cookies.spring.dao.repository.AddressRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,7 +28,7 @@ public class AddressRepositoryIntegrationTest {
 	
 	@Test
 	public void testGetAddresses() {
-		Address address = addressRepository.get(1);
+		AddressEntity address = addressRepository.get(1);
 		
 		assertNotNull(address);
 		assertEquals(address.getLine1(), "7220 McCallum Blvd");

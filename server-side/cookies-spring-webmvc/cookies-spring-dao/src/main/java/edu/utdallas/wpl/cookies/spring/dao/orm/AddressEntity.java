@@ -8,14 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
-/**
- * 
- * @author Himanshu
- *
- */
 @Entity(name = "address")
-public class Address
-{
+public class AddressEntity {
 
     @Id
     @Basic(optional = false)

@@ -6,8 +6,13 @@
 		  		http://dozer.sourceforge.net/schema/beanmapping.xsd">
 
 	<mapping>
-		<class-a>edu.utdallas.wpl.cookies.spring.dao.orm.EventModel</class-a>
-		<class-b>edu.utdallas.wpl.cookies.spring.common.dto.Event</class-b>
+		<class-a>edu.utdallas.wpl.cookies.spring.dao.orm.AddressEntity</class-a>
+		<class-b>edu.utdallas.wpl.cookies.spring.common.dto.Address</class-b>
+	</mapping>
+
+	<mapping>
+		<class-a>edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity</class-a>
+		<class-b>edu.utdallas.wpl.cookies.spring.common.dto.UserInformation</class-b>
 	</mapping>
 
 </mappings> 

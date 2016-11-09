@@ -7,9 +7,6 @@ import org.dozer.Mapper;
 
 /**
  * A simple dozer helper class to auto-convert lists from source type to destination class type (list).
- * 
- * @author Heman
- *
  */
 public class DozerHelper {
 
