@@ -40,7 +40,7 @@
 		<junit.version>4.12</junit.version>
 		<org.springframework.version>4.3.2.RELEASE</org.springframework.version>
 		<spring-data.version>Gosling-RELEASE</spring-data.version>
-		<version.org.hibernate>5.2.2.Final</version.org.hibernate>
+		<version.org.hibernate>4.2.2.Final</version.org.hibernate>
 		<service.release.version>1.0.0-SNAPSHOT</service.release.version>
 		<org.apache.tomcat.maven.tomcat7-maven-plugin.version>2.2</org.apache.tomcat.maven.tomcat7-maven-plugin.version>
 		<org.apache.tomcat.embed.tomcat-embed-core.version>7.0.69</org.apache.tomcat.embed.tomcat-embed-core.version>
@@ -122,6 +122,7 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
 				<version>${version.org.hibernate}</version>
+				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
