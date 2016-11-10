@@ -8,12 +8,15 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.utdallas.wpl.cookies.spring.dao.orm.AddressEntity;
 import edu.utdallas.wpl.cookies.spring.dao.repository.AddressRepository;
-
+@Transactional(readOnly=false)
+@Rollback(false)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:testDomainContext.xml" })
 public class AddressRepositoryIntegrationTest {
@@ -38,6 +41,14 @@ public class AddressRepositoryIntegrationTest {
 	
 	@Test
 	public void testCreateAddress() {
+		
+		AddressEntity addressEntity =new AddressEntity();
+		addressEntity.setId(2);
+		addressEntity.setLine1("7740 Mccallum Blvd");
+		addressEntity.setLine2("Apt 2083");
+		addressEntity.setCountryCode("DALLAS");
+		addressEntity.setZipCode("75252");
+		addressRepository.save(addressEntity);
 		
 	}
 	
