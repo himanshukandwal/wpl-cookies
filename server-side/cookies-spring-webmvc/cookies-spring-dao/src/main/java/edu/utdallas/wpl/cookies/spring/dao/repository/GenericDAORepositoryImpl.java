@@ -9,6 +9,7 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -17,6 +18,7 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
  * @param <T>
  * @param <PK>
  */
+
 @SuppressWarnings({ "unchecked" })
 public class GenericDAORepositoryImpl<T, PK extends Serializable>  implements IDAORepository<T, PK> {
 	

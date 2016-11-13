@@ -38,7 +38,7 @@ public class UserInformationEntity {
     @Column(name = "password", nullable = false, length = 20)
     private String password;
    
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn (name = "address_id")
     private AddressEntity address;
     
@@ -53,6 +53,17 @@ public class UserInformationEntity {
     
     @Column(name = "mobile_number", length = 20)
     private String mobileNumber;
+    @Column(name="role_id")
+    
+    private Integer roleId;
+	
+    public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
 
 	public Integer getId() {
 		return id;
