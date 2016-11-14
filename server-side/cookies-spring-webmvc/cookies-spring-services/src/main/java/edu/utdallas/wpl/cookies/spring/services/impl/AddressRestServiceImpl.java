@@ -21,7 +21,7 @@ import edu.utdallas.wpl.cookies.spring.biz.manager.AddressServiceManager;
 import edu.utdallas.wpl.cookies.spring.common.dto.Address;
 import edu.utdallas.wpl.cookies.spring.services.AddressRestService;
 
-@Controller
+@Controller 
 @RequestMapping("/api")
 public  class AddressRestServiceImpl implements AddressRestService {
 
@@ -45,6 +45,7 @@ public  class AddressRestServiceImpl implements AddressRestService {
 	@Override
 	@RequestMapping(value = "/addresses", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<List<Address>> getAddresses() {
+		System.out.println("here - 2");
 		return ResponseEntity.ok(addressServiceManager.getAddresses());
 	}
 

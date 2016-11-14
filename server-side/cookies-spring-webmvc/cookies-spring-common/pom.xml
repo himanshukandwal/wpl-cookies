@@ -10,8 +10,7 @@
 
 	<artifactId>cookies-spring-common</artifactId>
 	<name>cookies-spring-common</name>
-	<description>spring-mongo common module</description>
-
+	
 	<build>
 		<plugins>
 			<plugin>

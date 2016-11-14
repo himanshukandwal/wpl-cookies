@@ -9,11 +9,15 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+	<import resource="classpath:applicationContext.xml" />
+
 	<mvc:annotation-driven>
 		<mvc:message-converters register-defaults="true">
-			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="objectMapper">
-					<bean id="jacksonMapper" class="edu.utdallas.wpl.cookies.spring.services.config.CustomizedJacksonMapper"/>
+					<bean id="jacksonMapper"
+						class="edu.utdallas.wpl.cookies.spring.services.config.CustomizedJacksonMapper" />
 				</property>
 			</bean>
 		</mvc:message-converters>

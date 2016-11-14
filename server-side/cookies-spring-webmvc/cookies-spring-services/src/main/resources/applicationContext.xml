@@ -17,9 +17,9 @@
 
 	<import resource="classpath:businessContext.xml" />
 
+	<context:annotation-config />
+	
 	<context:component-scan base-package="edu.utdallas.wpl.cookies.spring.services" />
-
-	<context:property-placeholder order="1" ignore-unresolvable="true" location="classpath:/${spring.profiles.active}/locationConfiguration.properties" />
 
 	<!-- Enables the caching through annotations -->
 	<cache:annotation-driven />

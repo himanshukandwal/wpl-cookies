@@ -12,7 +12,7 @@ public interface UserInformationServiceManager {
 	
 	public UserInformation getUserInformation(Integer id);
 	
-	public UserInformation updateUserInformation(UserInformation userInfomation);
+	public UserInformation updateUserInformation(UserInformation userInformation);
 	
 	public void deleteUserInformation(UserInformation userInfomation);
 	

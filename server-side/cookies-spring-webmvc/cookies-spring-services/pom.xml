@@ -14,7 +14,7 @@
 	<description>spring-services rest application</description>
 
 	<build>
-		<finalName>spring-mongo-application</finalName>
+		<finalName>cookies-spring-webmvc</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -191,11 +191,6 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>de.flapdoodle.embed</groupId>
-			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<scope>test</scope>
-		</dependency>
 
 		<!-- TOMCAT DEPENDENCIES -->
 		<dependency>
@@ -242,7 +237,6 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
-			<version>1.12.2.RELEASE</version>
 		</dependency>
 	</dependencies>
 

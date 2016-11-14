@@ -2,6 +2,7 @@ package edu.utdallas.wpl.cookies.spring.dao.integration;
 
 import java.util.Date;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import edu.utdallas.wpl.cookies.spring.dao.orm.AddressEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity;
 import edu.utdallas.wpl.cookies.spring.dao.repository.AddressRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.UserInformationRepository;
+
+@Ignore
 @Transactional(readOnly=false)
 @Rollback(false)
 @RunWith(SpringJUnit4ClassRunner.class)

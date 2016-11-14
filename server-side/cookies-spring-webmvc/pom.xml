@@ -116,7 +116,11 @@
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
-
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-commons</artifactId>
+				<version>1.12.2.RELEASE</version>
+			</dependency>
 			<!-- HIBERNATE ORM -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
