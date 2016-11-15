@@ -9,6 +9,7 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -18,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @param <T>
  * @param <PK>
  */
-
+@Transactional(propagation = Propagation.REQUIRED)
 @SuppressWarnings({ "unchecked" })
 public class GenericDAORepositoryImpl<T, PK extends Serializable>  implements IDAORepository<T, PK> {
 	
@@ -32,31 +33,38 @@ public class GenericDAORepositoryImpl<T, PK extends Serializable>  implements ID
     }
 
 	@Override
-    public PK save(T newInstance) {
-        return (PK) hibernateTemplate.save(newInstance);
+	@Transactional
+    public T save(T newInstance) {
+		PK id = (PK) hibernateTemplate.save(newInstance);
+        return (T) get(id);
     }
 
     @Override
+    @Transactional (readOnly = true)
     public T get(PK id) {
     	return (T) hibernateTemplate.get(type, id);
     }
 
     @Override
+    @Transactional
     public void update(T transientObject) {
     	hibernateTemplate.update(transientObject);
     }
 
     @Override
+    @Transactional
     public void delete(T persistentObject) {
     	hibernateTemplate.delete(persistentObject);
     }
     
 	@Override
+	@Transactional (readOnly = true)
     public List<T> getAll() {
         return (List<T>) hibernateTemplate.findByCriteria(DetachedCriteria.forClass(type));
     }
     
     @Override
+    @Transactional (readOnly = true)
     public List<T> findByExample(T example) {
         return (List<T>) hibernateTemplate.findByCriteria(DetachedCriteria.forClass(type)
         		.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
@@ -64,6 +72,7 @@ public class GenericDAORepositoryImpl<T, PK extends Serializable>  implements ID
     }
 
     @Override
+    @Transactional (readOnly = true)
     public Integer count() {
         return (Integer) hibernateTemplate.findByCriteria(DetachedCriteria.forClass(type).setProjection(Projections.rowCount())).size();
     }

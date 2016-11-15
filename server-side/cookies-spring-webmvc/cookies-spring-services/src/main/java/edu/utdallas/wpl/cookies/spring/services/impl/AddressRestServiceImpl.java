@@ -36,6 +36,8 @@ public  class AddressRestServiceImpl implements AddressRestService {
 		
 		Address persistedAddress = addressServiceManager.createAddress(address);
 
+		LOG.info("created address with id : " + persistedAddress.getId());
+		
 		if (persistedAddress.getId() == null)
 			return new ResponseEntity<Address>(HttpStatus.BAD_REQUEST);
 
@@ -45,7 +47,6 @@ public  class AddressRestServiceImpl implements AddressRestService {
 	@Override
 	@RequestMapping(value = "/addresses", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<List<Address>> getAddresses() {
-		System.out.println("here - 2");
 		return ResponseEntity.ok(addressServiceManager.getAddresses());
 	}
 
@@ -66,6 +67,9 @@ public  class AddressRestServiceImpl implements AddressRestService {
 		
 		else {
 			Address persistedAddress = addressServiceManager.updateAddress(address);
+			
+			LOG.info("updated address with id : " + persistedAddress.getId());
+			
 			return ResponseEntity.ok(persistedAddress);
 		}
 	}
@@ -80,6 +84,8 @@ public  class AddressRestServiceImpl implements AddressRestService {
 			return ResponseEntity.badRequest().body("address not found");
 		else 
 			addressServiceManager.deleteAddress(addressServiceManager.getAddress(id));
+		
+		LOG.info("deleted address with id : " + id);
 		
 		return ResponseEntity.ok("success");
 	}
