@@ -55,5 +55,11 @@ public class UserInformationServiceManagerImpl implements UserInformationService
 	public void deleteUserInformation(Integer id) {
 		userInformationRepository.delete(userInformationRepository.get(id));
 	}
+
+	@Override
+	public UserInformation getUserInformationByEmail(String email) {
+		UserInformationEntity informationEntity = userInformationRepository.getUserInformationByEmail(email);
+		return (informationEntity == null) ? null : mapper.map(informationEntity, UserInformation.class);
+	}
 	
 }
