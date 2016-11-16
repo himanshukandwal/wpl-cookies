@@ -42,13 +42,14 @@ public class LoginInfoRepositoryIntegrationTest {
 		UserInformationEntity userInformationEntity = userInformationRepository.get(200);
 		
 		LoginInfoEntity loginInfoEntity = new LoginInfoEntity();
-		loginInfoEntity.setLoginInfoEntityPk(new LoginInfoEntityPk(userInformationEntity, "iPhone 7"));
+		loginInfoEntity.setUser(userInformationEntity);
+		loginInfoEntity.setDeviceName("iPhone 7");
 		loginInfoEntity.setLoginTime(new Date());
 		loginInfoEntity.setSessionId("1234ABCD4567");
 		loginInfoEntity = loginInfoRepository.save(loginInfoEntity);
 		
 		assertNotNull(loginInfoEntity);
-		assertEquals("iPhone 7", loginInfoEntity.getLoginInfoEntityPk().getDeviceName());
+		assertEquals("iPhone 7", loginInfoEntity.getDeviceName());
 		assertEquals("1234ABCD4567", loginInfoEntity.getSessionId());
 		
 		temporaryLoginInfo = loginInfoEntity;
@@ -56,13 +57,13 @@ public class LoginInfoRepositoryIntegrationTest {
 	
 	@Test
 	public void b_testUpdateLogin() {	
-		temporaryLoginInfo.getLoginInfoEntityPk().setDeviceName("iPhone 7s");
+		temporaryLoginInfo.setDeviceName("iPhone 7s");
 		temporaryLoginInfo.setLoginTime(new Date());
 		temporaryLoginInfo.setSessionId("1234ABCD45679");
 		loginInfoRepository.update(temporaryLoginInfo);
 		
 		assertNotNull(temporaryLoginInfo);
-		assertEquals("iPhone 7s", temporaryLoginInfo.getLoginInfoEntityPk().getDeviceName());
+		assertEquals("iPhone 7s", temporaryLoginInfo.getDeviceName());
 		assertEquals("1234ABCD45679", temporaryLoginInfo.getSessionId());
 	}	
 	
@@ -70,7 +71,7 @@ public class LoginInfoRepositoryIntegrationTest {
 	public void c_testUpdateLogin() {	
 		loginInfoRepository.delete(temporaryLoginInfo);
 		
-		temporaryLoginInfo = loginInfoRepository.get(temporaryLoginInfo.getLoginInfoEntityPk());
+		temporaryLoginInfo = loginInfoRepository.get(new LoginInfoEntityPk(temporaryLoginInfo.getUser(), temporaryLoginInfo.getDeviceName()));
 		
 		assertNull("LoginInfo not found !", temporaryLoginInfo);
 	}

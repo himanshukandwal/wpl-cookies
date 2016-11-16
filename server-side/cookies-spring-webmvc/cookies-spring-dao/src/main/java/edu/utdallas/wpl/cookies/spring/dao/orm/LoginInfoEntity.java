@@ -3,14 +3,19 @@ package edu.utdallas.wpl.cookies.spring.dao.orm;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 
 @Entity(name = "login_info")
+@IdClass(LoginInfoEntityPk.class)
 public class LoginInfoEntity {
 	
-	@EmbeddedId
-	private LoginInfoEntityPk loginInfoEntityPk;
+	@Id
+	private UserInformationEntity user;
+	
+	@Id
+	private String deviceName;
 	
 	@Column(name = "LOGIN_TIME", length = 6)
 	private Date loginTime;
@@ -21,14 +26,14 @@ public class LoginInfoEntity {
 	@Column(name = "LOCATION_COORD", length = 20)
 	private String locationCoordinates;
 
-	public LoginInfoEntityPk getLoginInfoEntityPk() {
-		return loginInfoEntityPk;
+	public UserInformationEntity getUser() {
+		return user;
 	}
-	
-	public void setLoginInfoEntityPk(LoginInfoEntityPk loginInfoEntityPk) {
-		this.loginInfoEntityPk = loginInfoEntityPk;
+
+	public void setUser(UserInformationEntity user) {
+		this.user = user;
 	}
-	
+
 	public Date getLoginTime() {
 		return loginTime;
 	}
@@ -43,6 +48,14 @@ public class LoginInfoEntity {
 
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
+	}
+
+	public String getDeviceName() {
+		return deviceName;
+	}
+
+	public void setDeviceName(String deviceName) {
+		this.deviceName = deviceName;
 	}
 
 	public String getLocationCoordinates() {
