@@ -50,7 +50,7 @@
 		<dependency>
 			<groupId>edu.utdallas.wpl</groupId>
 			<artifactId>cookies-spring-common</artifactId>
-			<version>${service.release.version}</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
