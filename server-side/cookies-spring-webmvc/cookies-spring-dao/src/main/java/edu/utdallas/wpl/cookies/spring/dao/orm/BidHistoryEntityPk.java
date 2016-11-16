@@ -3,9 +3,11 @@ package edu.utdallas.wpl.cookies.spring.dao.orm;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+@Embeddable
 public class BidHistoryEntityPk implements Serializable {
 
 	private static final long serialVersionUID = 1L;
