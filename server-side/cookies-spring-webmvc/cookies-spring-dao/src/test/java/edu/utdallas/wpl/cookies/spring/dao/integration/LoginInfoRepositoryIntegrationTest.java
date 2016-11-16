@@ -1,5 +1,8 @@
 package edu.utdallas.wpl.cookies.spring.dao.integration;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Date;
 
 import org.junit.Test;
@@ -10,15 +13,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.utdallas.wpl.cookies.spring.dao.orm.AddressEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.LoginInfoEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity;
-import edu.utdallas.wpl.cookies.spring.dao.repository.AddressRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.LoginInfoRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.UserInformationRepository;
 
-@Transactional(readOnly=false)
-@Rollback(false)
+@Transactional
+@Rollback
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:testDomainContext.xml" })
 public class LoginInfoRepositoryIntegrationTest {
@@ -34,12 +35,15 @@ public class LoginInfoRepositoryIntegrationTest {
 		UserInformationEntity userInformationEntity = userInformationRepository.get(200);
 		
 		LoginInfoEntity loginInfoEntity = new LoginInfoEntity();
-		loginInfoEntity.setUserId(userInformationEntity);
+		loginInfoEntity.setUser(userInformationEntity);
 		loginInfoEntity.setDeviceName("iPhone 7");
 		loginInfoEntity.setLoginTime(new Date());
-
-		loginInfoRepository.save(loginInfoEntity);
+		loginInfoEntity.setSessionId("1234ABCD4567");
+		loginInfoEntity = loginInfoRepository.save(loginInfoEntity);
+		
+		assertNotNull(loginInfoEntity);
+		assertEquals("iPhone 7", loginInfoEntity.getDeviceName());
+		assertEquals("1234ABCD4567", loginInfoEntity.getSessionId());
 	}
-	
 	
 }

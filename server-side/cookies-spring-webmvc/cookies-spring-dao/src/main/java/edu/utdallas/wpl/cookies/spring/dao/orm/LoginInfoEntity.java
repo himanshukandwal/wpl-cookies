@@ -12,7 +12,10 @@ import javax.persistence.IdClass;
 public class LoginInfoEntity {
 	
 	@Id
-	private UserInformationEntity userInfo;
+	private UserInformationEntity user;
+	
+	@Id
+	private String deviceName;
 	
 	@Column(name = "LOGIN_TIME", length = 6)
 	private Date loginTime;
@@ -20,20 +23,15 @@ public class LoginInfoEntity {
 	@Column(name = "SESSION_ID", length = 20)
 	private String sessionId;
 	
-	@Id
-	private String deviceName;
-	
 	@Column(name = "LOCATION_COORD", length = 20)
-	private String locationCord;
+	private String locationCoordinates;
 
-	
-
-	public UserInformationEntity getUserId() {
-		return userInfo;
+	public UserInformationEntity getUser() {
+		return user;
 	}
 
-	public void setUserId(UserInformationEntity userId) {
-		this.userInfo = userId;
+	public void setUser(UserInformationEntity user) {
+		this.user = user;
 	}
 
 	public Date getLoginTime() {
@@ -60,12 +58,12 @@ public class LoginInfoEntity {
 		this.deviceName = deviceName;
 	}
 
-	public String getLocationCord() {
-		return locationCord;
+	public String getLocationCoordinates() {
+		return locationCoordinates;
 	}
 
-	public void setLocationCord(String locationCord) {
-		this.locationCord = locationCord;
+	public void setLocationCoordinates(String locationCord) {
+		this.locationCoordinates = locationCord;
 	}
 
 }

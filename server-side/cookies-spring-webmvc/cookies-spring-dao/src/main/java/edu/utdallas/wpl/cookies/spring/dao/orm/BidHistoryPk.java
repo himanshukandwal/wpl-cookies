@@ -3,27 +3,27 @@ package edu.utdallas.wpl.cookies.spring.dao.orm;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-public class LoginPk implements Serializable {
+public class BidHistoryPk implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@OneToOne(cascade = CascadeType.DETACH)
 	@JoinColumn(name = "USER_ID")
 	private UserInformationEntity user;
 	
-	@Column(name = "DEVICE_NAME")
-	private String deviceName;
+	@OneToOne(cascade = CascadeType.DETACH)
+	@JoinColumn(name = "BID_ID")
+	private PublishedBidsEntity bid;
 
-	public LoginPk() {}
+	public BidHistoryPk() {}
 	
-	public LoginPk(String loginId, UserInformationEntity user, String deviceName) {
+	public BidHistoryPk(UserInformationEntity user, PublishedBidsEntity bid) {
 		super();
 		this.user = user;
-		this.deviceName = deviceName;
+		this.bid = bid;
 	}
 
 }
