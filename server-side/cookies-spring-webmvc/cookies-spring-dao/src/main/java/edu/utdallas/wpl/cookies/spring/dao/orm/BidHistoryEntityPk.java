@@ -6,7 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-public class BidHistoryPk implements Serializable {
+public class BidHistoryEntityPk implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -18,9 +18,9 @@ public class BidHistoryPk implements Serializable {
 	@JoinColumn(name = "BID_ID")
 	private PublishedBidsEntity bid;
 
-	public BidHistoryPk() {}
+	public BidHistoryEntityPk() {}
 	
-	public BidHistoryPk(UserInformationEntity user, PublishedBidsEntity bid) {
+	public BidHistoryEntityPk(UserInformationEntity user, PublishedBidsEntity bid) {
 		super();
 		this.user = user;
 		this.bid = bid;

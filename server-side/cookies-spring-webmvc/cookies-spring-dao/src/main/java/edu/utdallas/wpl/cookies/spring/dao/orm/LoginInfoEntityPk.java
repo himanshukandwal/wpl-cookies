@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-public class LoginPk implements Serializable {
+public class LoginInfoEntityPk implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -18,9 +18,9 @@ public class LoginPk implements Serializable {
 	@Column(name = "DEVICE_NAME")
 	private String deviceName;
 
-	public LoginPk() {}
+	public LoginInfoEntityPk() {}
 	
-	public LoginPk(String loginId, UserInformationEntity user, String deviceName) {
+	public LoginInfoEntityPk(String loginId, UserInformationEntity user, String deviceName) {
 		super();
 		this.user = user;
 		this.deviceName = deviceName;

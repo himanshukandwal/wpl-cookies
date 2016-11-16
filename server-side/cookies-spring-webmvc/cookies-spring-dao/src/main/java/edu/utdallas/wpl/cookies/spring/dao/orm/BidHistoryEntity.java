@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 
 @Entity(name = "bid_history")
-@IdClass(BidHistoryPk.class)
+@IdClass(BidHistoryEntityPk.class)
 public class BidHistoryEntity implements Serializable{
 	
 	private static final long serialVersionUID = 708196945214833810L;

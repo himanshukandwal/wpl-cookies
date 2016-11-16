@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 
 @Entity(name = "login_info")
-@IdClass(LoginPk.class)
+@IdClass(LoginInfoEntityPk.class)
 public class LoginInfoEntity {
 	
 	@Id
