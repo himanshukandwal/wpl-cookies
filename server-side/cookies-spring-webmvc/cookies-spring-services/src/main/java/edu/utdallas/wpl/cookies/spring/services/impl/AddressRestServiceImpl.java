@@ -52,7 +52,7 @@ public  class AddressRestServiceImpl implements AddressRestService {
 
 	@Override
 	@RequestMapping(value = "/address/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Address> getAddress(@PathVariable Integer id) {
+	public @ResponseBody ResponseEntity<Address> getAddress(@PathVariable Integer id) {
 		return ResponseEntity.ok(addressServiceManager.getAddress(id));
 	}
 
