@@ -25,6 +25,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+Servers/
 
 # Eclipse Core
 .project
