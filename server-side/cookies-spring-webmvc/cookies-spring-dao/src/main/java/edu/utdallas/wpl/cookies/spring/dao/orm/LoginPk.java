@@ -20,7 +20,7 @@ public class LoginPk implements Serializable {
 
 	public LoginPk() {}
 	
-	public LoginPk(String loginId, UserInformationEntity user, String deviceName) {
+	public LoginPk( UserInformationEntity user, String deviceName) {
 		super();
 		this.user = user;
 		this.deviceName = deviceName;

@@ -2,10 +2,13 @@ package edu.utdallas.wpl.cookies.spring.dao.orm;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity(name = "bid_history")
 @IdClass(BidHistoryPk.class)
@@ -25,8 +28,10 @@ public class BidHistoryEntity implements Serializable{
 	@Column(name="BID_PRICE", length = 20)
 	private String bidPrice;
 	
-	@Column(name="APARTMENT_ID", length = 20)
-	private Integer apartmentId;
+	
+	@OneToOne(cascade = CascadeType.DETACH)
+    @JoinColumn (name = "APARTMENT_ID")
+	private ApartmentEntity apartmentEntity;
 	
 	public UserInformationEntity getUser() {
 		return user;
@@ -60,12 +65,12 @@ public class BidHistoryEntity implements Serializable{
 		this.bidPrice = bidPrice;
 	}
 	
-	public Integer getApartmentId() {
-		return apartmentId;
+	public ApartmentEntity getApartmentId() {
+		return apartmentEntity;
 	}
 	
-	public void setApartmentId(Integer apartmentId) {
-		this.apartmentId = apartmentId;
+	public void setApartmentId(ApartmentEntity apartmentId) {
+		this.apartmentEntity = apartmentId;
 	}
 	
 }
