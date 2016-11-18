@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +30,7 @@ public  class UserLoginRestServiceImpl implements UserLoginRestService {
 
 	@Override
 	@RequestMapping(value = "/userlogin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<UserInformation> createLogin(UserInformation userInformation, HttpServletRequest request) {
+	public @ResponseBody ResponseEntity<UserInformation> createLogin(@RequestBody UserInformation userInformation, HttpServletRequest request) {
 		UserInformation persistedUser = userInformationServiceManager.createUserInformation(userInformation);
 		
 		LOG.info(" created user with id :" + persistedUser.getId());
@@ -54,7 +55,11 @@ public  class UserLoginRestServiceImpl implements UserLoginRestService {
 	}
 
 	@Override
-	public @ResponseBody ResponseEntity<UserInformation> updateUserInformation(UserInformation userInformation) {
+	@RequestMapping(value = "/userlogin/{email}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity updateUserInformation(@PathVariable String email, @RequestBody UserInformation userInformation) {
+		if (userInformationServiceManager.getUserInformationByEmail(email) == null)
+			return ResponseEntity.badRequest().body("user not found");
+		
 		UserInformation updatedUserInformation = userInformationServiceManager.updateUserInformation(userInformation);
 		
 		LOG.info(" updated user with id :" + updatedUserInformation.getId());
@@ -63,17 +68,17 @@ public  class UserLoginRestServiceImpl implements UserLoginRestService {
 	}
 
 	@Override
-	@RequestMapping(value = "/userlogin/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteUserInformation(@PathVariable Integer id) {
-		if (null == id)
-			return ResponseEntity.badRequest().body("address id is empty");
+	@RequestMapping(value = "/userlogin/{email}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> deleteUserInformation(@PathVariable String email) {
+		if (null == email && email.isEmpty())
+			return ResponseEntity.badRequest().body("email is empty");
 		
-		else if (userInformationServiceManager.getUserInformation(id) == null)
-			return ResponseEntity.badRequest().body("address not found");
+		else if (userInformationServiceManager.getUserInformationByEmail(email) == null)
+			return ResponseEntity.badRequest().body("user not found");
 		else 
-			userInformationServiceManager.deleteUserInformation(id);
+			userInformationServiceManager.deleteUserInformation(userInformationServiceManager.getUserInformationByEmail(email).getId());
 		
-		LOG.info("deleted address with id : " + id);
+		LOG.info("deleted address with email : " + email);
 		
 		return ResponseEntity.ok("success");
 	}

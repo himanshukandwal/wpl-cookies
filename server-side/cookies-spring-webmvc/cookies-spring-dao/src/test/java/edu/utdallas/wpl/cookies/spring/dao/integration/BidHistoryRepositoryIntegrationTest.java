@@ -1,10 +1,5 @@
 package edu.utdallas.wpl.cookies.spring.dao.integration;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +8,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.utdallas.wpl.cookies.spring.dao.orm.AddressEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.ApartmentEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.BidHistoryEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.PublishedBidsEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity;
-import edu.utdallas.wpl.cookies.spring.dao.repository.AddressRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.ApartmentRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.BidHistoryRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.PublishedBidsRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.UserInformationRepository;
 
 @Transactional(readOnly=false)
-@Rollback(false)
+@Rollback
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:testDomainContext.xml" })
 public class BidHistoryRepositoryIntegrationTest {
@@ -39,9 +32,6 @@ public class BidHistoryRepositoryIntegrationTest {
     
     @Autowired
     private UserInformationRepository userInformationRepository;
-	
-	
-	
 	
 	@Test
 	public void testCreateBidHistory() {
