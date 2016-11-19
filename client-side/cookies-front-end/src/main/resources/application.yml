@@ -3,3 +3,5 @@ security:
     password: password
 server:
     port: 9000    
+services:
+    url:  http://localhost:8080/cookies-spring-webmvc/api/

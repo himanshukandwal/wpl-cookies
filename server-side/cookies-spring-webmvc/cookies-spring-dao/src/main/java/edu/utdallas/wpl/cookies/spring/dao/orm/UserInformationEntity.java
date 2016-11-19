@@ -32,17 +32,17 @@ public class UserInformationEntity {
     @Column(name = "last_name", length = 20)
     private String lastName;
     
-    @Column(name = "email", nullable = false, length = 20)
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
     
-    @Column(name = "password", nullable = false, length = 20)
+    @Column(name = "password", length = 20)
     private String password;
    
 	@OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn (name = "address_id")
     private AddressEntity address;
     
-    @Column(name = "registration_date", nullable = false, length = 20)
+    @Column(name = "registration_date", length = 20)
     private Date registrationDate;
     
     @Column(name = "birth_date", length = 20)

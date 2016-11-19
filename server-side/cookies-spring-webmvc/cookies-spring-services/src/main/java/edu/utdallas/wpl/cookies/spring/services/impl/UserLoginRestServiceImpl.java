@@ -35,7 +35,7 @@ public  class UserLoginRestServiceImpl implements UserLoginRestService {
 		
 		LOG.info(" created user with id :" + persistedUser.getId());
 		
-		return ResponseEntity.ok(persistedUser );
+		return ResponseEntity.ok(persistedUser);
 	}
 	
 	@Override
