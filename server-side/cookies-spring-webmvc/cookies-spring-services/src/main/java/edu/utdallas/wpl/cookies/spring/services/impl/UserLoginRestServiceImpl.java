@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,13 +40,12 @@ public  class UserLoginRestServiceImpl implements UserLoginRestService {
 	}
 	
 	@Override
-	@RequestMapping(value = "/userlogin/{email}/{password}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<String> authenticateUser(@PathVariable String email, @PathVariable String password) {
+	@RequestMapping(value = "/userlogin/{email}/{password}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<UserInformation> authenticateUser(@PathVariable String email, @PathVariable String password) {
 		UserInformation userInformation = userInformationServiceManager.getUserInformationByEmail(email);
-		
 		if (userInformation == null || !userInformation.getPassword().equals(password)) 
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("either username is invalid or password is incorrect !");
-		return ResponseEntity.ok("success !");	
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		return ResponseEntity.ok(userInformation);	
 	}
 	
 	@Override

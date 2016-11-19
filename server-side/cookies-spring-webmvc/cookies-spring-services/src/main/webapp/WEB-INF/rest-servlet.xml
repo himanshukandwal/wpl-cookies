@@ -9,6 +9,7 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
+
 	<import resource="classpath:applicationContext.xml" />
 
 	<mvc:annotation-driven>
@@ -22,5 +23,11 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+
+	<mvc:cors>
+		<mvc:mapping path="/api/**" allowed-origins="*"
+			allowed-methods="GET, PUT,POST,DELETE" allowed-headers="*"
+			 />
+	</mvc:cors>
 
 </beans>

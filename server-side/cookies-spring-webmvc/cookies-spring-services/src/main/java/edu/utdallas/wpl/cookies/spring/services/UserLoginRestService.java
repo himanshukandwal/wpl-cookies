@@ -12,7 +12,7 @@ public interface UserLoginRestService {
 
 	ResponseEntity<UserInformation> getUserInformation(Integer id);
 	
-	ResponseEntity<String> authenticateUser(String email, String password);
+	ResponseEntity<UserInformation> authenticateUser(String email, String password);
 	
 	ResponseEntity updateUserInformation(String email, UserInformation userInformation);
 	
