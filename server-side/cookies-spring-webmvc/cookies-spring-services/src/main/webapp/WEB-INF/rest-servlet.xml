@@ -26,8 +26,7 @@
 
 	<mvc:cors>
 		<mvc:mapping path="/api/**" allowed-origins="*"
-			allowed-methods="GET, PUT,POST,DELETE" allowed-headers="*"
-			 />
+		allowed-methods="GET, PUT,POST,DELETE" allowed-headers="*" />
 	</mvc:cors>
 
 </beans>
