@@ -16,4 +16,24 @@ angular.module('app', [])
 				console.log('result :: ' + self.result)
 			});
 		}
+		self.checkValidLogin = function () {
+			console.log("here")
+			console.log(self.user);
+
+			self.result.hidden = false;
+			$http.get('/checkLogin/'+ self.user.email+"/"+self.user.password).then(function (response) {
+				console.log("status"+response.data.status);
+				self.result = response.data.userInfo.email;
+				console.log('result :: ' + self.result)
+			}, function (response) {
+				self.result.hidden = true;
+				self.result="invalid login";
+				console.log('result ::::: ' + self.result)
+			});
+		}
+		
+		
+		
+		
+		
 	});
