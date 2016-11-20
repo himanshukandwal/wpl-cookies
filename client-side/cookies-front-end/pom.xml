@@ -63,6 +63,11 @@
 						<artifactId>bootstrap</artifactId>
 						<version>3.3.7-1</version>
 					</dependency>
+					<dependency>
+					    <groupId>org.webjars</groupId>
+					    <artifactId>angular-ui-router</artifactId>
+					    <version>1.0.0-beta.3</version>
+					</dependency>		
 				</dependencies>
 			</plugin>
 			<plugin>
@@ -134,6 +139,11 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
 			<version>3.3.7-1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>angular-ui-router</artifactId>
+			<version>1.0.0-beta.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>

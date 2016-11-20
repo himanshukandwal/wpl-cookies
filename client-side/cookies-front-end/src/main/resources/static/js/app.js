@@ -1,22 +1,41 @@
-angular.module('app', ['ngRoute'])
-	// .config(function($routeProvider) {
-	//     $routeProvider
-	//     .when("/", {
-	//         templateUrl : "main.htm"
-	//     })
-	//     .when("/red", {
-	//         templateUrl : "red.htm"
-	//     })
-	//     .when("/green", {
-	//         templateUrl : "green.htm"
-	//     })
-	//     .when("/blue", {
-	//         templateUrl : "blue.htm"
-	//     })
-	// 	.otherwise({
-	// 		redirectTo: '/'
-	// 	});
-	// })
+angular.module('app', ['ui.router'])
+	.config(function($stateProvider, $urlRouterProvider) {
+
+		$urlRouterProvider
+			.when('', '/')
+			.otherwise(function($injector) {
+				var $state = $injector.get('$state');
+				$state.go('404', null, {
+					location: false
+			});
+
+		});
+
+		$stateProvider
+			.state('home', {
+				url : '/',
+				templateUrl : '../templates/welcome.html'
+			})
+			.state('login', {
+				url : '/login',
+				templateUrl : '../templates/login.html'
+			})
+			.state('about-us', {
+				url : '/about-us',
+				templateUrl : '../templates/about-us.html'
+			})
+			.state('contact-us', {
+				url : '/contact-us',
+				templateUrl : '../templates/contact-us.html'
+			})
+			.state('404', {
+				url: "/404",
+				templateUrl: "../templates/404.html",
+				data: {
+					pageTitle: '404 Not found'
+				}
+			});
+	})
 	.controller('registration', function($http,$window) {
 		var self = this;
 		
@@ -35,7 +54,7 @@ angular.module('app', ['ngRoute'])
 			});
 		}
 	})
-	.controller('home', function($http,$window) {
+	.controller('login', function($http,$window) {
 		var self = this;
 		
 		self.checkValidLogin = function () {
@@ -50,8 +69,6 @@ angular.module('app', ['ngRoute'])
 				$http.get('/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
 					console.log(response.data.status);
 					self.result = false;
-					 $window.location.href = '/login.html';
-					
 				}, function (response) {
 					console.log(response.data.status);
 					self.result = "invalid login or password!";
