@@ -1,21 +1,24 @@
 angular.module('app', [])
-	.controller('home', function($http) {
+	.controller('registration', function($http,$window) {
 		var self = this;
-
+		
 		self.submitDetails = function () {
 			console.log("here")
 			console.log(self.user);
-
+	
 			$http.get('/ping').then(function (response) {
 				self.result = response.data.time;
 				console.log('result :: ' + self.result)
 			});
-
+	
 			$http.post('/createUser', self.user).then(function (response) {
 				self.result = response.data.status;
 				console.log('result :: ' + self.result)
 			});
 		}
+	})
+	.controller('home', function($http,$window) {
+		var self = this;
 		
 		self.checkValidLogin = function () {
 			if (self.user == '' || self.user.email == '' || self.user.password == '') {
@@ -29,6 +32,8 @@ angular.module('app', [])
 				$http.get('/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
 					console.log(response.data.status);
 					self.result = false;
+					 $window.location.href = '/hello.html';
+					
 				}, function (response) {
 					console.log(response.data.status);
 					self.result = "invalid login or password!";
