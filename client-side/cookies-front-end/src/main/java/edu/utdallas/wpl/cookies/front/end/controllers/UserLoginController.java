@@ -4,13 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,30 +44,11 @@ public class UserLoginController {
 	
 	@RequestMapping(value = "/checkLogin/{email}/{password}")
 	public Map<String,Object> getUserInfo(@PathVariable String email, @PathVariable String password){
-		
 		Map<String,Object> model = new HashMap<String,Object>();
-		UserInformation result =null;
-		/*System.out.println("Inside check login "+email+" pass "+password);
-		try{
-		 result = restTemplate.getForObject(webserviceUrl + "/userlogin/"+email+"/"+password, UserInformation.class);
-		}
-		catch(Exception e){
-			System.out.println("inside excep");
-			e.printStackTrace();
-		}*/
 		
-		ResponseEntity<UserInformation> responseEntity = restTemplate.getForEntity(
-				webserviceUrl + "/userlogin/"+email+"/"+password,
-				UserInformation.class);
-
-	    if (responseEntity.getStatusCode() == HttpStatus.OK) {
-	    	result=responseEntity.getBody();
-	        
-	    }
-	    else
-	    {
-	    	System.out.println("Exception occured");
-	    }
+		// web service invocation.
+		UserInformation result = restTemplate.getForObject(webserviceUrl + "/userlogin/"+email+"/"+password, UserInformation.class);
+	    
 		model.put("status", "success");
 		model.put("userInfo", result);
 		return model;

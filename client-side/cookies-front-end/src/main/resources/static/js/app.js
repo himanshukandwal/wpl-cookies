@@ -16,24 +16,23 @@ angular.module('app', [])
 				console.log('result :: ' + self.result)
 			});
 		}
+		
 		self.checkValidLogin = function () {
-			console.log("here")
-			console.log(self.user);
-
-			self.result.hidden = false;
-			$http.get('/checkLogin/'+ self.user.email+"/"+self.user.password).then(function (response) {
-				console.log("status"+response.data.status);
-				self.result = response.data.userInfo.email;
-				console.log('result :: ' + self.result)
-			}, function (response) {
-				self.result.hidden = true;
-				self.result="invalid login";
-				console.log('result ::::: ' + self.result)
-			});
+			if (self.user == '' || self.user.email == '' || self.user.password == '') {
+				if (self.user == '')
+					self.result = "null user element";
+				else if (self.user.email == '')
+					self.result = "no user email provided";
+				else
+					self.result = "no user password provided";
+			} else {
+				$http.get('/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
+					console.log(response.data.status);
+					self.result = false;
+				}, function (response) {
+					console.log(response.data.status);
+					self.result = "invalid login or password!";
+				});
+			}
 		}
-		
-		
-		
-		
-		
 	});
