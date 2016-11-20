@@ -1,4 +1,22 @@
-angular.module('app', [])
+angular.module('app', ['ngRoute'])
+	// .config(function($routeProvider) {
+	//     $routeProvider
+	//     .when("/", {
+	//         templateUrl : "main.htm"
+	//     })
+	//     .when("/red", {
+	//         templateUrl : "red.htm"
+	//     })
+	//     .when("/green", {
+	//         templateUrl : "green.htm"
+	//     })
+	//     .when("/blue", {
+	//         templateUrl : "blue.htm"
+	//     })
+	// 	.otherwise({
+	// 		redirectTo: '/'
+	// 	});
+	// })
 	.controller('registration', function($http,$window) {
 		var self = this;
 		
@@ -32,7 +50,7 @@ angular.module('app', [])
 				$http.get('/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
 					console.log(response.data.status);
 					self.result = false;
-					 $window.location.href = '/hello.html';
+					 $window.location.href = '/login.html';
 					
 				}, function (response) {
 					console.log(response.data.status);

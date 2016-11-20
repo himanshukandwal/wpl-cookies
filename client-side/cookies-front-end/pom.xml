@@ -104,7 +104,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>edu.utdallas.wpl</groupId>
@@ -132,10 +132,15 @@
 		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.7-1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
 			<artifactId>jasmine</artifactId>
 			<version>2.0.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 </project>
