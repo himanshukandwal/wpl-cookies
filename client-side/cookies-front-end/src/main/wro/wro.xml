@@ -1,10 +1,13 @@
+
 <groups xmlns="http://www.isdc.ro/wro">
   <group name="angular-bootstrap">
 	<css>classpath:META-INF/resources/webjars/bootstrap/3.3.7-1/less/bootstrap.less</css>
+	<css>classpath:META-INF/resources/webjars/font-awesome/4.7.0/less/font-awesome.less</css>
     <js>webjar:jquery/2.2.4/jquery.min.js</js>
     <js>webjar:angularjs/1.4.9/angular.min.js</js>
     <js>webjar:angularjs/1.4.9/angular-route.min.js</js>
     <js>webjar:angularjs/1.4.9/angular-cookies.min.js</js>
+    <js>webjar:angularjs/1.4.9/angular-animate.min.js</js>
     <js>webjar:angular-ui-router/1.0.0-beta.3/angular-ui-router.min.js</js>
     <js>webjar:bootstrap/3.3.7-1/js/bootstrap.min.js</js>
     <js>webjar:bootstrap/3.3.7-1/js/carousel.js</js>

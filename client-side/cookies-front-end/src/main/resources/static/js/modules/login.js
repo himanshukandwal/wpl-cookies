@@ -1,4 +1,8 @@
-angular.module('loginModule', [])
+angular.module('loginModule', ['ui.router', 'ngAnimate'])
+    .config (function () {
+
+
+    })
     .controller('registration', function($http,$window) {
         var self = this;
 
@@ -16,7 +20,7 @@ angular.module('loginModule', [])
             });
         }
     })
-    .controller('login', function($http,$window) {
+    .controller('login', function($http) {
         var self = this;
 
         self.checkValidLogin = function () {
@@ -31,8 +35,6 @@ angular.module('loginModule', [])
                 $http.get('/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
                     console.log(response.data.status);
                     self.result = false;
-                    $window.location.href = '/login.html';
-
                 }, function (response) {
                     console.log(response.data.status);
                     self.result = "invalid login or password!";
