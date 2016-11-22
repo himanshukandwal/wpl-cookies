@@ -53,5 +53,17 @@ public class UserLoginController {
 		model.put("userInfo", result);
 		return model;
 	}
+	
+	@RequestMapping(value = "/contactus" , method = RequestMethod.POST)
+	public Map<String,Object> saveContactus(@RequestBody Map<String, Object> userInformationMap){
+		Map<String,Object> model = new HashMap<String,Object>();
+		
+		// web service invocation.
+		//UserInformation result = restTemplate.getForObject(webserviceUrl + "/userlogin/"+email+"/"+password, UserInformation.class);
+	    System.out.println("FirstName>>>>>>>>>>> "+userInformationMap.get("firstName"));
+		model.put("status", "success");
+		//model.put("userInfo", new Object());
+		return model;
+	}
 
 }
