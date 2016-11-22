@@ -28,6 +28,10 @@ angular.module('app', ['ui.router', 'loginModule'])
 				url : '/contact-us',
 				templateUrl : '../templates/contact-us.html'
 			})
+			.state('contact-success', {
+				url : '/thank-you',
+				templateUrl : '../templates/thank-you.html'
+			})
 			.state('404', {
 				url: "/404",
 				templateUrl: "../templates/404.html",
@@ -35,4 +39,23 @@ angular.module('app', ['ui.router', 'loginModule'])
 					pageTitle: '404 Not found'
 				}
 			});
+	})
+	.controller('contact-us', function($http, $injector) {
+		var self = this;
+
+		self.submitContactDetails = function () {
+            if (!self.user || !self.user.email || !self.user.password) {
+                if (!self.user || !self.user.email)
+                    self.message = "no user email provided";
+                else
+                    self.message = "no name for the user provided";
+			} else {
+				$http.post('/contactus', self.user).then(function (response) {
+                    self.message = false;
+					console.log('status :: ' + response.data.status)
+					var $state = $injector.get('$state');
+					$state.go('contact-success');
+				});
+			}
+		}
 	});
