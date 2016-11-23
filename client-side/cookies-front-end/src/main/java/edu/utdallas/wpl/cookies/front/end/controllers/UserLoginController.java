@@ -39,6 +39,7 @@ public class UserLoginController {
 		UserInformation result = restTemplate.postForObject(webserviceUrl + "/userlogin", userInformationMap, UserInformation.class);
 		
 		model.put("status", (result != null) ? "success" : "failure");
+		model.put("userInfo", result);
 		return model;
 	}
 	
@@ -55,7 +56,7 @@ public class UserLoginController {
 	}
 	
 	@RequestMapping(value = "/contactus" , method = RequestMethod.POST)
-	public Map<String,Object> saveContactus(@RequestBody Map<String, Object> userInformationMap){
+	public Map<String,Object> saveContactUs(@RequestBody Map<String, Object> userInformationMap){
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.

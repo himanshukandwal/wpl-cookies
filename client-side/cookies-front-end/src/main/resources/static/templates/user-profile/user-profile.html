@@ -1,5 +1,7 @@
-<div class="container">
+<link href="../../css/user-profile.css" rel="stylesheet">
+<div class="container left" ng-controller="pass-profile as profile">
     <div class="row">
+        <label >{{ profile.user.email }}</label>
         <div class="col-lg-3 col-sm-6">
 
             <div class="card hovercard">
@@ -11,31 +13,12 @@
                 </div>
                 <div class="info">
                     <div class="title">
-                        <a target="_blank" href="http://scripteden.com/">Script Eden</a>
+                        <p>Script Eden</p>
+                        <p id="link"><a class="btn btn-lg btn-primary" ui-sref="edit-profile({ userInfo : profile.user })">Edit profile</a></p>
                     </div>
-                    <div class="desc">Passionate designer</div>
-                    <div class="desc">Curious developer</div>
-                    <div class="desc">Tech geek</div>
                 </div>
-                <div class="bottom">
-                    <a class="btn btn-primary btn-twitter btn-sm" href="https://twitter.com/webmaniac">
-                        <i class="fa fa-twitter"></i>
-                    </a>
-                    <a class="btn btn-danger btn-sm" rel="publisher"
-                       href="https://plus.google.com/+ahmshahnuralam">
-                        <i class="fa fa-google-plus"></i>
-                    </a>
-                    <a class="btn btn-primary btn-sm" rel="publisher"
-                       href="https://plus.google.com/shahnuralam">
-                        <i class="fa fa-facebook"></i>
-                    </a>
-                    <a class="btn btn-warning btn-sm" rel="publisher" href="https://plus.google.com/shahnuralam">
-                        <i class="fa fa-behance"></i>
-                    </a>
-                </div>
+
             </div>
-
         </div>
-
     </div>
 </div>

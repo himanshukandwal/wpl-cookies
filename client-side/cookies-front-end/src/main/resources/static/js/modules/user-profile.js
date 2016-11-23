@@ -1,57 +1,53 @@
 angular.module('user-profile', ['ui.router'])
-    .component ('bids', {
-        template: '<h2>User Bids</h2><ng-outlet></ng-outlet>',
-        $routeConfig: [
-            { path: '/',    name: 'BidList',   component: 'bidList', useAsDefault: true },
-            { path: '/:id', name: 'BidDetail', component: 'bidDetail' }
-        ]
+    .config (function ($stateProvider) {
+        $stateProvider
+            .state('edit-profile', {
+                url : '/edit-profile',
+                params : { userInfo : null },
+                templateUrl : '../../templates/edit-profile.html',
+            });
     })
-    .component ('bidList', {
-        template:
-        '<div ng-repeat="hero in $ctrl.heroes" ' +
-        '     ng-class="{ selected: $ctrl.isSelected(hero) }">\n' +
-        '<a ng-link="[\'HeroDetail\', {id: hero.id}]">{{hero.name}}</a>\n' +
-        '</div>',
-        controller: function () {
-
-        }
+    .controller('static-profile', function($stateParams) {
+        this.userInfo = $stateParams.userInfo;
     })
-    .controller('registration', function($http,$window) {
+    .controller('edit-profile', function($http) {
         var self = this;
 
-        self.submitDetails = function () {
-            console.log(self.user);
+        self.getProfile = function () {
 
             $http.get('/ping').then(function (response) {
                 self.result = response.data.time;
                 console.log('result :: ' + self.result)
             });
 
-            $http.post('/createUser', self.user).then(function (response) {
-                self.result = response.data.status;
-                console.log('result :: ' + self.result)
-            });
-        }
-    })
-    .controller('login', function($http) {
-        var self = this;
-
-        self.checkValidLogin = function () {
-            if (self.user == '' || self.user.email == '' || self.user.password == '') {
-                if (self.user == '')
-                    self.result = "null user element";
-                else if (self.user.email == '')
-                    self.result = "no user email provided";
-                else
-                    self.result = "no user password provided";
+            if (self.user.passwordConfirm != self.user.password) {
+                self.message = "confirmation password does not matches password";
             } else {
-                $http.get('/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
-                    console.log(response.data.status);
-                    self.result = false;
+                $http.post('/createUser', self.user).then(function (response) {
+                    self.message = false;
+                    var $state = $injector.get('$state');
+                    $state.go('registration-success');
                 }, function (response) {
                     console.log(response.data.status);
-                    self.result = "invalid login or password!";
+                    self.message = "error creating user !";
                 });
             }
         }
-    });
+    })
+    //  .component ('bids', {
+    //     template: '<h2>User Bids</h2><ng-outlet></ng-outlet>',
+    //     $routeConfig: [
+    //         { path: '/',  name: 'BidList',   component: 'bidList', useAsDefault: true },
+    //         { path: '/:id', name: 'BidDetail', component: 'bidDetail' }
+    //     ]
+    // })
+    // .component ('bidList', {
+    //     template:
+    //     '<div ng-repeat="hero in $ctrl.heroes" ' +
+    //     '     ng-class="{ selected: $ctrl.isSelected(hero) }">\n' +
+    //     '<a ng-link="[\'HeroDetail\', {id: hero.id}]">{{hero.name}}</a>\n' +
+    //     '</div>',
+    //     controller: function () {
+    //
+    //     }
+    // });

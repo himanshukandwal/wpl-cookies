@@ -27,6 +27,70 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+	 		<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-dependency-plugin</artifactId>
+	            <executions>
+	                <execution>
+	                    <id>unpack-fonts</id>
+	                    <phase>generate-resources</phase>
+	                    <goals>
+	                        <goal>unpack</goal>
+	                    </goals>
+	                    <configuration>
+	                        <artifactItems>
+	                            <artifactItem>
+	                                <groupId>org.webjars</groupId>
+	                                <artifactId>bootstrap</artifactId>
+	                                <version>3.3.7-1</version>
+	                                <type>jar</type>
+	                                <overWrite>false</overWrite>
+	                            </artifactItem>
+	                            <artifactItem>
+	                                <groupId>org.webjars</groupId>
+	                                <artifactId>font-awesome</artifactId>
+	                                <version>4.7.0</version>
+	                                <type>jar</type>
+	                                <overWrite>false</overWrite>
+	                            </artifactItem>
+	                        </artifactItems>
+	                        <includes>**/fonts/**/*</includes>
+	                        <outputDirectory>${project.build.directory}/unpacked</outputDirectory>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>	
+			<plugin>
+	            <artifactId>maven-resources-plugin</artifactId>
+	            <executions>
+	                <execution>
+	                    <id>copy-fonts</id>
+	                    <phase>process-resources</phase>
+	                    <goals>
+	                        <goal>copy-resources</goal>
+	                    </goals>
+	                    <configuration>
+	                        <outputDirectory>${project.build.directory}/classes/static/fonts</outputDirectory>
+	                        <resources>
+	                            <resource>
+	                                <directory>${project.build.directory}/unpacked/META-INF/resources/webjars/bootstrap/3.3.7-1/fonts</directory>
+	                                <includes>
+	                                    <include>**/*</include>
+	                                </includes>
+	                                <filtering>false</filtering>
+	                            </resource>
+	                            <resource>
+	                                <directory>${project.build.directory}/unpacked/META-INF/resources/webjars/font-awesome/4.7.0/fonts</directory>
+	                                <includes>
+	                                    <include>**/*</include>
+	                                </includes>
+	                                <filtering>false</filtering>
+	                            </resource>
+	                        </resources>
+	                    </configuration>
+	                </execution>
+	            </executions>
+	        </plugin>
 			<plugin>
 				<groupId>ro.isdc.wro4j</groupId>
 				<artifactId>wro4j-maven-plugin</artifactId>

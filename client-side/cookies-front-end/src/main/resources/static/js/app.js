@@ -44,18 +44,11 @@ angular.module('app', ['ui.router', 'loginModule'])
 		var self = this;
 
 		self.submitContactDetails = function () {
-            if (!self.user || !self.user.email || !self.user.password) {
-                if (!self.user || !self.user.email)
-                    self.message = "no user email provided";
-                else
-                    self.message = "no name for the user provided";
-			} else {
-				$http.post('/contactus', self.user).then(function (response) {
-                    self.message = false;
-					console.log('status :: ' + response.data.status)
-					var $state = $injector.get('$state');
-					$state.go('contact-success');
-				});
-			}
+            $http.post('/contactus', self.user).then(function (response) {
+                self.message = false;
+                console.log('status :: ' + response.data.status)
+                var $state = $injector.get('$state');
+                $state.go('contact-success');
+            });
 		}
 	});

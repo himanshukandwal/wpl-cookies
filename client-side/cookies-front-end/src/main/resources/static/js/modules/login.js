@@ -1,25 +1,23 @@
-angular.module('loginModule', ['ui.router', 'ngAnimate'])
+angular.module('loginModule', ['ui.router', 'ngAnimate', 'user-profile'])
     .config (function ($stateProvider) {
         $stateProvider
             .state('login-success', {
                 url : '/user-profile',
-                templateUrl : '../templates/user-profile.html'
+                params : { userInfo : null },
+                templateUrl : '../../templates/user-profile/user-profile.html',
+                controller : 'static-profile'
             })
             .state('registration-success', {
                 url : '/reg-success',
-                templateUrl : '../templates/reg-success.html'
-            })
-            .state('editprofile', {
-                url : '/edit-profile',
-                templateUrl : '../templates/edit-profile.html'
-
+                params : { userInfo : null },
+                templateUrl : '../templates/reg-success.html',
+                controller : 'static-profile'
             });
     })
-    .controller('registration', function($http, $injector) {
+    .controller('registration', function($http, $state) {
         var self = this;
 
         self.submitDetails = function () {
-            console.log(self.user);
 
             $http.get('/ping').then(function (response) {
                 self.result = response.data.time;
@@ -31,16 +29,15 @@ angular.module('loginModule', ['ui.router', 'ngAnimate'])
             } else {
                 $http.post('/createUser', self.user).then(function (response) {
                     self.message = false;
-                    var $state = $injector.get('$state');
-                    $state.go('registration-success');
+                    $state.go('registration-success', { userInfo : response.data.userInfo });
                 }, function (response) {
                     console.log(response.data.status);
-                    self.message = "Error creating user";
+                    self.message = "error creating user !";
                 });
             }
         }
     })
-    .controller('login', function($http, $injector) {
+    .controller('login', function($http, $state) {
         var self = this;
 
         self.checkValidLogin = function () {
@@ -53,10 +50,7 @@ angular.module('loginModule', ['ui.router', 'ngAnimate'])
                 $http.get('/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
                     self.message = false;
                     sessionStorage.user= JSON.stringify(response.data.userInfo);
-                    console.log(sessionStorage.user)
-
-                    var $state = $injector.get('$state');
-                    $state.go('login-success');
+                    $state.go('login-success', { userInfo : response.data.userInfo });
                 }, function (response) {
                     console.log(response.data.status);
                     self.message = "Invalid login or password!";
