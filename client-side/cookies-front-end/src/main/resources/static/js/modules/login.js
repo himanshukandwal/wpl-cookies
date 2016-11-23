@@ -19,7 +19,7 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
 
         self.submitDetails = function () {
 
-            $http.get('/ping').then(function (response) {
+            $http.get('/api/ping').then(function (response) {
                 self.result = response.data.time;
                 console.log('ping result :: ' + self.result)
             });
@@ -27,7 +27,7 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
             if (self.user.passwordConfirm != self.user.password) {
                 self.message = "confirmation password does not matches password";
             } else {
-                $http.post('/createUser', self.user).then(function (response) {
+                $http.post('/api/createUser', self.user).then(function (response) {
                     self.message = false;
                     $state.go('registration-success', { userInfo : response.data.userInfo });
                 }, function (response) {
@@ -47,7 +47,7 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
                 else
                     self.message = "no user password provided";
             } else {
-                $http.get('/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
+                $http.get('/api/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
                     self.message = false;
                     sessionStorage.user= JSON.stringify(response.data.userInfo);
                     $state.go('user-profile', { userInfo : response.data.userInfo });

@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import edu.utdallas.wpl.cookies.front.end.config.CustomRestController;
 import edu.utdallas.wpl.cookies.spring.common.dto.UserInformation;
 
-@RestController
+@CustomRestController
 public class UserLoginController {
 	
 	@Autowired
@@ -48,8 +48,8 @@ public class UserLoginController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/updateUser/{email}", method = RequestMethod.PUT)
-	public @ResponseBody Map<String, Object> updateUser(@PathVariable String email, @RequestBody Map<String, Object> userInformationMap) {
+	@RequestMapping(value = "/updateUser", method = RequestMethod.PUT)
+	public @ResponseBody Map<String, Object> updateUser(@RequestBody Map<String, Object> userInformationMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.

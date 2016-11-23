@@ -18,7 +18,7 @@ angular.module('userProfileModule', ['ui.router'])
         self.cleanCopy = jQuery.extend(true, {}, self.userInfo);
         
         self.updateProfile = function () {
-            $http.put('/updateUser/' + self.userInfo.email, self.userInfo).then(function (response) {
+            $http.put('/api/updateUser', self.userInfo).then(function (response) {
                 self.message = false;
                 $state.go('user-profile', { userInfo : response.data.userInfo });
             }, function (response) {
@@ -28,7 +28,7 @@ angular.module('userProfileModule', ['ui.router'])
         };
 
         self.goBackToProfile = function () {
-            $http.get('/checkLogin/' + self.cleanCopy.email + "/" + self.cleanCopy.password).then(function (response) {
+            $http.get('/api/checkLogin/' + self.cleanCopy.email + "/" + self.cleanCopy.password).then(function (response) {
                 $state.go('user-profile', { userInfo : response.data.userInfo });
             }, function (response) {
                 console.log('going back with potential unsaved changes. ' + response.data.status);

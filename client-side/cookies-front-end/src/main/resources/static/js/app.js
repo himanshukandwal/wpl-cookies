@@ -44,7 +44,7 @@ angular.module('app', ['ui.router', 'loginModule'])
 		var self = this;
 
 		self.submitContactDetails = function () {
-            $http.post('/contactus', self.user).then(function (response) {
+            $http.post('/api/contactus', self.user).then(function (response) {
                 self.message = false;
                 console.log('status :: ' + response.data.status)
                 var $state = $injector.get('$state');

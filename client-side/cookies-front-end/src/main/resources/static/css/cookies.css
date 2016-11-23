@@ -2,6 +2,10 @@
 	border-radius: 100%;
 }
 
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none !important;
+}
+
 hr {
 	margin: 50px;
 	color: white;

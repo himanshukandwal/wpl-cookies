@@ -6,16 +6,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import edu.utdallas.wpl.cookies.spring.common.dto.UserInformation;
+import edu.utdallas.wpl.cookies.front.end.config.CustomRestController;
 
-@RestController
+@CustomRestController
 public class ApplicationController {
 	
 	@Autowired
