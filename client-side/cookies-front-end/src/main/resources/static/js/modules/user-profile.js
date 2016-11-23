@@ -1,39 +1,29 @@
-angular.module('user-profile', ['ui.router'])
+angular.module('userProfileModule', ['ui.router'])
     .config (function ($stateProvider) {
         $stateProvider
             .state('edit-profile', {
                 url : '/edit-profile',
                 params : { userInfo : null },
-                templateUrl : '../../templates/edit-profile.html',
+                templateUrl : '../../templates/user-profile/edit-profile.html',
             });
     })
     .controller('static-profile', function($stateParams) {
         this.userInfo = $stateParams.userInfo;
     })
-    .controller('edit-profile', function($http) {
+    .controller('edit-profile', function($http, $stateParams) {
         var self = this;
-
-        self.getProfile = function () {
-
-            $http.get('/ping').then(function (response) {
-                self.result = response.data.time;
-                console.log('result :: ' + self.result)
+        self.userInfo = $stateParams.userInfo;
+        console.log(JSON.stringify(self.userInfo));
+        
+        self.updateProfile = function () {
+            $http.post('/contactus', self.user).then(function (response) {
+                self.message = false;
+                console.log('status :: ' + response.data.status)
+                var $state = $injector.get('$state');
+                $state.go('contact-success');
             });
-
-            if (self.user.passwordConfirm != self.user.password) {
-                self.message = "confirmation password does not matches password";
-            } else {
-                $http.post('/createUser', self.user).then(function (response) {
-                    self.message = false;
-                    var $state = $injector.get('$state');
-                    $state.go('registration-success');
-                }, function (response) {
-                    console.log(response.data.status);
-                    self.message = "error creating user !";
-                });
-            }
-        }
-    })
+        };
+    });
     //  .component ('bids', {
     //     template: '<h2>User Bids</h2><ng-outlet></ng-outlet>',
     //     $routeConfig: [

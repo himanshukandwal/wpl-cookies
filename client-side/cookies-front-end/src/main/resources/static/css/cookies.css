@@ -8,6 +8,11 @@ hr {
 	align-self: center;
 }
 
+.white-stylish-text {
+	color: white;
+	font-family: "Apple Braille";
+}
+
 .centered {
     margin: 0 auto;
     text-align: center;

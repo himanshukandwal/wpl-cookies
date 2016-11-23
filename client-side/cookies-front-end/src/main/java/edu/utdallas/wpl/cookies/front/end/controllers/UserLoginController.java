@@ -24,13 +24,6 @@ public class UserLoginController {
 	@Value("${services.url}")
 	private String webserviceUrl;
 	
-	@RequestMapping(value = "/ping", method = RequestMethod.GET)
-	public Map<String, Object> ping() {
-		Map<String,Object> model = new HashMap<String,Object>();
-		model.put("time", new Date());
-		return model;
-	}
-	
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
 	public Map<String, Object> createUser(@RequestBody Map<String, Object> userInformationMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
@@ -55,15 +48,15 @@ public class UserLoginController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/contactus" , method = RequestMethod.POST)
-	public Map<String,Object> saveContactUs(@RequestBody Map<String, Object> userInformationMap){
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public Map<String, Object> updateUser(@RequestBody Map<String, Object> userInformationMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		//UserInformation result = restTemplate.getForObject(webserviceUrl + "/userlogin/"+email+"/"+password, UserInformation.class);
-	    System.out.println("FirstName>>>>>>>>>>> "+userInformationMap.get("firstName"));
-		model.put("status", "success");
-		//model.put("userInfo", new Object());
+		UserInformation result = restTemplate.put(webserviceUrl + "/userlogin", userInformationMap, UserInformation.class);
+		
+		model.put("status", (result != null) ? "success" : "failure");
+		model.put("userInfo", result);
 		return model;
 	}
 

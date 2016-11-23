@@ -1,4 +1,4 @@
-angular.module('loginModule', ['ui.router', 'ngAnimate', 'user-profile'])
+angular.module('loginModule', ['ui.router', 'userProfileModule'])
     .config (function ($stateProvider) {
         $stateProvider
             .state('login-success', {
@@ -10,7 +10,7 @@ angular.module('loginModule', ['ui.router', 'ngAnimate', 'user-profile'])
             .state('registration-success', {
                 url : '/reg-success',
                 params : { userInfo : null },
-                templateUrl : '../templates/reg-success.html',
+                templateUrl : '../../templates/reg-success.html',
                 controller : 'static-profile'
             });
     })

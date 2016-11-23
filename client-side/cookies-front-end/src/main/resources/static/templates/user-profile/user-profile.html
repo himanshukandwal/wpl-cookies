@@ -1,7 +1,6 @@
 <link href="../../css/user-profile.css" rel="stylesheet">
-<div class="container left" ng-controller="pass-profile as profile">
+<div class="container left" ng-controller="static-profile as profile">
     <div class="row">
-        <label >{{ profile.user.email }}</label>
         <div class="col-lg-3 col-sm-6">
 
             <div class="card hovercard">
@@ -13,8 +12,8 @@
                 </div>
                 <div class="info">
                     <div class="title">
-                        <p>Script Eden</p>
-                        <p id="link"><a class="btn btn-lg btn-primary" ui-sref="edit-profile({ userInfo : profile.user })">Edit profile</a></p>
+                        <p class="white-stylish-text">Welcome {{ profile.userInfo.firstName }}</p>
+                        <p><a class="btn btn-lg btn-primary" ui-sref="edit-profile({ userInfo : profile.userInfo })">Edit profile</a></p>
                     </div>
                 </div>
 
