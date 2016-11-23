@@ -4,7 +4,12 @@
         <!-- left column -->
         <div class="col-md-4 col-sm-6 col-xs-12">
             <div class="text-center">
-                <img src="http://lorempixel.com/200/200/people/9/" class="avatar img-circle img-thumbnail" alt="avatar">
+                <div ng-show="!profile.userInfo.sex || (profile.userInfo.sex && profile.userInfo.sex == 'male')">
+                    <img class="avatar img-circle img-thumbnail" ng-src="../../images/user-male.jpg">
+                </div>
+                <div ng-show="profile.userInfo.sex && profile.userInfo.sex == 'female'">
+                    <img class="avatar img-circle img-thumbnail" ng-src="../../images/user-female.jpg">
+                </div>
                 <!-- <h6>Upload a different photo...</h6>
                 <input type="file" class="text-center center-block well well-sm"> -->
             </div>
@@ -38,6 +43,13 @@
                     <label class="col-lg-3 control-label white-stylish-text">Last Name:</label>
                     <div class="col-lg-8">
                         <input class="form-control" ng-model="profile.userInfo.lastName" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label white-stylish-text">Sex:</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-model="profile.userInfo.sex" type="text">
                     </div>
                 </div>
 

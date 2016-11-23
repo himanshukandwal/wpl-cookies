@@ -37,7 +37,7 @@ angular.module('userProfileModule', ['ui.router'])
         };
 
     });
-    //  .component ('bids', {
+    // .component ('bids', {
     //     template: '<h2>User Bids</h2><ng-outlet></ng-outlet>',
     //     $routeConfig: [
     //         { path: '/',  name: 'BidList',   component: 'bidList', useAsDefault: true },

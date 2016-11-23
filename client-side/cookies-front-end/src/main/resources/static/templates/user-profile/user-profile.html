@@ -1,5 +1,5 @@
-<link href="../../css/user-profile.css" rel="stylesheet">
 <div class="container left" ng-controller="static-profile as profile">
+    <div class="col-lg-12" style="height:50px;"/>
     <div class="row">
         <div class="col-lg-3 col-sm-6">
 
@@ -7,12 +7,16 @@
                 <div class="cardheader">
 
                 </div>
-                <div class="avatar">
-                    <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                <div class="avatar" ng-show="!profile.userInfo.sex || (profile.userInfo.sex && profile.userInfo.sex == 'male')">
+                    <img ng-src="../../images/user-male.jpg">
+                </div>
+                <div class="avatar" ng-show="profile.userInfo.sex && profile.userInfo.sex == 'female'">
+                    <img ng-src="../../images/user-female.jpg">
                 </div>
                 <div class="info">
                     <div class="title">
-                        <p class="white-stylish-text">Welcome {{ profile.userInfo.firstName }}</p>
+                        <p class="white-stylish-text">{{ profile.userInfo.firstName }}</p>
+                        <br>
                         <p><button class="glyphicon glyphicon-pencil" type="submit" role="button" ui-sref="edit-profile({ userInfo : profile.userInfo })"/></p>
                     </div>
                 </div>
