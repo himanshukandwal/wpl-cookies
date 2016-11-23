@@ -1,6 +1,5 @@
 package edu.utdallas.wpl.cookies.front.end.controllers;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +28,7 @@ public class UserLoginController {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		UserInformation result = restTemplate.postForObject(webserviceUrl + "/userlogin", userInformationMap, UserInformation.class);
+		UserInformation result = restTemplate.postForObject(webserviceUrl + "/userinfo", userInformationMap, UserInformation.class);
 		
 		model.put("status", (result != null) ? "success" : "failure");
 		model.put("userInfo", result);
@@ -41,7 +40,7 @@ public class UserLoginController {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		UserInformation result = restTemplate.getForObject(webserviceUrl + "/userlogin/"+email+"/"+password, UserInformation.class);
+		UserInformation result = restTemplate.getForObject(webserviceUrl + "/userinfo/"+email+"/"+password, UserInformation.class);
 	    
 		model.put("status", "success");
 		model.put("userInfo", result);
@@ -53,7 +52,9 @@ public class UserLoginController {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		UserInformation result = restTemplate.put(webserviceUrl + "/userlogin", userInformationMap, UserInformation.class);
+		restTemplate.put(webserviceUrl + "/userinfo", userInformationMap);
+		
+		UserInformation result = restTemplate.getForObject(webserviceUrl + "/userinfo/" + userInformationMap.get("email") + "/" + userInformationMap.get("password"), UserInformation.class);
 		
 		model.put("status", (result != null) ? "success" : "failure");
 		model.put("userInfo", result);
