@@ -55,9 +55,9 @@ public  class UserInformationRestServiceImpl implements UserInformationRestServi
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	@RequestMapping(value = "/userinfo/{email}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity updateUserInformation(@PathVariable String email, @RequestBody UserInformation userInformation) {
-		if (userInformationServiceManager.getUserInformationByEmail(email) == null)
+	@RequestMapping(value = "/userinfo", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity updateUserInformation(@RequestBody UserInformation userInformation) {
+		if (userInformation.getId() == null || userInformationServiceManager.getUserInformation(userInformation.getId()) == null)
 			return ResponseEntity.badRequest().body("user not found");
 		
 		UserInformation updatedUserInformation = userInformationServiceManager.updateUserInformation(userInformation);
@@ -68,14 +68,14 @@ public  class UserInformationRestServiceImpl implements UserInformationRestServi
 	}
 
 	@Override
-	@RequestMapping(value = "/userinfo/{email}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteUserInformation(@PathVariable String email) {
-		if (userInformationServiceManager.getUserInformationByEmail(email) == null)
+	@RequestMapping(value = "/userinfo", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> deleteUserInformation(@RequestBody UserInformation userInformation) {
+		if (userInformation.getEmail() == null || userInformationServiceManager.getUserInformation(userInformation.getId()) == null)
 			return ResponseEntity.badRequest().body("user not found");
 		else 
-			userInformationServiceManager.deleteUserInformation(userInformationServiceManager.getUserInformationByEmail(email).getId());
+			userInformationServiceManager.deleteUserInformation(userInformation);
 		
-		LOG.info("deleted address with email : " + email);
+		LOG.info("deleted address with email : " + userInformation.getEmail());
 		
 		return ResponseEntity.ok("success");
 	}

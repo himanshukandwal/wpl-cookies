@@ -1,7 +1,7 @@
 angular.module('loginModule', ['ui.router', 'userProfileModule'])
     .config (function ($stateProvider) {
         $stateProvider
-            .state('login-success', {
+            .state('user-profile', {
                 url : '/user-profile',
                 params : { userInfo : null },
                 templateUrl : '../../templates/user-profile/user-profile.html',
@@ -10,7 +10,7 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
             .state('registration-success', {
                 url : '/reg-success',
                 params : { userInfo : null },
-                templateUrl : '../../templates/reg-success.html',
+                templateUrl : '../../templates/registration-success.html',
                 controller : 'static-profile'
             });
     })
@@ -21,7 +21,7 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
 
             $http.get('/ping').then(function (response) {
                 self.result = response.data.time;
-                console.log('result :: ' + self.result)
+                console.log('ping result :: ' + self.result)
             });
 
             if (self.user.passwordConfirm != self.user.password) {
@@ -50,7 +50,7 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
                 $http.get('/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
                     self.message = false;
                     sessionStorage.user= JSON.stringify(response.data.userInfo);
-                    $state.go('login-success', { userInfo : response.data.userInfo });
+                    $state.go('user-profile', { userInfo : response.data.userInfo });
                 }, function (response) {
                     console.log(response.data.status);
                     self.message = "Invalid login or password!";

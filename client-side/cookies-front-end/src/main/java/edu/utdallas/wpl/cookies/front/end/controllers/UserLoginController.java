@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,7 +25,7 @@ public class UserLoginController {
 	private String webserviceUrl;
 	
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
-	public Map<String, Object> createUser(@RequestBody Map<String, Object> userInformationMap) {
+	public @ResponseBody Map<String, Object> createUser(@RequestBody Map<String, Object> userInformationMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
@@ -36,7 +37,7 @@ public class UserLoginController {
 	}
 	
 	@RequestMapping(value = "/checkLogin/{email}/{password}")
-	public Map<String,Object> getUserInfo(@PathVariable String email, @PathVariable String password){
+	public @ResponseBody Map<String,Object> getUserInfo(@PathVariable String email, @PathVariable String password){
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
@@ -47,14 +48,15 @@ public class UserLoginController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-	public Map<String, Object> updateUser(@RequestBody Map<String, Object> userInformationMap) {
+	@RequestMapping(value = "/updateUser/{email}", method = RequestMethod.PUT)
+	public @ResponseBody Map<String, Object> updateUser(@PathVariable String email, @RequestBody Map<String, Object> userInformationMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
 		restTemplate.put(webserviceUrl + "/userinfo", userInformationMap);
 		
-		UserInformation result = restTemplate.getForObject(webserviceUrl + "/userinfo/" + userInformationMap.get("email") + "/" + userInformationMap.get("password"), UserInformation.class);
+		UserInformation result = restTemplate.getForObject(webserviceUrl + "/userinfo/" 
+									+ userInformationMap.get("email") + "/" + userInformationMap.get("password"), UserInformation.class);
 		
 		model.put("status", (result != null) ? "success" : "failure");
 		model.put("userInfo", result);

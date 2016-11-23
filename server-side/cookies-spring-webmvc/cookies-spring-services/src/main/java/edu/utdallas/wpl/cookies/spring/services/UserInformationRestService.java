@@ -14,8 +14,8 @@ public interface UserInformationRestService {
 	
 	ResponseEntity<UserInformation> authenticateUser(String email, String password);
 	
-	ResponseEntity updateUserInformation(String email, UserInformation userInformation);
+	ResponseEntity updateUserInformation(UserInformation userInformation);
 	
-	ResponseEntity<String> deleteUserInformation(String email);
+	ResponseEntity<String> deleteUserInformation(UserInformation userInformation);
 	
 }
