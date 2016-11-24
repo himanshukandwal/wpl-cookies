@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.utdallas.wpl.cookies.spring.biz.manager.BidServiceManager;
 import edu.utdallas.wpl.cookies.spring.common.dto.PublishedBids;
+import edu.utdallas.wpl.cookies.spring.common.dto.UserInformation;
 import edu.utdallas.wpl.cookies.spring.services.BidRestService;
-import edu.utdallas.wpl.cookies.spring.services.UserLoginRestService;
 
 @Controller
 @RequestMapping("/api")
@@ -26,7 +26,7 @@ public class BidRestServiceImpl  implements BidRestService{
 	@Autowired
 	private BidServiceManager bidServiceManager;
 	
-    private static final Logger LOG = LoggerFactory.getLogger(UserLoginRestService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserInformation.class);
 	@Override
 	@RequestMapping(value = "/addbidrequest", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<PublishedBids> createBidRequest(@RequestBody PublishedBids publishedBids, HttpServletRequest request) {
