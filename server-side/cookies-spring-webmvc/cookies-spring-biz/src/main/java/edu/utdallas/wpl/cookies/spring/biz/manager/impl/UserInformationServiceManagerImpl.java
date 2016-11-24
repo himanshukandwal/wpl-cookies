@@ -43,7 +43,8 @@ public class UserInformationServiceManagerImpl implements UserInformationService
 
 	@Override
 	public UserInformation updateUserInformation(UserInformation userInformation) {
-		return mapper.map(userInformationRepository.save(mapper.map(userInformation, UserInformationEntity.class)), UserInformation.class);
+		userInformationRepository.update(mapper.map(userInformation, UserInformationEntity.class));
+		return mapper.map(userInformationRepository.get(userInformation.getId()), UserInformation.class);
 	}
 
 	@Override

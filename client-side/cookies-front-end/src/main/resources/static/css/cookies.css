@@ -2,10 +2,19 @@
 	border-radius: 100%;
 }
 
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none !important;
+}
+
 hr {
 	margin: 50px;
 	color: white;
 	align-self: center;
+}
+
+.white-stylish-text {
+	color: white;
+	font-family: "Apple Braille";
 }
 
 .centered {

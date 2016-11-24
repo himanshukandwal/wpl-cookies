@@ -17,19 +17,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.utdallas.wpl.cookies.spring.biz.manager.UserInformationServiceManager;
 import edu.utdallas.wpl.cookies.spring.common.dto.UserInformation;
-import edu.utdallas.wpl.cookies.spring.services.UserLoginRestService;
+import edu.utdallas.wpl.cookies.spring.services.UserInformationRestService;
 
 @Controller
 @RequestMapping("/api")
-public  class UserLoginRestServiceImpl implements UserLoginRestService {
+public  class UserInformationRestServiceImpl implements UserInformationRestService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserLoginRestService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserInformationRestService.class);
 
 	@Autowired
 	private UserInformationServiceManager userInformationServiceManager;
 
 	@Override
-	@RequestMapping(value = "/userlogin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/userinfo", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<UserInformation> createLogin(@RequestBody UserInformation userInformation, HttpServletRequest request) {
 		UserInformation persistedUser = userInformationServiceManager.createUserInformation(userInformation);
 		
@@ -39,7 +39,7 @@ public  class UserLoginRestServiceImpl implements UserLoginRestService {
 	}
 	
 	@Override
-	@RequestMapping(value = "/userlogin/{email}/{password}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/userinfo/{email}/{password}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<UserInformation> authenticateUser(@PathVariable String email, @PathVariable String password) {
 		UserInformation userInformation = userInformationServiceManager.getUserInformationByEmail(email);
 		if (userInformation == null || !userInformation.getPassword().equals(password)) 
@@ -48,15 +48,16 @@ public  class UserLoginRestServiceImpl implements UserLoginRestService {
 	}
 	
 	@Override
-	@RequestMapping(value = "/userlogin/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/userinfo/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<UserInformation> getUserInformation(@PathVariable Integer id) {
 		return ResponseEntity.ok(userInformationServiceManager.getUserInformation(id));
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
-	@RequestMapping(value = "/userlogin/{email}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity updateUserInformation(@PathVariable String email, @RequestBody UserInformation userInformation) {
-		if (userInformationServiceManager.getUserInformationByEmail(email) == null)
+	@RequestMapping(value = "/userinfo", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity updateUserInformation(@RequestBody UserInformation userInformation) {
+		if (userInformation.getId() == null || userInformationServiceManager.getUserInformation(userInformation.getId()) == null)
 			return ResponseEntity.badRequest().body("user not found");
 		
 		UserInformation updatedUserInformation = userInformationServiceManager.updateUserInformation(userInformation);
@@ -67,17 +68,14 @@ public  class UserLoginRestServiceImpl implements UserLoginRestService {
 	}
 
 	@Override
-	@RequestMapping(value = "/userlogin/{email}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deleteUserInformation(@PathVariable String email) {
-		if (null == email && email.isEmpty())
-			return ResponseEntity.badRequest().body("email is empty");
-		
-		else if (userInformationServiceManager.getUserInformationByEmail(email) == null)
+	@RequestMapping(value = "/userinfo", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> deleteUserInformation(@RequestBody UserInformation userInformation) {
+		if (userInformation.getEmail() == null || userInformationServiceManager.getUserInformation(userInformation.getId()) == null)
 			return ResponseEntity.badRequest().body("user not found");
 		else 
-			userInformationServiceManager.deleteUserInformation(userInformationServiceManager.getUserInformationByEmail(email).getId());
+			userInformationServiceManager.deleteUserInformation(userInformation);
 		
-		LOG.info("deleted address with email : " + email);
+		LOG.info("deleted address with email : " + userInformation.getEmail());
 		
 		return ResponseEntity.ok("success");
 	}

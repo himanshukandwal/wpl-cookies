@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import edu.utdallas.wpl.cookies.spring.common.dto.UserInformation;
 
-public interface UserLoginRestService {
+public interface UserInformationRestService {
 
 	ResponseEntity<UserInformation> createLogin(UserInformation userInformation,  HttpServletRequest request);
 
@@ -14,8 +14,8 @@ public interface UserLoginRestService {
 	
 	ResponseEntity<UserInformation> authenticateUser(String email, String password);
 	
-	ResponseEntity updateUserInformation(String email, UserInformation userInformation);
+	ResponseEntity updateUserInformation(UserInformation userInformation);
 	
-	ResponseEntity<String> deleteUserInformation(String email);
+	ResponseEntity<String> deleteUserInformation(UserInformation userInformation);
 	
 }

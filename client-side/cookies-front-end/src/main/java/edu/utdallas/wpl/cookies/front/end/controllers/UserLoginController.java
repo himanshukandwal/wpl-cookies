@@ -1,6 +1,5 @@
 package edu.utdallas.wpl.cookies.front.end.controllers;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,12 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import edu.utdallas.wpl.cookies.front.end.config.CustomRestController;
 import edu.utdallas.wpl.cookies.spring.common.dto.UserInformation;
 
-@RestController
+@CustomRestController
 public class UserLoginController {
 	
 	@Autowired
@@ -24,45 +24,42 @@ public class UserLoginController {
 	@Value("${services.url}")
 	private String webserviceUrl;
 	
-	@RequestMapping(value = "/ping", method = RequestMethod.GET)
-	public Map<String, Object> ping() {
-		Map<String,Object> model = new HashMap<String,Object>();
-		model.put("time", new Date());
-		return model;
-	}
-	
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
-	public Map<String, Object> createUser(@RequestBody Map<String, Object> userInformationMap) {
+	public @ResponseBody Map<String, Object> createUser(@RequestBody Map<String, Object> userInformationMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		UserInformation result = restTemplate.postForObject(webserviceUrl + "/userlogin", userInformationMap, UserInformation.class);
+		UserInformation result = restTemplate.postForObject(webserviceUrl + "/userinfo", userInformationMap, UserInformation.class);
 		
 		model.put("status", (result != null) ? "success" : "failure");
+		model.put("userInfo", result);
 		return model;
 	}
 	
 	@RequestMapping(value = "/checkLogin/{email}/{password}")
-	public Map<String,Object> getUserInfo(@PathVariable String email, @PathVariable String password){
+	public @ResponseBody Map<String,Object> getUserInfo(@PathVariable String email, @PathVariable String password){
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		UserInformation result = restTemplate.getForObject(webserviceUrl + "/userlogin/"+email+"/"+password, UserInformation.class);
+		UserInformation result = restTemplate.getForObject(webserviceUrl + "/userinfo/"+email+"/"+password, UserInformation.class);
 	    
 		model.put("status", "success");
 		model.put("userInfo", result);
 		return model;
 	}
 	
-	@RequestMapping(value = "/contactus" , method = RequestMethod.POST)
-	public Map<String,Object> saveContactus(@RequestBody Map<String, Object> userInformationMap){
+	@RequestMapping(value = "/updateUser", method = RequestMethod.PUT)
+	public @ResponseBody Map<String, Object> updateUser(@RequestBody Map<String, Object> userInformationMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		//UserInformation result = restTemplate.getForObject(webserviceUrl + "/userlogin/"+email+"/"+password, UserInformation.class);
-	    System.out.println("FirstName>>>>>>>>>>> "+userInformationMap.get("firstName"));
-		model.put("status", "success");
-		//model.put("userInfo", new Object());
+		restTemplate.put(webserviceUrl + "/userinfo", userInformationMap);
+		
+		UserInformation result = restTemplate.getForObject(webserviceUrl + "/userinfo/" 
+									+ userInformationMap.get("email") + "/" + userInformationMap.get("password"), UserInformation.class);
+		
+		model.put("status", (result != null) ? "success" : "failure");
+		model.put("userInfo", result);
 		return model;
 	}
 
