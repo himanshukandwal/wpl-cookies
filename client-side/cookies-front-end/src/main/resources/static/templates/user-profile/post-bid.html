@@ -1,27 +1,26 @@
-<div class="container" style="padding-top: 60px;" ng-controller="edit-profile as profile">
-    <h1 class="page-header white-stylish-text">Edit Profile</h1>
+<div class="container" style="padding-top: 60px;" ng-controller="static-profile as profile">
+    <h1 class="page-header white-stylish-text">Post new  Bid</h1>
+
     <div class="row">
         <!-- left column -->
         <div class="col-md-4 col-sm-6 col-xs-12">
+
             <div class="text-center">
                 <div ng-show="!profile.userInfo.sex || (profile.userInfo.sex && profile.userInfo.sex == 'male')">
                     <img class="avatar img-circle img-thumbnail" ng-src="../../images/user-male.jpg">
                 </div>
+
                 <div ng-show="profile.userInfo.sex && profile.userInfo.sex == 'female'">
                     <img class="avatar img-circle img-thumbnail" ng-src="../../images/user-female.jpg">
                 </div>
-                <!-- <h6>Upload a different photo...</h6>
-                <input type="file" class="text-center center-block well well-sm"> -->
             </div>
+
         </div>
+
         <!-- edit form column -->
         <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
-            <!--      <div class="alert alert-info alert-dismissable">
-                   <a class="panel-close close" data-dismiss="alert">�</a>
-                   <i class="fa fa-coffee"></i>
-                   This is an <strong>.alert</strong>. Use this to show important messages to the user.
-                 </div> -->
-            <h3 class="white-stylish-text">Personal info</h3>
+
+            <h3 class="white-stylish-text">New Bid</h3>
 
             <form class="form-horizontal" role="form" ng-submit="profile.updateProfile()">
 
@@ -49,7 +48,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label white-stylish-text">Sex:</label>
                     <div class="col-md-8">
-                        <select ng-model="profile.userInfo.sex" ng-options="x for x in profile.gender"/>
+                        <input class="form-control" ng-model="profile.userInfo.sex" type="text">
                     </div>
                 </div>
 

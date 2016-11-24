@@ -1,5 +1,5 @@
-<div class="container centered">
-    <h1>Congrats !.User Registration Successful</h1>
+<div class="container centered" ng-controller="static-profile as profile">
+    <h1>Congratulations, User Registration Successful !</h1>
     <hr>
-    <p><a class="btn btn-lg btn-primary" ui-sref="user-profile" role="button">Enter Website</a></p>
+    <p><a class="btn btn-lg btn-primary" ui-sref="user-profile({ userInfo : profile.userInfo })" role="button">Continue to Website</a></p>
 </div>

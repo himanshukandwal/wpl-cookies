@@ -17,6 +17,8 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
     .controller('registration', function($http, $state) {
         var self = this;
 
+        self.gender = [ "male", "female" ];
+
         self.submitDetails = function () {
 
             $http.get('/api/ping').then(function (response) {
@@ -27,11 +29,13 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
             if (self.user.passwordConfirm != self.user.password) {
                 self.message = "confirmation password does not matches password";
             } else {
+                delete self.user.passwordConfirm;
+
                 $http.post('/api/createUser', self.user).then(function (response) {
                     self.message = false;
                     $state.go('registration-success', { userInfo : response.data.userInfo });
                 }, function (response) {
-                    console.log(response.data.status);
+                    console.log(response.data);
                     self.message = "error creating user !";
                 });
             }
