@@ -12,9 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.utdallas.wpl.cookies.spring.common.enums.ApartmentType;
+import edu.utdallas.wpl.cookies.spring.dao.orm.AddressEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.ApartmentEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.PublishedBidsEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity;
+import edu.utdallas.wpl.cookies.spring.dao.repository.AddressRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.ApartmentRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.PublishedBidsRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.UserInformationRepository;
@@ -32,20 +35,27 @@ public class PublishedBidsRepositoryIntegrationTest {
 	private UserInformationRepository userInformationRepository;
 	@Autowired
 	private PublishedBidsRepository publishedBidsRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
    
 	@Test
 	public void testPublishBids() {
 		UserInformationEntity userInformationEntity = userInformationRepository.get(200);
         ApartmentEntity apartmentEntity =apartmentRepository.get(250);
-
+        AddressEntity addressEntity =addressRepository.get(6050);
+         
 		PublishedBidsEntity publishedBidsEntity=new PublishedBidsEntity();
 		publishedBidsEntity.setActiveInd("Y");
-		publishedBidsEntity.setApartment(apartmentEntity);
+		publishedBidsEntity.setApartmentType(ApartmentType.BHK_1.toString());
 		publishedBidsEntity.setHostedDate(new Date());
 		publishedBidsEntity.setComments("comments");
 		publishedBidsEntity.setNumDays(30);
 		publishedBidsEntity.setPrice("$300");
-		publishedBidsEntity.setUserId(userInformationEntity);
+		publishedBidsEntity.setOwner(userInformationEntity);
+		publishedBidsEntity.setFromDate(new Date());
+		publishedBidsEntity.setToDate(new Date());
+		publishedBidsEntity.setAddressEntity(addressEntity);
 		publishedBidsRepository.save(publishedBidsEntity);
 		assertNotNull(apartmentEntity);
 		

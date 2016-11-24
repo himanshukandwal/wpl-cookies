@@ -1,6 +1,6 @@
 package edu.utdallas.wpl.cookies.spring.common.exceptions;
 
-import static edu.utdallas.wpl.cookies.spring.common.Constants.*;
+import static edu.utdallas.wpl.cookies.spring.common.enums.Constants.*;
 
 public class CookiesApplicationException extends Exception {
 

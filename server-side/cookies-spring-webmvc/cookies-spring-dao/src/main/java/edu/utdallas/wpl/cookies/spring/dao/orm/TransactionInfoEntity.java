@@ -33,6 +33,8 @@ public class TransactionInfoEntity {
 	
 	@Column(name="BID_PRICE", length = 20)
 	private String bidPrice;
+	@Column(name="BID_STATUS", length = 20)
+	private String bidStatus;
 	
 	public Integer getTranId() {
 		return tranId;
@@ -42,6 +44,14 @@ public class TransactionInfoEntity {
 		this.tranId = tranId;
 	}
 	
+	public String getBidStatus() {
+		return bidStatus;
+	}
+
+	public void setBidStatus(String bidStatus) {
+		this.bidStatus = bidStatus;
+	}
+
 	public PublishedBidsEntity getBid() {
 		return bid;
 	}

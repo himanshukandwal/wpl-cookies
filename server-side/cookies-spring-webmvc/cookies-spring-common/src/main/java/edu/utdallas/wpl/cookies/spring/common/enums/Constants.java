@@ -1,4 +1,4 @@
-package edu.utdallas.wpl.cookies.spring.common;
+package edu.utdallas.wpl.cookies.spring.common.enums;
 
 public class Constants {
 	
