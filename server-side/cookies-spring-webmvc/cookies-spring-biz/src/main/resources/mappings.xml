@@ -14,5 +14,10 @@
 		<class-a>edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity</class-a>
 		<class-b>edu.utdallas.wpl.cookies.spring.common.dto.UserInformation</class-b>
 	</mapping>
+	
+	<mapping>
+		<class-a>edu.utdallas.wpl.cookies.spring.dao.orm.PublishedBidsEntity</class-a>
+		<class-b>edu.utdallas.wpl.cookies.spring.common.dto.PublishedBids</class-b>
+	</mapping>
 
 </mappings> 

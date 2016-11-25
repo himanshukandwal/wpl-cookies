@@ -18,19 +18,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.utdallas.wpl.cookies.spring.biz.manager.BidServiceManager;
 import edu.utdallas.wpl.cookies.spring.common.dto.PublishedBids;
-import edu.utdallas.wpl.cookies.spring.common.dto.UserInformation;
 import edu.utdallas.wpl.cookies.spring.services.BidRestService;
-import scala.util.parsing.combinator.testing.Str;
 
 @Controller
 @RequestMapping("/api")
-public class BidRestServiceImpl  implements BidRestService{
+public class BidRestServiceImpl implements BidRestService {
+	
 	@Autowired
 	private BidServiceManager bidServiceManager;
 	
-    private static final Logger LOG = LoggerFactory.getLogger(UserInformation.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BidRestService.class);
+    
 	@Override
-	@RequestMapping(value = "/addbidrequest", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/addBidRequest", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<PublishedBids> createBidRequest(@RequestBody PublishedBids publishedBids, HttpServletRequest request) {
 		PublishedBids persistedBids = bidServiceManager.addBidRequest(publishedBids);
 		
@@ -40,29 +40,21 @@ public class BidRestServiceImpl  implements BidRestService{
 	}
 	
 	@Override
-	@RequestMapping(value = "/getbids", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getBids", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PublishedBids>> viewMyBidRequests(Integer userId) {
-		
-		
-		  List<PublishedBids> publishedBids=   bidServiceManager.getBidRequests(userId);
-		  if(publishedBids!=null){
-		  LOG.info(" The number of bid requests for user  :" +publishedBids.size());
-		  return ResponseEntity.ok(publishedBids);
-		  }
-		  return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		List<PublishedBids> publishedBids = bidServiceManager.getBidRequests(userId);
+
+		if (publishedBids != null) {
+			LOG.info(" The number of bid requests for user  :" + publishedBids.size());
+			return ResponseEntity.ok(publishedBids);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
-	
-	
 	
 	@Override
 	@RequestMapping(value = "/deleteBids", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void deleteBidRequest(Integer bidId) {
-		
-		
-		  bidServiceManager.deleteBidRequest(bidId);
-		 
-		  
-		
+		bidServiceManager.deleteBidRequest(bidId);
 	}
 	
 }
