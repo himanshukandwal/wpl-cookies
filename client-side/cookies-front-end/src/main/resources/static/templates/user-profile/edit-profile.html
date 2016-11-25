@@ -49,7 +49,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label white-stylish-text">Sex:</label>
                     <div class="col-md-8">
-                        <input class="form-control" ng-model="profile.userInfo.sex" type="text">
+                        <select ng-model="profile.userInfo.sex" ng-options="x for x in profile.gender"/>
                     </div>
                 </div>
 

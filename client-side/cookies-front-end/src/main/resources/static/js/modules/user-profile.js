@@ -5,6 +5,11 @@ angular.module('userProfileModule', ['ui.router'])
                 url : '/edit-profile',
                 params : { userInfo : null },
                 templateUrl : '../../templates/user-profile/edit-profile.html',
+            })
+            .state('user-post-bid', {
+                url : '/user-profile/new-bid',
+                templateUrl : '../../templates/user-profile/post-bid.html',
+                controller : 'static-profile'
             });
     })
     .controller('static-profile', function($stateParams) {
@@ -16,7 +21,9 @@ angular.module('userProfileModule', ['ui.router'])
 
         // clone the original user information object.
         self.cleanCopy = jQuery.extend(true, {}, self.userInfo);
-        
+
+        self.gender = [ "male", "female" ];
+
         self.updateProfile = function () {
             $http.put('/api/updateUser', self.userInfo).then(function (response) {
                 self.message = false;
@@ -37,20 +44,3 @@ angular.module('userProfileModule', ['ui.router'])
         };
 
     });
-    // .component ('bids', {
-    //     template: '<h2>User Bids</h2><ng-outlet></ng-outlet>',
-    //     $routeConfig: [
-    //         { path: '/',  name: 'BidList',   component: 'bidList', useAsDefault: true },
-    //         { path: '/:id', name: 'BidDetail', component: 'bidDetail' }
-    //     ]
-    // })
-    // .component ('bidList', {
-    //     template:
-    //     '<div ng-repeat="hero in $ctrl.heroes" ' +
-    //     '     ng-class="{ selected: $ctrl.isSelected(hero) }">\n' +
-    //     '<a ng-link="[\'HeroDetail\', {id: hero.id}]">{{hero.name}}</a>\n' +
-    //     '</div>',
-    //     controller: function () {
-    //
-    //     }
-    // });

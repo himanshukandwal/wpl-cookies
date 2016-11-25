@@ -65,7 +65,4 @@ public class BidRestServiceImpl  implements BidRestService{
 		
 	}
 	
-	
-	
-	
 }

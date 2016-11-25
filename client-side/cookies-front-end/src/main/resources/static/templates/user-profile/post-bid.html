@@ -1,0 +1,90 @@
+<div class="container" style="padding-top: 60px;" ng-controller="static-profile as profile">
+    <h1 class="page-header white-stylish-text">Post new  Bid</h1>
+
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+
+            <div class="text-center">
+                <div ng-show="!profile.userInfo.sex || (profile.userInfo.sex && profile.userInfo.sex == 'male')">
+                    <img class="avatar img-circle img-thumbnail" ng-src="../../images/user-male.jpg">
+                </div>
+
+                <div ng-show="profile.userInfo.sex && profile.userInfo.sex == 'female'">
+                    <img class="avatar img-circle img-thumbnail" ng-src="../../images/user-female.jpg">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- edit form column -->
+        <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+
+            <h3 class="white-stylish-text">New Bid</h3>
+
+            <form class="form-horizontal" role="form" ng-submit="profile.updateProfile()">
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label white-stylish-text">First name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" ng-model="profile.userInfo.firstName" type="text" >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label white-stylish-text">Middle Name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" ng-model="profile.userInfo.middleName" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label white-stylish-text">Last Name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" ng-model="profile.userInfo.lastName" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label white-stylish-text">Sex:</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-model="profile.userInfo.sex" type="text">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label white-stylish-text">Email:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" ng-model="profile.userInfo.email" type="text">
+                    </div>
+                </div>
+                <!--  <div class="form-group">
+                     <label class="col-md-3 control-label">Username:</label>
+                     <div class="col-md-8">
+                       <input class="form-control" value="janeuser" type="text">
+                     </div>
+                   </div> -->
+                <div class="form-group">
+                    <label class="col-md-3 control-label white-stylish-text">Password:</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-model="profile.userInfo.password" type="password">
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <label ng-if="profile.message">{{ profile.message }}</label>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                        <button class="btn btn-lg btn-primary" type="submit" role="button">Save Changes</button>
+                        <span/>
+                        <input class="btn btn-default" value="Cancel" type="button" ng-click="profile.goBackToProfile()">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
