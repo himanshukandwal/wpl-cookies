@@ -1,5 +1,6 @@
 package edu.utdallas.wpl.cookies.spring.dao.integration;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import edu.utdallas.wpl.cookies.spring.dao.repository.ApartmentRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.BidHistoryRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.PublishedBidsRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.UserInformationRepository;
-
+@Ignore
 @Transactional(readOnly=false)
 @Rollback
 @RunWith(SpringJUnit4ClassRunner.class)

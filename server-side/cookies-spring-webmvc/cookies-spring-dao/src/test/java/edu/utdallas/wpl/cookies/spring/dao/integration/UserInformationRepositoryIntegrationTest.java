@@ -16,7 +16,7 @@ import edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity;
 import edu.utdallas.wpl.cookies.spring.dao.repository.AddressRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.UserInformationRepository;
 
-@Ignore
+
 @Transactional(readOnly=false)
 @Rollback(false)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -44,12 +44,12 @@ public class UserInformationRepositoryIntegrationTest {
 	@Test
 	public void testCreateUser() {
 		
-		AddressEntity address = addressRepository.get(1);
+		AddressEntity address = addressRepository.get(11300);
 		UserInformationEntity userInformationEntity =new UserInformationEntity();
 		userInformationEntity.setFirstName("Anirudh");
 		userInformationEntity.setLastName("Kuttiyil Valsalan");
 		userInformationEntity.setBirthDate(new Date());
-		userInformationEntity.setAddress(address);
+		//userInformationEntity.setAddress(address);
 		userInformationEntity.setPassword("password");
 		userInformationEntity.setEmail("ani123kv@gmail.com");
 		userInformationEntity.setRegistrationDate(new Date());
@@ -58,10 +58,11 @@ public class UserInformationRepositoryIntegrationTest {
 		
 		userInformationEntity.setSex("M");
 		userInformationEntity.setMiddleName("Kuttiyil");
+		userInformationRepository.save(userInformationEntity);
 		
-		UserInformationEntity userInfoUser1 =userInformationRepository.get(250);
-		userInfoUser1.setMiddleName("M");
-		userInformationRepository.delete(userInfoUser1);
+		//UserInformationEntity userInfoUser1 =userInformationRepository.get(250);
+		//userInfoUser1.setMiddleName("M");
+		//userInformationRepository.delete(userInfoUser1);
 		
 	}
 	

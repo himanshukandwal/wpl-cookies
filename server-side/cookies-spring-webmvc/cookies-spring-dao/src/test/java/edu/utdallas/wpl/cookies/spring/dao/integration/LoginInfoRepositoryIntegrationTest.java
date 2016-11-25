@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import java.util.Date;
 
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -21,8 +22,8 @@ import edu.utdallas.wpl.cookies.spring.dao.orm.LoginInfoEntityPk;
 import edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity;
 import edu.utdallas.wpl.cookies.spring.dao.repository.LoginInfoRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.UserInformationRepository;
-
-@Transactional
+@Ignore
+@Transactional(readOnly=false)
 @Rollback
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:testDomainContext.xml" })

@@ -3,7 +3,9 @@ package edu.utdallas.wpl.cookies.spring.dao.integration;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
+import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +43,9 @@ public class PublishedBidsRepositoryIntegrationTest {
    
 	@Test
 	public void testPublishBids() {
-		UserInformationEntity userInformationEntity = userInformationRepository.get(200);
-        ApartmentEntity apartmentEntity =apartmentRepository.get(250);
-        AddressEntity addressEntity =addressRepository.get(6050);
+		UserInformationEntity userInformationEntity = userInformationRepository.get(6050);
+       // ApartmentEntity apartmentEntity =apartmentRepository.get(250);
+        AddressEntity addressEntity =addressRepository.get(624);
          
 		PublishedBidsEntity publishedBidsEntity=new PublishedBidsEntity();
 		publishedBidsEntity.setActiveInd("Y");
@@ -57,8 +59,23 @@ public class PublishedBidsRepositoryIntegrationTest {
 		publishedBidsEntity.setToDate(new Date());
 		publishedBidsEntity.setAddressEntity(addressEntity);
 		publishedBidsRepository.save(publishedBidsEntity);
-		assertNotNull(apartmentEntity);
+		//assertNotNull(apartmentEntity);
 		
 	}
+	
+	/*@Test
+	public void getPublishBids() {
+		Integer userId =5150;
+		List<PublishedBidsEntity> pubLishedEntityList =publishedBidsRepository.getAllBidRequestes(userId);
+		if(pubLishedEntityList!=null){
+			System.out.println("size is "+pubLishedEntityList.size());
+		}
+		else
+		{
+			System.out.println("is Empty");
+		}
+		
+		
+	}*/
 	
 }

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import edu.utdallas.wpl.cookies.spring.biz.manager.BidServiceManager;
 import edu.utdallas.wpl.cookies.spring.common.dto.PublishedBids;
 import edu.utdallas.wpl.cookies.spring.common.dto.UserInformation;
 import edu.utdallas.wpl.cookies.spring.services.BidRestService;
+import scala.util.parsing.combinator.testing.Str;
 
 @Controller
 @RequestMapping("/api")
@@ -30,7 +32,7 @@ public class BidRestServiceImpl  implements BidRestService{
 	@Override
 	@RequestMapping(value = "/addbidrequest", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<PublishedBids> createBidRequest(@RequestBody PublishedBids publishedBids, HttpServletRequest request) {
-		PublishedBids persistedBids = bidServiceManager.addBid(publishedBids);
+		PublishedBids persistedBids = bidServiceManager.addBidRequest(publishedBids);
 		
 		LOG.info(" created bid with id :" + persistedBids.getBidId());
 		
@@ -39,9 +41,31 @@ public class BidRestServiceImpl  implements BidRestService{
 	
 	@Override
 	@RequestMapping(value = "/getbids", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<PublishedBids>> viewBidResponse(Integer bidId) {
+	public ResponseEntity<List<PublishedBids>> viewMyBidRequests(Integer userId) {
 		
-		return null;
+		
+		  List<PublishedBids> publishedBids=   bidServiceManager.getBidRequests(userId);
+		  if(publishedBids!=null){
+		  LOG.info(" The number of bid requests for user  :" +publishedBids.size());
+		  return ResponseEntity.ok(publishedBids);
+		  }
+		  return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
+	
+	
+	
+	@Override
+	@RequestMapping(value = "/deleteBids", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteBidRequest(Integer bidId) {
+		
+		
+		  bidServiceManager.deleteBidRequest(bidId);
+		 
+		  
+		
+	}
+	
+	
+	
 	
 }

@@ -12,7 +12,9 @@ public interface BidRestService {
 	
 	ResponseEntity<PublishedBids>  createBidRequest(PublishedBids publishedBids,HttpServletRequest request);
 	//this method will return all the response for a particular bidId
-	ResponseEntity<List<PublishedBids>> viewBidResponse(Integer bidId);
+	ResponseEntity<List<PublishedBids>> viewMyBidRequests(Integer bidId);
+     void deleteBidRequest(Integer bidId);
+	
 	
 	
 	

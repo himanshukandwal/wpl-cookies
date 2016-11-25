@@ -40,16 +40,21 @@
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.impl.RAMDirectoryProvider </prop>
 			</props>
+			
 		</property>
 	</bean>
 
 	<bean class="org.springframework.orm.hibernate4.HibernateTemplate" id="hibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory" />
+		
 	</bean>
 
 	<bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	
 
 </beans>

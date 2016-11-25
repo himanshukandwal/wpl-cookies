@@ -8,7 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+
 @Entity(name = "address")
+@Indexed
+@Analyzer(impl = org.apache.lucene.analysis.standard.StandardAnalyzer.class)
 public class AddressEntity {
 
     @Id
@@ -17,57 +24,60 @@ public class AddressEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
 	@SequenceGenerator(name = "address_seq", sequenceName = "address_sequence")
     private Integer id;
-
-    @Column(name="address_line1", length = 20)
-    private String line1;
+    @Field(store = Store.YES)
+    @Column(name="address_line", length = 20)
+    private String line;
     
-    @Column(name="address_line2", length = 20)
-    private String line2;
-    
-    @Column(name="country_code", length = 20)
+    @Column(name="country", length = 20)
+    @Field(store = Store.YES)
     private String countryCode;
     
     @Column(name="zip_code", length = 20)
-    private String zipCode;
+    @Field(store = Store.YES)
+    private Integer zipCode;
 
+    @Column(name="city", length = 20)
+    @Field(store = Store.YES)
+    private String city;
+    @Column(name="state", length = 20)
+    @Field(store = Store.YES)
+    private String state;
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getLine1() {
-		return line1;
+	public String getLine() {
+		return line;
 	}
-
-	public void setLine1(String line1) {
-		this.line1 = line1;
+	public void setLine(String line) {
+		this.line = line;
 	}
-
-	public String getLine2() {
-		return line2;
-	}
-
-	public void setLine2(String line2) {
-		this.line2 = line2;
-	}
-
 	public String getCountryCode() {
 		return countryCode;
 	}
-
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
 	}
-
-	public String getZipCode() {
+	public Integer getZipCode() {
 		return zipCode;
 	}
-
-	public void setZipCode(String zipCode) {
+	public void setZipCode(Integer zipCode) {
 		this.zipCode = zipCode;
 	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	
    
 }
