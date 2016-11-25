@@ -1,6 +1,5 @@
 package edu.utdallas.wpl.cookies.spring.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,13 +43,13 @@ public class BidRestServiceImpl implements BidRestService {
 	@Override
 	@RequestMapping(value ="/getBids/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PublishedBids>> viewMyBidRequests(@PathVariable Integer userId) {
-		//List<PublishedBids> publishedBids = bidServiceManager.getBidRequests(userId);
-		List<PublishedBids> publishedBids =new ArrayList<>();
-         System.out.println("inside get Bids>>>>>>>>>>>>>");
+		List<PublishedBids> publishedBids = bidServiceManager.getBidRequests(userId);
+		
 		if (publishedBids != null) {
 			LOG.info(" The number of bid requests for user  :" + publishedBids.size());
 			return ResponseEntity.ok(publishedBids);
 		}
+		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 	
