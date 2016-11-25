@@ -45,13 +45,15 @@ public  class AddressRestServiceImpl implements AddressRestService {
 	}
 
 	@Override
+	
 	@RequestMapping(value = "/addresses", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<List<Address>> getAddresses() {
 		return ResponseEntity.ok(addressServiceManager.getAddresses());
 	}
 
 	@Override
-	@RequestMapping(value = "/address/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	
+	@RequestMapping(value = "/address/{id}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE ,produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Address> getAddress(@PathVariable Integer id) {
 		return ResponseEntity.ok(addressServiceManager.getAddress(id));
 	}

@@ -5,16 +5,9 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.util.Version;
-import org.hibernate.SessionFactory;
-import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.Search;
-import org.junit.Ignore;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +17,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.utdallas.wpl.cookies.spring.dao.orm.Car;
 import edu.utdallas.wpl.cookies.spring.dao.repository.AddressRepository;
-@Ignore
+
 @Transactional(readOnly=false)
 @Rollback(false)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -45,13 +39,10 @@ public class AddressRepositoryIntegrationTest {
 	@Autowired
 	private HibernateTemplate hibenateTemplate;
 	
-	@Autowired
-	private SessionFactory sessionFactory;
 	
-	
-	/*private Car[] testCars = { new Car("Shelby American", "GT 350","1967", "This is T"),
+	private Car[] testCars = { new Car("Shelby American", "GT 350","1967", "This is T"),
 			new Car("Chevrolet", "Bel Air","1957", "This") };
-	*/
+	
 	/*@Test
 	public void testGetAddresses() {
 		AddressEntity address = addressRepository.get(1);
@@ -99,7 +90,7 @@ public class AddressRepositoryIntegrationTest {
 	}*/
 	
 	@Test
-	public void testUpdateAddress() throws ParseException {
+	public void testUpdateAddress() {
 		
 	//	Transaction tx = hibenateTemplate.getSessionFactory().getCurrentSession().beginTransaction();
 
@@ -109,8 +100,9 @@ public class AddressRepositoryIntegrationTest {
 
 	//	tx.commit();
 		
-		//FullTextSession fullTextSession = Search.getFullTextSession(hibenateTemplate.getSessionFactory().getCurrentSession());
-		/*FullTextSession fullTextSession = Search.getFullTextSession(sessionFactory.getCurrentSession());
+		hibenateTemplate.getSessionFactory().getCurrentSession().save(testCars[0]);
+		hibenateTemplate.getSessionFactory().getCurrentSession().save(testCars[1]);
+	/*	FullTextSession fullTextSession = Search.getFullTextSession(hibenateTemplate.getSessionFactory().getCurrentSession());
 		QueryBuilder queryBuilder = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(Car.class).get();
 		org.apache.lucene.search.Query luceneQuery = queryBuilder.bool()
 				.should(queryBuilder.keyword().onField("model").matching("GT 350").createQuery())
@@ -131,25 +123,6 @@ public class AddressRepositoryIntegrationTest {
 			}
 		}
 		*/
-		
-		
-		FullTextSession fullTestSession = Search.getFullTextSession(sessionFactory.getCurrentSession());
-		// The second arg - the default field - specifies which
-		// field to search if we don't specify the field in our query
-		QueryParser parser = new QueryParser(Version.LUCENE_36, "model", new StandardAnalyzer(Version.LUCENE_36));
-		String searchString = "model:" + "GT 350" + " OR model:" + "Bel Air";
-		Query luceneQuery = parser.parse(searchString);
-		FullTextQuery fullTextQuery = fullTestSession.createFullTextQuery(luceneQuery);
-		/*
-		 * Setting a projection avoids hitting the database and retrieving data
-		 * not required by your search use case. This can save overhead when you
-		 * only need to return a "read-only" list of items. If no project is
-		 * set, Hibernate Search will fetch all matching Hibernate-managed
-		 * entities from the database.
-		 */
-		fullTextQuery.setProjection("id", "model");
-		List<Object[]> searchResults = (List<Object[]>) fullTextQuery.list();
-		System.out.println("Size >>>>"+searchResults.size());
 		
 		
 		

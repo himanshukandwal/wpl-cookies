@@ -24,8 +24,7 @@ import edu.utdallas.wpl.cookies.spring.dao.repository.ApartmentRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.PublishedBidsRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.UserInformationRepository;
 
-@Ignore
-@Transactional
+@Transactional(readOnly=false)
 @Rollback(false)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:testDomainContext.xml" })
@@ -66,7 +65,7 @@ public class PublishedBidsRepositoryIntegrationTest {
 	
 	/*@Test
 	public void getPublishBids() {
-		Integer userId =5150;
+		Integer userId =6050;
 		List<PublishedBidsEntity> pubLishedEntityList =publishedBidsRepository.getAllBidRequestes(userId);
 		if(pubLishedEntityList!=null){
 			System.out.println("size is "+pubLishedEntityList.size());
@@ -77,6 +76,6 @@ public class PublishedBidsRepositoryIntegrationTest {
 		}
 		
 		
-	}*/
-	
+	}
+	*/
 }
