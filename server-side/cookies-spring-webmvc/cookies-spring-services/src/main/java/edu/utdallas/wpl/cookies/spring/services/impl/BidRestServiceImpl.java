@@ -40,7 +40,7 @@ public class BidRestServiceImpl implements BidRestService {
 	}
 	
 	@Override
-	@RequestMapping(value = "/getBids", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getBids", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PublishedBids>> viewMyBidRequests(Integer userId) {
 		List<PublishedBids> publishedBids = bidServiceManager.getBidRequests(userId);
 
@@ -52,7 +52,7 @@ public class BidRestServiceImpl implements BidRestService {
 	}
 	
 	@Override
-	@RequestMapping(value = "/deleteBids", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/deleteBids", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void deleteBidRequest(Integer bidId) {
 		bidServiceManager.deleteBidRequest(bidId);
 	}

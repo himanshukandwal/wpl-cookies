@@ -24,6 +24,7 @@ import edu.utdallas.wpl.cookies.spring.dao.repository.ApartmentRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.PublishedBidsRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.UserInformationRepository;
 
+@Ignore
 @Transactional
 @Rollback(false)
 @RunWith(SpringJUnit4ClassRunner.class)
