@@ -12,8 +12,23 @@ angular.module('userProfileModule', ['ui.router'])
                 controller : 'static-profile'
             });
     })
-    .controller('static-profile', function($stateParams) {
-        this.userInfo = $stateParams.userInfo;
+    .controller('static-profile', function($http, $stateParams) {
+        var self = this;
+        self.userInfo = $stateParams.userInfo;
+        self.apartmentTypes = [ '1 BHK', '2 BHK', '3 BHK', 'House' ];
+        self.bid = { owner :  self.userInfo, hostedDate : new Date(), activeInd: 'y' };
+
+
+        self.postBid = function () {
+            $http.post('/api/postBid', self.bid).then(function () {
+                console.log(response.data.status);
+                self.message = false;
+            }, function () {
+                console.log(response.data.status);
+                self.message = "error posting user !";
+            });
+        }
+
     })
     .controller('edit-profile', function($http, $state, $stateParams) {
         var self = this;

@@ -42,7 +42,7 @@ public class BidRestServiceImpl implements BidRestService {
 	}
 	
 	@Override
-	@RequestMapping(value ="/getBids/{userId}", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value ="/getBids/{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PublishedBids>> viewMyBidRequests(@PathVariable Integer userId) {
 		//List<PublishedBids> publishedBids = bidServiceManager.getBidRequests(userId);
 		List<PublishedBids> publishedBids =new ArrayList<>();
