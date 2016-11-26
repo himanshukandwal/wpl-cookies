@@ -1,7 +1,5 @@
 package edu.utdallas.wpl.cookies.spring.dao.integration;
 
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,15 +9,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.utdallas.wpl.cookies.spring.dao.orm.ApartmentEntity;
+import edu.utdallas.wpl.cookies.spring.common.enums.BidStatus;
 import edu.utdallas.wpl.cookies.spring.dao.orm.PublishedBidsEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.TransactionInfoEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity;
-import edu.utdallas.wpl.cookies.spring.dao.repository.ApartmentRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.PublishedBidsRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.TransactionInfoRepository;
 import edu.utdallas.wpl.cookies.spring.dao.repository.UserInformationRepository;
-@Ignore
+
 @Transactional
 @Rollback(false)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,15 +34,17 @@ public class TransactionInfoRepositoryIntegrationTest {
 	@Test
 	public void testCreateApartment() {
 		UserInformationEntity bidPoster = userInformationRepository.get(200);
-		UserInformationEntity bidReceiver=userInformationRepository.get (350);
-		PublishedBidsEntity publishedBidsEntity = publishedBidsRepository.get(50);
+		UserInformationEntity bidReceiver=userInformationRepository.get (9400);
+		PublishedBidsEntity publishedBidsEntity = publishedBidsRepository.get(10550);
 		
 		
 		TransactionInfoEntity transactionInfoEntity =new TransactionInfoEntity();
 		transactionInfoEntity.setBid(publishedBidsEntity);
-		transactionInfoEntity.setBidPoster(bidPoster);
+		//transactionInfoEntity.setBidPoster(bidPoster);
 		transactionInfoEntity.setBidReceiver(bidReceiver);
 		transactionInfoEntity.setBidPrice("250");
+		transactionInfoEntity.setComments("test");
+		transactionInfoEntity.setBidStatus(BidStatus.INTERESTED.toString());
 		transactionInfoRepository.save(transactionInfoEntity);
 		
 	}
