@@ -32,7 +32,7 @@ public class PublishedBidsEntity {
 	private String comments;
 	
 	@Column(name="PRICE", length = 20)
-	private String price;
+	private Float price;
 	
 	@Column(name="ACTIVE_IND", length = 1)
 	private String activeInd;
@@ -76,10 +76,10 @@ public class PublishedBidsEntity {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public String getPrice() {
+	public Float getPrice() {
 		return price;
 	}
-	public void setPrice(String price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 	public String getActiveInd() {

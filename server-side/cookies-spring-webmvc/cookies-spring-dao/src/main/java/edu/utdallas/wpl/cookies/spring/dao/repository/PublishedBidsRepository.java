@@ -37,4 +37,19 @@ public class PublishedBidsRepository extends GenericDAORepositoryImpl<PublishedB
 	}
 	
 	
+	/*@SuppressWarnings("unchecked")
+	public List<PublishedBidsEntity> getAllBidRequestes() {
+		
+		List<UserInformationEntity> userInformationEntity =userInformationRepository.getAll();
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PublishedBidsEntity.class);
+		criteria.add(Restrictions.eq("owner", userInformationEntity));
+		
+		List<PublishedBidsEntity> informations = (List<PublishedBidsEntity>) criteria.list();
+		if (informations == null || informations.isEmpty())
+			return null;
+		else
+			return informations;
+	}*/
+	
+	
 }

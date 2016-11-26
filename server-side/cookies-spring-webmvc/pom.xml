@@ -149,11 +149,11 @@
    				<version>4.2.2.Final</version>
 		     </dependency> -->
 		     
-		   <dependency>
+		  <!--  <dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-search</artifactId>
 			<version>4.3.0.Final</version>
-			</dependency>
+			</dependency> -->
 
 			<!-- DATABASE -->
 			<dependency>

@@ -59,4 +59,18 @@ public class BidRestServiceImpl implements BidRestService {
 		bidServiceManager.deleteBidRequest(bidId);
 	}
 	
+	@Override
+	@RequestMapping(value ="/getBids", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PublishedBids>> viewAllBidRequests() {
+		List<PublishedBids> publishedBids = bidServiceManager.getBidRequests();
+		
+		if (publishedBids != null) {
+			LOG.info(" The number of bid requests for user  :" + publishedBids.size());
+			return ResponseEntity.ok(publishedBids);
+		}
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	}
+	
+	
 }

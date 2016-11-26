@@ -41,7 +41,7 @@ public class PublishedBidsRepositoryIntegrationTest {
 	@Autowired
 	private AddressRepository addressRepository;
    
-	@Test
+	/*@Test
 	public void testPublishBids() {
 		UserInformationEntity userInformationEntity = userInformationRepository.get(6050);
        // ApartmentEntity apartmentEntity =apartmentRepository.get(250);
@@ -53,7 +53,7 @@ public class PublishedBidsRepositoryIntegrationTest {
 		publishedBidsEntity.setHostedDate(new Date());
 		publishedBidsEntity.setComments("comments");
 		publishedBidsEntity.setNumDays(30);
-		publishedBidsEntity.setPrice("$300");
+		publishedBidsEntity.setPrice(300.00f);
 		publishedBidsEntity.setOwner(userInformationEntity);
 		publishedBidsEntity.setFromDate(new Date());
 		publishedBidsEntity.setToDate(new Date());
@@ -61,7 +61,7 @@ public class PublishedBidsRepositoryIntegrationTest {
 		publishedBidsRepository.save(publishedBidsEntity);
 		//assertNotNull(apartmentEntity);
 		
-	}
+	}*/
 	
 	/*@Test
 	public void getPublishBids() {
@@ -77,5 +77,21 @@ public class PublishedBidsRepositoryIntegrationTest {
 		
 		
 	}
-	*/
+*/
+	
+	
+	@Test
+	public void getPublishBids() {
+		///Integer userId =6050;
+		List<PublishedBidsEntity> pubLishedEntityList =publishedBidsRepository.getAll();
+		if(pubLishedEntityList!=null){
+			System.out.println("size is "+pubLishedEntityList.size());
+		}
+		else
+		{
+			System.out.println("is Empty");
+		}
+		
+		
+	}
 }

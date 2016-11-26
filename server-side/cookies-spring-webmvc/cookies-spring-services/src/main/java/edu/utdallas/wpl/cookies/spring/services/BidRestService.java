@@ -17,4 +17,5 @@ public interface BidRestService {
     
 	void deleteBidRequest(Integer bidId);
 	
+	ResponseEntity<List<PublishedBids>> viewAllBidRequests();
 }

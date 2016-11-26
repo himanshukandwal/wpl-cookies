@@ -42,6 +42,22 @@ public class BidServiceManagerImpl implements BidServiceManager{
 		return publishedBidsList;
 	}
 
+	
+	@Override
+	public List<PublishedBids> getBidRequests() {
+		List<PublishedBidsEntity> pubBidList = publishedBidsRepository.getAll();
+		List<PublishedBids> publishedBidsList = null;
+		
+		if (pubBidList != null) {
+			publishedBidsList = new ArrayList<>();
+			for (PublishedBidsEntity publishedBidsEntity : pubBidList) {
+				PublishedBids publishedBids = mapper.map(publishedBidsEntity, PublishedBids.class);
+				publishedBidsList.add(publishedBids);
+			}
+		}
+
+		return publishedBidsList;
+	}
 	@Override
 	public void deleteBidRequest(Integer bidId) {
 		PublishedBidsEntity publishedBidsEntity = publishedBidsRepository.get(bidId);

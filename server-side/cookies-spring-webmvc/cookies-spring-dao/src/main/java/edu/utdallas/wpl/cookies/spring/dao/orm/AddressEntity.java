@@ -8,14 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
-import org.hibernate.search.annotations.Analyzer;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Store;
-
 @Entity(name = "address")
-@Indexed
-@Analyzer(impl = org.apache.lucene.analysis.standard.StandardAnalyzer.class)
 public class AddressEntity {
 
     @Id
@@ -24,23 +17,19 @@ public class AddressEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "address_seq")
 	@SequenceGenerator(name = "address_seq", sequenceName = "address_sequence")
     private Integer id;
-    @Field(store = Store.YES)
+
     @Column(name="address_line", length = 20)
     private String line;
     
     @Column(name="country", length = 20)
-    @Field(store = Store.YES)
     private String countryCode;
     
     @Column(name="zip_code", length = 20)
-    @Field(store = Store.YES)
     private Integer zipCode;
 
     @Column(name="city", length = 20)
-    @Field(store = Store.YES)
     private String city;
     @Column(name="state", length = 20)
-    @Field(store = Store.YES)
     private String state;
 	public Integer getId() {
 		return id;
