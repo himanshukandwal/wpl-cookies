@@ -1,16 +1,24 @@
 package edu.utdallas.wpl.cookies.spring.common.dto;
 
-public class TransactionInfo {
 
+
+public class TransactionInfo {
+	
+	
 	private Integer tranId;
+
 
 	private PublishedBids bid;
 
-	private UserInformation bidPoster;
 
 	private UserInformation bidReceiver;
 
+	
 	private String bidPrice;
+	
+	private String bidStatus;
+	
+	private String comments;
 
 	public Integer getTranId() {
 		return tranId;
@@ -28,14 +36,6 @@ public class TransactionInfo {
 		this.bid = bid;
 	}
 
-	public UserInformation getBidPoster() {
-		return bidPoster;
-	}
-
-	public void setBidPoster(UserInformation bidPoster) {
-		this.bidPoster = bidPoster;
-	}
-
 	public UserInformation getBidReceiver() {
 		return bidReceiver;
 	}
@@ -51,5 +51,24 @@ public class TransactionInfo {
 	public void setBidPrice(String bidPrice) {
 		this.bidPrice = bidPrice;
 	}
+
+	public String getBidStatus() {
+		return bidStatus;
+	}
+
+	public void setBidStatus(String bidStatus) {
+		this.bidStatus = bidStatus;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	
+
 
 }

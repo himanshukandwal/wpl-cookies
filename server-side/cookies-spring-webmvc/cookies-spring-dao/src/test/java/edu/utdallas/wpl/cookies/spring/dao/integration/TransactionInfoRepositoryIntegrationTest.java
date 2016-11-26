@@ -1,6 +1,7 @@
 package edu.utdallas.wpl.cookies.spring.dao.integration;
 
-import org.junit.Ignore;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class TransactionInfoRepositoryIntegrationTest {
 	@Autowired
 	private TransactionInfoRepository transactionInfoRepository;
    
-	@Test
+	/*@Test
 	public void testCreateApartment() {
 		UserInformationEntity bidPoster = userInformationRepository.get(200);
 		UserInformationEntity bidReceiver=userInformationRepository.get (9400);
@@ -46,6 +47,17 @@ public class TransactionInfoRepositoryIntegrationTest {
 		transactionInfoEntity.setComments("test");
 		transactionInfoEntity.setBidStatus(BidStatus.INTERESTED.toString());
 		transactionInfoRepository.save(transactionInfoEntity);
+		
+	}*/
+	
+	
+	@Test
+	public void testGetTransactions() {
+		
+		List<TransactionInfoEntity> transactionInfoList = transactionInfoRepository.getAll();
+		System.out.println(transactionInfoList.size());
+		
+		
 		
 	}
 	
