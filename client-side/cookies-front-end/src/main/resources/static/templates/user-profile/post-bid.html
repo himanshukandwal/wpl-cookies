@@ -31,19 +31,27 @@
 
                 <div class="form-group">
                     <label class="col-md-3 control-label white-stylish-text">Locate Address:</label>
-                    <input type="search" placeholder="live address search..." ng-model="profile.searchText" />
-                    <div ng-repeat="address in addresses | filter:filterText">
-                        <span ng-bind="entry.city + ' , ' + address.state + ' , ' + address.zipCode"/>
+                    <div class="col-md-8">
+                        <input type="search" data-ng-model="profile.searchText" ng-model-options="{debounce: 1000}">
+                        <textarea ng-show="profile.searchText && profile.searchText != ''"> {{ profile.addresses | filter: profile.searchText }} </textarea>
                     </div>
                 </div>
 
-                <!-- <div class="form-group">
+                <div class="form-group">
+                    <label class="col-md-3 control-label white-stylish-text"/>
+                    <div class="col-md-8">
+                        <label class="white-stylish-text" onclick="">can't find address, create one</label>
+                    </div>
+                </div>
+
+                <!--
+                <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Address</label>
                     <div class="col-lg-8">
                         Search: <input type='text' name='query' />
                         <input class="form-control" ng-model="profile.userInfo.firstName" type="text" >
                     </div>
-                </div> -->
+                </div>
 
                 <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Address</label>
@@ -53,6 +61,10 @@
                         </select>
                     </div>
                 </div>
+
+                -->
+
+
 
                 <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Price:</label>

@@ -43,7 +43,7 @@ public class AddressServiceManagerIntegrationTest {
 		
 		assertNotNull(address);
 		assertNotNull(address.getId());
-		assertEquals(ADDRESS_1.getLine1(), address.getLine1());
+		assertEquals(ADDRESS_1.getLine(), address.getLine());
 		
 		// for future handles (update event scenarios)
 		ADDRESS_1.setId(address.getId());
@@ -53,17 +53,17 @@ public class AddressServiceManagerIntegrationTest {
 	public void b_testUpdateAddress() {
 		Address createAddressCopy = copy (ADDRESS_1);
 		
-		createAddressCopy.setLine1(ADDRESS_1.getLine1() + "-updated");
+		createAddressCopy.setLine(ADDRESS_1.getLine() + "-updated");
 		
 		Address address = addressServiceManager.updateAddress(createAddressCopy);
 		
 		assertNotNull(address);
 		assertNotNull(address.getId());
-		assertEquals(address.getLine1(), containsString("-updated"));
+		assertEquals(address.getLine(), containsString("-updated"));
 		assertEquals(createAddressCopy.getCountryCode(), address.getCountryCode());
 		
 		// for future handles (find event scenarios)
-		ADDRESS_1.setLine1(address.getLine1());
+		ADDRESS_1.setLine(address.getLine());
 	}
 	
 	@Test
@@ -72,8 +72,8 @@ public class AddressServiceManagerIntegrationTest {
 		
 		assertNotNull(address);
 		assertNotNull(address.getId());
-		assertEquals(ADDRESS_1.getLine1(), address.getLine1());
-		assertThat(address.getLine1(), containsString("-updated"));
+		assertEquals(ADDRESS_1.getLine(), address.getLine());
+		assertThat(address.getLine(), containsString("-updated"));
 	}
 	
 	@Test

@@ -12,7 +12,7 @@ angular.module('userProfileModule', ['ui.router'])
                 controller : 'static-profile'
             });
     })
-    .controller('static-profile', function($http, $stateParams) {
+    .controller('static-profile', function($http, $stateParams, $scope, $timeout) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
         self.apartmentTypes = [ '1 BHK', '2 BHK', '3 BHK', 'House' ];
