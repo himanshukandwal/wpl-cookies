@@ -16,10 +16,17 @@ angular.module('userProfileModule', ['ui.router'])
         var self = this;
         self.userInfo = $stateParams.userInfo;
         self.apartmentTypes = [ '1 BHK', '2 BHK', '3 BHK', 'House' ];
-        self.bid = { owner :  self.userInfo, hostedDate : new Date(), activeInd: 'y' };
+        self.bid = { owner :  self.userInfo, hostedDate : new Date(), activeInd: 'Y', addressEntity : {
+            id: 624,
+            line1 : null,
+            line2: null,
+            countryCode : "US",
+            zipCode : "982"
+        } };
 
 
         self.postBid = function () {
+            console.log(JSON.stringify(self.bid));
             $http.post('/api/postBid', self.bid).then(function () {
                 console.log(response.data.status);
                 self.message = false;
