@@ -9,16 +9,14 @@ import edu.utdallas.wpl.cookies.spring.common.dto.builders.AddressBuilder;
 public class Addresses {
 
 	public static final Address ADDRESS_1 = new AddressBuilder()
-			.withLine1("temp line 1")
-			.withLine2("temp line 2")
+			.withLine("temp line 2")
 			.withCountryCode("US")
-			.withZipCode("75252")
+			.withZipCode(75252)
 			.build();
 
 	public static Address copy(Address srcEvent) {
 		return new AddressBuilder()
-				.withLine1(srcEvent.getLine1())
-				.withLine2(srcEvent.getLine2())
+				.withLine(srcEvent.getLine())
 				.withZipCode(srcEvent.getZipCode())
 				.withCountryCode(srcEvent.getCountryCode())
 				.build();

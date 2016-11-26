@@ -10,22 +10,16 @@ public class AddressBuilder {
 		address = new Address();
 	}
 	
-	public  AddressBuilder withLine1(String line1) {
-		address.setLine1(line1);
+	public  AddressBuilder withLine(String line) {
+		address.setLine(line);
 		return this;
 	}
-	
-	public  AddressBuilder withLine2(String line2) {
-		address.setLine2(line2);
-		return this;
-	}
-	
 	public  AddressBuilder withCountryCode(String countryCode) {
 		address.setCountryCode(countryCode);
 		return this;
 	}
 	
-	public  AddressBuilder withZipCode(String zipCode) {
+	public  AddressBuilder withZipCode(Integer zipCode) {
 		address.setZipCode(zipCode);
 		return this;
 	}

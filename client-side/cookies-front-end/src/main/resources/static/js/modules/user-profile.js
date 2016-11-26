@@ -16,14 +16,28 @@ angular.module('userProfileModule', ['ui.router'])
         var self = this;
         self.userInfo = $stateParams.userInfo;
         self.apartmentTypes = [ '1 BHK', '2 BHK', '3 BHK', 'House' ];
-        self.bid = { owner :  self.userInfo, hostedDate : new Date(), activeInd: 'Y', addressEntity : {
-            id: 624,
-            line1 : null,
-            line2: null,
-            countryCode : "US",
-            zipCode : "982"
-        } };
+        self.bid = { owner :  self.userInfo, hostedDate : new Date(), activeInd: 'Y' };
 
+        $http.get('/api/addresses').then(function (response) {
+            self.addresses = response.data.addresses;
+            console.log('got addresses : ' + self.addresses);
+        }, function (response) {
+            self.addresses = [];
+            console.log('error getting addresses ' + response.data);
+        });
+
+        var tempFilterText = '',
+            filterTextTimeout;
+
+        $scope.$watch('searchText', function (val) {
+            if (filterTextTimeout)
+                $timeout.cancel(filterTextTimeout);
+
+            tempFilterText = val;
+            filterTextTimeout = $timeout(function() {
+                $scope.filterText = tempFilterText;
+            }, 250); // delay 250 ms
+        })
 
         self.postBid = function () {
             console.log(JSON.stringify(self.bid));

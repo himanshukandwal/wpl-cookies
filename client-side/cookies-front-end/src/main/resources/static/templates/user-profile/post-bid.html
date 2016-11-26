@@ -29,6 +29,14 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="col-md-3 control-label white-stylish-text">Locate Address:</label>
+                    <input type="search" placeholder="live address search..." ng-model="profile.searchText" />
+                    <div ng-repeat="address in addresses | filter:filterText">
+                        <span ng-bind="entry.city + ' , ' + address.state + ' , ' + address.zipCode"/>
+                    </div>
+                </div>
+
                 <!-- <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Address</label>
                     <div class="col-lg-8">
@@ -36,6 +44,15 @@
                         <input class="form-control" ng-model="profile.userInfo.firstName" type="text" >
                     </div>
                 </div> -->
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label white-stylish-text">Address</label>
+                    <div class="col-lg-8">
+                        <select ng-model="selectedTestAccount" ng-options="address.countryCode for address in profile.addresses">
+                            <option value="">Select Account</option>
+                        </select>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Price:</label>
