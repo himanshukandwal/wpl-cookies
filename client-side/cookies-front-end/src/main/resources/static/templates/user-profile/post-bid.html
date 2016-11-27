@@ -1,4 +1,4 @@
-<div class="container" style="padding-top: 60px;" ng-controller="static-profile as profile">
+<div class="container" style="padding-top: 60px;" ng-controller="post-bid as profile">
     <h1 class="page-header white-stylish-text">Post new  Bid</h1>
 
     <div class="row">
@@ -7,7 +7,7 @@
 
             <div class="text-center">
                 <div ng-show="!profile.userInfo.sex || (profile.userInfo.sex && profile.userInfo.sex == 'male')">
-                    <img class="avatar img-circle img-thumbnail" ng-src="../../images/user-male.jpg">
+                    <img class="avatar img-circle img-thumbnail" ng-src="../../../images/user-male.jpg">
                 </div>
 
                 <div ng-show="profile.userInfo.sex && profile.userInfo.sex == 'female'">
@@ -30,43 +30,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-3 control-label white-stylish-text">Locate Address:</label>
-                    <div class="col-md-8">
-                        <input type="search" data-ng-model="profile.searchText" ng-model-options="{debounce: 1000}">
-                        <textarea ng-show="profile.searchText && profile.searchText != ''"> {{ profile.addresses | filter: profile.searchText }} </textarea>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-md-3 control-label white-stylish-text"/>
-                    <div class="col-md-8">
-                        <label class="white-stylish-text" onclick="">can't find address, create one</label>
-                    </div>
-                </div>
-
-                <!--
-                <div class="form-group">
-                    <label class="col-lg-3 control-label white-stylish-text">Address</label>
-                    <div class="col-lg-8">
-                        Search: <input type='text' name='query' />
-                        <input class="form-control" ng-model="profile.userInfo.firstName" type="text" >
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-lg-3 control-label white-stylish-text">Address</label>
-                    <div class="col-lg-8">
-                        <select ng-model="selectedTestAccount" ng-options="address.countryCode for address in profile.addresses">
-                            <option value="">Select Account</option>
-                        </select>
-                    </div>
-                </div>
-
-                -->
-
-
-
-                <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Price:</label>
                     <div class="col-lg-8">
                         <input required class="form-control" ng-model="profile.bid.price" type="number">
@@ -87,8 +50,6 @@
                     </div>
                 </div>
 
-
-                <!-- -->
                 <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Comments:</label>
                     <div class="col-lg-8">
@@ -103,7 +64,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label"></label>
                     <div class="col-md-8">
-                        <button class="btn btn-lg btn-primary" type="submit" role="button">Save Changes</button>
+                        <button class="btn btn-lg btn-primary" type="submit" role="button">Post Bid</button>
                         <span/>
                         <input class="btn btn-default" value="Cancel" type="button" ng-click="profile.goBackToProfile()">
                     </div>

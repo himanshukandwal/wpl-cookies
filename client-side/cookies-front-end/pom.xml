@@ -73,6 +73,11 @@
 					    <artifactId>font-awesome</artifactId>
 					    <version>4.7.0</version>
 					</dependency>
+					<dependency>
+					    <groupId>org.webjars</groupId>
+					    <artifactId>angular-filter</artifactId>
+					    <version>0.4.9</version>
+					</dependency>
 				</dependencies>
 			</plugin>
 			<plugin>
@@ -161,6 +166,11 @@
 			<version>2.0.0</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>angular-filter</artifactId>
+		    <version>0.4.9</version>
+		</dependency>		
 	</dependencies>
 
 </project>

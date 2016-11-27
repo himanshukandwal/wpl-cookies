@@ -53,7 +53,7 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
             } else {
                 $http.get('/api/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
                     self.message = false;
-                    sessionStorage.user= JSON.stringify(response.data.userInfo);
+                    console.log(esponse.data.userInfo);
                     $state.go('user-profile', { userInfo : response.data.userInfo });
                 }, function (response) {
                     console.log(response.data.status);

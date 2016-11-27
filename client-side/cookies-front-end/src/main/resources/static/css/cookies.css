@@ -17,6 +17,12 @@ hr {
 	font-family: "Apple Braille";
 }
 
+.white-stylish-text-big {
+	color: white;
+	font-family: "Apple Braille";
+	font-size: 20px;
+}
+
 .centered {
     margin: 0 auto;
     text-align: center;
