@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import edu.utdallas.wpl.cookies.spring.biz.manager.ShoppingServiceManager;
 import edu.utdallas.wpl.cookies.spring.common.dto.ShoppingInfo;
+import edu.utdallas.wpl.cookies.spring.common.dto.TransactionInfo;
 import edu.utdallas.wpl.cookies.spring.dao.orm.ShoppingInfoEntity;
 import edu.utdallas.wpl.cookies.spring.dao.repository.ShoppingRepository;
 @Service

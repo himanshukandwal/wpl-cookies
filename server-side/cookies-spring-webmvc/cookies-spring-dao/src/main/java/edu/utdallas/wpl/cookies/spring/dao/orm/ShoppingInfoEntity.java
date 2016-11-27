@@ -16,47 +16,39 @@ public class ShoppingInfoEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SHOPPING_SEQUENCE")
 	@SequenceGenerator(name = "SHOPPING_SEQUENCE", sequenceName = "SHOPPING_SEQUENCE")
 	public Integer shoppingId;
-	
 	@OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn (name = "TRAN_ID")
-	public TransactionInfoEntity transactionInfoEntity;
+	public TransactionInfoEntity transactionInfo;
 	@Column(name = "QUANTITY", nullable = false)
 	public Integer quantity;
 	@Column(name = "PRICE", nullable = false)
 	public Float price;
-
-	
-	
 	public Integer getShoppingId() {
 		return shoppingId;
 	}
-
 	public void setShoppingId(Integer shoppingId) {
 		this.shoppingId = shoppingId;
 	}
-
-	
-	public TransactionInfoEntity getTransactionInfoEntity() {
-		return transactionInfoEntity;
+	public TransactionInfoEntity getTransactionInfo() {
+		return transactionInfo;
 	}
-
-	public void setTransactionInfoEntity(TransactionInfoEntity transactionInfoEntity) {
-		this.transactionInfoEntity = transactionInfoEntity;
+	public void setTransactionInfo(TransactionInfoEntity transactionInfo) {
+		this.transactionInfo = transactionInfo;
 	}
-
 	public Integer getQuantity() {
 		return quantity;
 	}
-
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-
 	public Float getPrice() {
 		return price;
 	}
-
 	public void setPrice(Float price) {
 		this.price = price;
 	}
+
+	
+	
+	
 }
