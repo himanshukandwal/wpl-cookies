@@ -1,18 +1,13 @@
 <div class="container" style="padding-top: 60px;" ng-controller="post-bid as profile">
-    <h1 class="page-header white-stylish-text">Post new  Bid</h1>
+    <h1 ng-hide="profile.successfulPosting" class="page-header white-stylish-text">Post new  Bid</h1>
+    <h1 ng-show="profile.successfulPosting" class="page-header white-stylish-text">Bid posted successfully !</h1>
 
     <div class="row">
         <!-- left column -->
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div ng-hide="profile.successfulPosting" class="col-md-4 col-sm-6 col-xs-12">
 
             <div class="text-center">
-                <div ng-show="!profile.userInfo.sex || (profile.userInfo.sex && profile.userInfo.sex == 'male')">
-                    <img class="avatar img-circle img-thumbnail" ng-src="../../../images/user-male.jpg">
-                </div>
-
-                <div ng-show="profile.userInfo.sex && profile.userInfo.sex == 'female'">
-                    <img class="avatar img-circle img-thumbnail" ng-src="../../images/user-female.jpg">
-                </div>
+                <img class="avatar img-circle img-thumbnail" ng-src="../../images/bid-icon.jpg">
             </div>
 
         </div>
@@ -20,7 +15,7 @@
         <!-- edit form column -->
         <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
 
-            <form class="form-horizontal" role="form" ng-submit="profile.postBid()">
+            <form ng-hide="profile.successfulPosting" class="form-horizontal" role="form" ng-submit="profile.postBid()">
 
                 <div class="form-group">
                     <label class="col-md-3 control-label white-stylish-text">Apartment Type:</label>
@@ -53,7 +48,7 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Comments:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" ng-model="profile.bid.comments" type="text">
+                        <input required class="form-control" ng-model="profile.bid.comments" type="text">
                     </div>
                 </div>
 
@@ -71,6 +66,10 @@
                 </div>
 
             </form>
+
+            <div ng-show="profile.successfulPosting" class="centered">
+                <img class="ng-enter" ng-src="../../images/bid-posted.png" ng-view>
+            </div>
         </div>
     </div>
 </div>

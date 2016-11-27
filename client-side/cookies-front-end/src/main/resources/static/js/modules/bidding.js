@@ -1,4 +1,4 @@
-angular.module('biddingModule', ['ui.router', 'angular.filter'])
+angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate'])
     .config (function ($stateProvider) {
         $stateProvider
             .state('find-address-post-bid', {
@@ -67,10 +67,12 @@ angular.module('biddingModule', ['ui.router', 'angular.filter'])
             console.log('selected address : ' + address);
         };
     })
-    .controller('post-bid', function($http, $stateParams) {
+    .controller('post-bid', function($http, $stateParams, $state, $timeout) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
         self.address = $stateParams.address;
+
+        self.successfulPosting = false;
 
         self.apartmentTypes = [ '1 BHK', '2 BHK', '3 BHK', 'House' ];
         self.bid = { owner :  self.userInfo, addressEntity: self.address, hostedDate : new Date(), activeInd: 'Y' };
@@ -80,6 +82,12 @@ angular.module('biddingModule', ['ui.router', 'angular.filter'])
             $http.post('/api/postBid', self.bid).then(function (response) {
                 console.log(response.data.status);
                 self.message = false;
+                self.successfulPosting = true;
+
+                $timeout(function() {
+                    $state.go('user-profile', { userInfo : self.userInfo });
+                }, 3000);
+
             }, function (response) {
                 console.log(response.data.status);
                 self.message = "error posting user !";
