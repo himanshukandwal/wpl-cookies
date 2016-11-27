@@ -1,4 +1,4 @@
-angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate'])
+angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'smart-table'])
     .config (function ($stateProvider) {
         $stateProvider
             .state('find-address-post-bid', {
@@ -12,6 +12,12 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate'])
                 templateUrl : '../../templates/user-profile/post-bid.html',
                 params : { userInfo : null, address : null },
                 controller : 'post-bid'
+            })
+            .state('user-show-my-bids', {
+                url : '/user-profile/user-show-my-bids',
+                templateUrl : '../../templates/user-profile/user-bids.html',
+                params : { userInfo : null },
+                controller : 'my-bids'
             });
     })
     .controller('find-address', function ($http, $timeout, $stateParams, $state, $scope) {
@@ -94,4 +100,12 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate'])
             });
         };
 
+    })
+    .controller('my-bids', function($http, $stateParams, $state, $timeout) {
+        var self = this;
+        self.userInfo = $stateParams.userInfo;
+
+        $http.get('sample/bids.json').then (function(response) {
+            self.allBids = response.data.bid;
+        });
     });

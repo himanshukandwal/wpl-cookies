@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import edu.utdallas.wpl.cookies.front.end.config.CustomRestController;
@@ -25,7 +26,7 @@ public class BidsController {
 	private String webserviceUrl;
 	
 	@RequestMapping(value = "/postBid", method = RequestMethod.POST)
-	public Map<String, Object> postBid(@RequestBody Map<String, Object> bidMap) {
+	public @ResponseBody Map<String, Object> postBid(@RequestBody Map<String, Object> bidMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
@@ -35,12 +36,12 @@ public class BidsController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/myBids/{userId}", method = RequestMethod.POST)
-	public Map<String, Object> getMyBids(@PathVariable String userId, @RequestBody Map<String, Object> addressMap) {
+	@RequestMapping(value = "/myBids/{userId}")
+	public @ResponseBody Map<String, Object> getMyBids(@PathVariable String userId) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		ResponseEntity<PublishedBids> responseEntity = restTemplate.postForEntity(webserviceUrl + "/getBids/" + userId, addressMap, PublishedBids.class);
+		ResponseEntity<PublishedBids[]> responseEntity = restTemplate.getForEntity(webserviceUrl + "/getBids/" + userId, PublishedBids[].class);
 				
 		model.put("bid", responseEntity.getBody());
 		return model;

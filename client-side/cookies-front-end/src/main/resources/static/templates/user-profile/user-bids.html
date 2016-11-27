@@ -1,0 +1,52 @@
+<div class="container" style="padding-top: 60px;" ng-controller="my-bids as bids">
+    <h1 class="page-header white-stylish-text">My Bids</h1>
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-6">
+            <table st-table="bids.allBids" class="table">
+                <thead>
+                <tr>
+                    <th class="white-stylish-text-big" st-sort="bidId">Bid Id</th>
+                    <th class="white-stylish-text-big" st-sort="firstName">Posted By</th>
+                    <th class="white-stylish-text-big" st-sort="hostedDate">Posted Date</th>
+                    <th class="white-stylish-text-big" st-sort="price">Price</th>
+                    <th class="white-stylish-text-big" st-sort="activeInd">Active</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input st-search="bidId" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="firstName" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="hostedDate" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="price" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="activeInd" class="input-sm form-control" type="search"/>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="bid in bids.allBids">
+                    <td>{{ bid.bidId }}</td>
+                    <td>{{ bid.owner.firstName }}</td>
+                    <td>{{ bid.hostedDate | date }}</td>
+                    <td>{{ bid.price }}</td>
+                    <td>{{ bid.activeInd }}</td>
+                </tr>
+                </tbody>
+                <!--<tfoot>-->
+                    <!--<tr>-->
+                        <!--<td colspan="5" class="text-center">-->
+                            <!--<div st-pagination="" st-items-by-page="15" st-displayed-pages="7"></div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--</tfoot>-->
+            </table>
+        </div>
+    </div>
+</div>
