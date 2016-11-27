@@ -23,5 +23,11 @@
 		<class-a>edu.utdallas.wpl.cookies.spring.dao.orm.TransactionInfoEntity</class-a>
 		<class-b>edu.utdallas.wpl.cookies.spring.common.dto.TransactionInfo</class-b>
 	</mapping>
+	
+	<mapping>
+		<class-a>edu.utdallas.wpl.cookies.spring.dao.orm.ShoppingInfoEntity</class-a>
+		<class-b>edu.utdallas.wpl.cookies.spring.common.dto.ShoppingInfo</class-b>
+	</mapping>
+	
 
 </mappings> 

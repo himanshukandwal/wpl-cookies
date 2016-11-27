@@ -56,7 +56,7 @@ public class UserInformationRepositoryIntegrationTest {
 		userInformationEntity.setMobileNumber("9724087043");
 		userInformationEntity.setRoleId(0);
 		
-		userInformationEntity.setSex("M");
+		userInformationEntity.setSex("male");
 		userInformationEntity.setMiddleName("Kuttiyil");
 		userInformationRepository.save(userInformationEntity);
 		
