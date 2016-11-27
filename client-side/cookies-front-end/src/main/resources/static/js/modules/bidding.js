@@ -101,11 +101,19 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         };
 
     })
-    .controller('my-bids', function($http, $stateParams, $state, $timeout) {
+    .controller('my-bids', function($http, $stateParams, $state, $timeout, $scope, $filter) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
 
+        if (localStorage.getItem('bids')) {
+
+        } else {
+            
+        }
+
         $http.get('sample/bids.json').then (function(response) {
-            self.allBids = response.data.bid;
+            $scope.rowCollection = response.data.bid;
         });
+
+        $scope.displayedCollection = [].concat($scope.rowCollection);
     });
