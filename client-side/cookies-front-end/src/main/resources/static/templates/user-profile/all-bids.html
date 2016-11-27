@@ -1,5 +1,5 @@
 <div class="container" style="padding-top: 60px;">
-    <h1 class="page-header white-stylish-text">My Active Bids</h1>
+    <h1 class="page-header white-stylish-text">All Active Bids</h1>
 
     <div class="row">
         <div class="col-lg-12 col-sm-6" ng-controller="all-bids as bids">
@@ -11,7 +11,7 @@
                     <th class="white-stylish-text-big" st-sort="hostedDate">Posted Date</th>
                     <th class="white-stylish-text-big" st-sort="apartmentType">Apartment Type</th>
                     <th class="white-stylish-text-big" st-sort="price">Price</th>
-                    <th>View</th>
+                    <th class="white-stylish-text-big">View Details</th>
                 </tr>
                 <tr>
                     <th>
@@ -32,7 +32,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="row in displayedCollection | filter : mySearch">
+                <tr ng-repeat="row in displayedCollection">
                     <td>{{ row.bidId }}</td>
                     <td>{{ row.owner.firstName }}</td>
                     <td>{{ row.hostedDate | date }}</td>
@@ -47,11 +47,11 @@
                 </tr>
                 </tbody>
                 <!--<tfoot>-->
-                    <!--<tr>-->
-                        <!--<td colspan="5" class="text-center">-->
-                            <!--<div st-pagination="" st-items-by-page="15" st-displayed-pages="7"></div>-->
-                        <!--</td>-->
-                    <!--</tr>-->
+                <!--<tr>-->
+                <!--<td colspan="5" class="text-center">-->
+                <!--<div st-pagination="" st-items-by-page="15" st-displayed-pages="7"></div>-->
+                <!--</td>-->
+                <!--</tr>-->
                 <!--</tfoot>-->
             </table>
         </div>

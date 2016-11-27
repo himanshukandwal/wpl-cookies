@@ -13,11 +13,23 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
                 params : { userInfo : null, address : null },
                 controller : 'post-bid'
             })
+            .state('user-show-all-bids', {
+                url : '/user-profile/user-show-all-bids',
+                templateUrl : '../../templates/user-profile/all-bids.html',
+                params : { userInfo : null },
+                controller : 'all-bids'
+            })
             .state('user-show-my-bids', {
                 url : '/user-profile/user-show-my-bids',
                 templateUrl : '../../templates/user-profile/user-bids.html',
                 params : { userInfo : null },
-                controller : 'my-bids'
+                controller : 'all-bids'
+            })
+            .state('user-show-bid-detail', {
+                url : '/user-profile/user-show-bid-detail',
+                templateUrl : '../../templates/user-profile/bid-detail.html',
+                params : { userInfo : null, bid : null },
+                controller : 'bid-detail'
             });
     })
     .controller('find-address', function ($http, $timeout, $stateParams, $state, $scope) {
@@ -101,19 +113,34 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         };
 
     })
-    .controller('my-bids', function($http, $stateParams, $state, $timeout, $scope, $filter) {
+    .controller('all-bids', function($http, $stateParams, $state, $timeout, $scope) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
+
+        $scope.rowCollection = [];
 
         if (localStorage.getItem('bids')) {
 
         } else {
-            
+            $http.get('/api/getBids').then(function (response) {
+                $scope.rowCollection = response.data.bid;
+            }, function (response) {
+                console.log(response.data);
+            });
         }
 
-        $http.get('sample/bids.json').then (function(response) {
-            $scope.rowCollection = response.data.bid;
-        });
+        self.selectItem = function (bid) {
+            $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid });
+        };
 
-        $scope.displayedCollection = [].concat($scope.rowCollection);
+        $scope.mySearch = function (bid) { return  (bid.owner.id == self.userInfo.id) ? true : false; };
+
+    })
+    .controller('bid-detail', function($http, $stateParams) {
+        var self = this;
+        self.userInfo = $stateParams.userInfo;
+        self.bid = $stateParams.bid;
+
+        console.log('got request for : ' + self.bid);
+
     });
