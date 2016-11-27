@@ -19,9 +19,11 @@ public class TransactionServiceManagerImpl  implements TransactionServiceManager
 	@Autowired
 	private Mapper mapper;
 	@Override
-	public List<TransactionInfo> addTransaction(TransactionInfo transactionInfo) {
-		
-		return null;
+	public TransactionInfo addTransaction(TransactionInfo transactionInfo) {
+
+		return mapper.map(transactionInfoRepository.save(mapper.map(transactionInfo, TransactionInfoEntity.class)),
+				TransactionInfo.class);
+
 	}
 
 	@Override
@@ -39,6 +41,30 @@ public class TransactionServiceManagerImpl  implements TransactionServiceManager
 		}
 
 		return transactionInfoList;
+	}
+
+	@Override
+	public TransactionInfo updateTransaction(TransactionInfo transactionInfo) {
+		
+		transactionInfoRepository.update(mapper.map(transactionInfo, TransactionInfoEntity.class));
+
+		return transactionInfo;
+		
+	}
+
+	@Override
+	public Integer deleteTransaction(Integer transId) {
+		
+		TransactionInfoEntity transactionInfoEntity =transactionInfoRepository.get(transId);
+		if(transactionInfoEntity !=null){
+			transactionInfoRepository.delete(transactionInfoEntity);
+			return 0;
+		}
+		return -1;
+		
+		
+		
+		
 	}
 	
 	

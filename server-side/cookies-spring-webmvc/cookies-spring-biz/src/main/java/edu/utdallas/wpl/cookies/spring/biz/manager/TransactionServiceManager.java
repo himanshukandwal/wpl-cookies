@@ -6,8 +6,12 @@ import edu.utdallas.wpl.cookies.spring.common.dto.TransactionInfo;
 
 public interface TransactionServiceManager {
 
-	public List<TransactionInfo> addTransaction(TransactionInfo transactionInfo);
+	public TransactionInfo addTransaction(TransactionInfo transactionInfo);
 
 	public List<TransactionInfo> getTranscation();
+	
+	public TransactionInfo updateTransaction(TransactionInfo transactionInfo);
+	
+	public Integer deleteTransaction(Integer transId);
 
 }
