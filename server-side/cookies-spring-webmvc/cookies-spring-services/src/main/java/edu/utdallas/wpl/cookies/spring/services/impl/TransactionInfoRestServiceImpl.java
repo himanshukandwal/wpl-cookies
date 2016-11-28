@@ -1,5 +1,6 @@
 package edu.utdallas.wpl.cookies.spring.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,8 +85,8 @@ public class TransactionInfoRestServiceImpl implements TransactionInfoRestServic
 	@RequestMapping(value = "/getTransactionByBid/{bidId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TransactionInfo>> getTransactionByBid(@PathVariable Integer bidId) {
 		List<TransactionInfo> transactionInfoList	=transactionManager.getTransactionsByBidId(bidId);
-		if(transactionInfoList==null){
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		if (transactionInfoList==null){
+			return ResponseEntity.ok(new ArrayList<TransactionInfo>());
 		}
 		
 		return ResponseEntity.ok(transactionInfoList);
