@@ -3,7 +3,9 @@ package edu.utdallas.wpl.cookies.spring.dao.repository;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -44,18 +46,11 @@ public class PublishedBidsRepository extends GenericDAORepositoryImpl<PublishedB
 	@SuppressWarnings("unchecked")
 	public List<PublishedBidsEntity> getAllActiveBids(Long timestamp) {
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "dd/MM/yyyy hh:mm:ss a");
-	    String date=	dateFormat.format(new Date(timestamp));
+	
+
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PublishedBidsEntity.class);
-		try {
-			
-			Date modifiedDate=dateFormat.parse(date);
-			criteria.add(Restrictions.gt("modifiedDate", modifiedDate));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		criteria.add(Restrictions.gt("modifiedDate", timestamp.floatValue()));
+		
 		
 		List<PublishedBidsEntity> informations = (List<PublishedBidsEntity>) criteria.list();
 		if (informations == null || informations.isEmpty())

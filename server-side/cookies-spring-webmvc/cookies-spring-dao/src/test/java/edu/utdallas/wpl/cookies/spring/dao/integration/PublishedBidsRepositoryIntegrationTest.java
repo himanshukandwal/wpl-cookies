@@ -57,13 +57,17 @@ public class PublishedBidsRepositoryIntegrationTest {
 		publishedBidsEntity.setOwner(userInformationEntity);
 		publishedBidsEntity.setFromDate(new Date());
 		publishedBidsEntity.setToDate(new Date());
-		publishedBidsEntity.setModifiedDate(new Date(Calendar.getInstance().getTimeInMillis()));
+		//publishedBidsEntity.setModifiedDate(new Date(Calendar.getInstance().getTimeInMillis()));
 		publishedBidsEntity.setAddressEntity(addressEntity);
 		//publishedBidsRepository.save(publishedBidsEntity);
 		//assertNotNull(apartmentEntity);
 		List<PublishedBidsEntity> pubList=	publishedBidsRepository.getAllActiveBids(1480287976419L);
 		System.out.println("Size "+pubList.size());
-		
+		// PublishedBidsEntity pub=publishedBidsRepository.get(13050);
+		 //System.out.println(pub.getModifiedDate());
+		 
+		 
+		 
 		/*SimpleDateFormat dateFormat = new SimpleDateFormat(
                 "dd/MM/yyyy hh:mm:ss a");
 		System.out.println("formated >"+dateFormat.format(new Date(1480287976419L)));

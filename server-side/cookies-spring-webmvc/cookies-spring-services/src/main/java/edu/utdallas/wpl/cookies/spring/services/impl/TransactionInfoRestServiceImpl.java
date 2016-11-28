@@ -44,10 +44,6 @@ public class TransactionInfoRestServiceImpl implements TransactionInfoRestServic
 	@Override
 	@RequestMapping(value = "/saveInterestedBid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<TransactionInfo> saveBidInterested(@RequestBody  TransactionInfo interstedBidRequest,HttpServletRequest request) {
-  
-		
-		System.out.println("inside transaction>>>>");
-		interstedBidRequest.setBidStatus(BidStatus.INTERESTED.toString());
 
 		TransactionInfo transactionInfo = transactionManager.addTransaction(interstedBidRequest);
 
