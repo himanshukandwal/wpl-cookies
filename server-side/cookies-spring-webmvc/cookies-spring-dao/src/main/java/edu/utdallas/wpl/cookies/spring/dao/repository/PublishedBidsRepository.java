@@ -1,5 +1,9 @@
 package edu.utdallas.wpl.cookies.spring.dao.repository;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -37,19 +41,28 @@ public class PublishedBidsRepository extends GenericDAORepositoryImpl<PublishedB
 	}
 	
 	
-	/*@SuppressWarnings("unchecked")
-	public List<PublishedBidsEntity> getAllBidRequestes() {
+	@SuppressWarnings("unchecked")
+	public List<PublishedBidsEntity> getAllActiveBids(Long timestamp) {
 		
-		List<UserInformationEntity> userInformationEntity =userInformationRepository.getAll();
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "dd/MM/yyyy hh:mm:ss a");
+	    String date=	dateFormat.format(new Date(timestamp));
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PublishedBidsEntity.class);
-		criteria.add(Restrictions.eq("owner", userInformationEntity));
+		try {
+			
+			Date modifiedDate=dateFormat.parse(date);
+			criteria.add(Restrictions.gt("modifiedDate", modifiedDate));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		List<PublishedBidsEntity> informations = (List<PublishedBidsEntity>) criteria.list();
 		if (informations == null || informations.isEmpty())
 			return null;
 		else
 			return informations;
-	}*/
+	}
 	
 	
 }

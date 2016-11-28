@@ -10,5 +10,7 @@ public class ShoppingRepository  extends GenericDAORepositoryImpl<ShoppingInfoEn
 		super(ShoppingInfoEntity.class);
 		
 	}
+	
+	
 
 }

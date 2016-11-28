@@ -13,5 +13,7 @@ public interface TransactionServiceManager {
 	public TransactionInfo updateTransaction(TransactionInfo transactionInfo);
 	
 	public Integer deleteTransaction(Integer transId);
+	
+	public List<TransactionInfo> getTransactionsByBidId(Integer bidId);
 
 }

@@ -51,8 +51,8 @@ public class ShoppingRepositoryIntegrationTest {
 	public void testCreateAddress() {
 		
     ShoppingInfoEntity shoppingEntity =new ShoppingInfoEntity();
-   TransactionInfoEntity transactionInfoEntity= transactionInfoRepository.get(7200);
-    shoppingEntity.setTransactionInfoEntity(transactionInfoEntity);
+    TransactionInfoEntity transactionInfoEntity= transactionInfoRepository.get(7200);
+    shoppingEntity.setTransactionInfo(transactionInfoEntity);
     shoppingEntity.setPrice(100f);
     shoppingEntity.setQuantity(10);
     shoppingRepository.save(shoppingEntity);

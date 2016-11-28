@@ -73,4 +73,18 @@ public class BidRestServiceImpl implements BidRestService {
 	}
 	
 	
+	@Override
+	@RequestMapping(value ="/getActiveBids/{timestamp}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<PublishedBids>> viewAllActiveBids(@PathVariable Long timestamp) {
+		List<PublishedBids> publishedBids = bidServiceManager.getlatestBids(timestamp);
+		
+		if (publishedBids != null) {
+			LOG.info(" The number of bid requests for user  :" + publishedBids.size());
+			return ResponseEntity.ok(publishedBids);
+		}
+		
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	}
+	
+	
 }

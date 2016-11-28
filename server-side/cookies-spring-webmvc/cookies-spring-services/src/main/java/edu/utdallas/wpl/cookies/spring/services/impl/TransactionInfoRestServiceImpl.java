@@ -97,6 +97,17 @@ public class TransactionInfoRestServiceImpl implements TransactionInfoRestServic
 		return ResponseEntity.ok("success");
 	}
 	
+	@Override
+	@RequestMapping(value = "/getTransactionByBid/{bidId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<TransactionInfo>> getTransactionByBid(@PathVariable Integer bidId) {
+		List<TransactionInfo> transactionInfoList	=transactionManager.getTransactionsByBidId(bidId);
+		if(transactionInfoList==null){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		
+		return ResponseEntity.ok(transactionInfoList);
+	}
+	
 	
 	
 	

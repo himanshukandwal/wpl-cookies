@@ -1,11 +1,10 @@
 package edu.utdallas.wpl.cookies.spring.dao.integration;
 
-import static org.junit.Assert.assertNotNull;
-
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.utdallas.wpl.cookies.spring.common.enums.ApartmentType;
 import edu.utdallas.wpl.cookies.spring.dao.orm.AddressEntity;
-import edu.utdallas.wpl.cookies.spring.dao.orm.ApartmentEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.PublishedBidsEntity;
 import edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity;
 import edu.utdallas.wpl.cookies.spring.dao.repository.AddressRepository;
@@ -41,7 +39,7 @@ public class PublishedBidsRepositoryIntegrationTest {
 	@Autowired
 	private AddressRepository addressRepository;
    
-	/*@Test
+	@Test
 	public void testPublishBids() {
 		UserInformationEntity userInformationEntity = userInformationRepository.get(6050);
        // ApartmentEntity apartmentEntity =apartmentRepository.get(250);
@@ -49,19 +47,30 @@ public class PublishedBidsRepositoryIntegrationTest {
          
 		PublishedBidsEntity publishedBidsEntity=new PublishedBidsEntity();
 		publishedBidsEntity.setActiveInd("Y");
-		publishedBidsEntity.setApartmentType(ApartmentType.BHK_1.toString());
+		
+		System.out.println(ApartmentType.BHK_1.getApartment());
+		publishedBidsEntity.setApartmentType(ApartmentType.BHK_1.getApartment());
 		publishedBidsEntity.setHostedDate(new Date());
-		publishedBidsEntity.setComments("comments");
+		publishedBidsEntity.setComments(" timestamp");
 		publishedBidsEntity.setNumDays(30);
 		publishedBidsEntity.setPrice(300.00f);
 		publishedBidsEntity.setOwner(userInformationEntity);
 		publishedBidsEntity.setFromDate(new Date());
 		publishedBidsEntity.setToDate(new Date());
+		publishedBidsEntity.setModifiedDate(new Date(Calendar.getInstance().getTimeInMillis()));
 		publishedBidsEntity.setAddressEntity(addressEntity);
-		publishedBidsRepository.save(publishedBidsEntity);
+		//publishedBidsRepository.save(publishedBidsEntity);
 		//assertNotNull(apartmentEntity);
+		List<PublishedBidsEntity> pubList=	publishedBidsRepository.getAllActiveBids(1480287976419L);
+		System.out.println("Size "+pubList.size());
 		
-	}*/
+		/*SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "dd/MM/yyyy hh:mm:ss a");
+		System.out.println("formated >"+dateFormat.format(new Date(1480287976419L)));
+		
+		System.out.println("Date is "+new Date(1480287976419L));*/
+		
+	}
 	
 	/*@Test
 	public void getPublishBids() {
@@ -80,7 +89,7 @@ public class PublishedBidsRepositoryIntegrationTest {
 */
 	
 	
-	@Test
+	/*@Test
 	public void getPublishBids() {
 		///Integer userId =6050;
 		List<PublishedBidsEntity> pubLishedEntityList =publishedBidsRepository.getAll();
@@ -93,5 +102,5 @@ public class PublishedBidsRepositoryIntegrationTest {
 		}
 		
 		
-	}
+	}*/
 }

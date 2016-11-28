@@ -66,6 +66,23 @@ public class TransactionServiceManagerImpl  implements TransactionServiceManager
 		
 		
 	}
+
+	@Override
+	public List<TransactionInfo> getTransactionsByBidId(Integer bidId) {
+
+		List<TransactionInfoEntity> transactionInfoEntityList = transactionInfoRepository
+				.getAllTransactionsByBidId(bidId);
+		List<TransactionInfo> transactionInfoList = null;
+		if (transactionInfoEntityList != null) {
+			transactionInfoList = new ArrayList<>();
+			for (TransactionInfoEntity transactionInfoEntity : transactionInfoEntityList) {
+				TransactionInfo transactionInfo = mapper.map(transactionInfoEntity, TransactionInfo.class);
+				transactionInfoList.add(transactionInfo);
+			}
+		}
+
+		return transactionInfoList;
+	}
 	
 	
 

@@ -36,7 +36,7 @@ public class TransactionInfoRepositoryIntegrationTest {
 	public void testCreateApartment() {
 		UserInformationEntity bidPoster = userInformationRepository.get(200);
 		UserInformationEntity bidReceiver=userInformationRepository.get (9400);
-		PublishedBidsEntity publishedBidsEntity = publishedBidsRepository.get(10550);
+		PublishedBidsEntity publishedBidsEntity = publishedBidsRepository.get(13050);
 		
 		
 		TransactionInfoEntity transactionInfoEntity =new TransactionInfoEntity();
@@ -48,13 +48,13 @@ public class TransactionInfoRepositoryIntegrationTest {
 		transactionInfoEntity.setBidStatus(BidStatus.INTERESTED.toString());
 		transactionInfoRepository.save(transactionInfoEntity);
 		
-	}*/
-	
+	}
+	*/
 	
 	@Test
 	public void testGetTransactions() {
 		
-		List<TransactionInfoEntity> transactionInfoList = transactionInfoRepository.getAll();
+		List<TransactionInfoEntity> transactionInfoList = transactionInfoRepository.getAllTransactionsByBidId(10550);
 		System.out.println(transactionInfoList.size());
 		
 		

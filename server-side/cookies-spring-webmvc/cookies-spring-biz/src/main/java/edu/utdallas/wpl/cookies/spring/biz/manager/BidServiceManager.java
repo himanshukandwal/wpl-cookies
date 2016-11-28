@@ -12,6 +12,6 @@ public interface BidServiceManager {
 	public List<PublishedBids> getBidRequests(Integer userId);
 	public void deleteBidRequest(Integer bidId);
 	public List<PublishedBids> getBidRequests();
-	
+	public List<PublishedBids> getlatestBids(Long timeStamp);
 
 }

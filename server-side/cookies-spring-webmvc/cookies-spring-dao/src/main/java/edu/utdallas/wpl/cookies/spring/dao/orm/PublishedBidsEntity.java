@@ -52,8 +52,17 @@ public class PublishedBidsEntity {
 	@OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn (name = "address_id")
 	private AddressEntity addressEntity;
+	@Column (name = "MODIFIED_DATE")
+	private Date modifiedDate;
+	
 	public Integer getBidId() {
 		return bidId;
+	}
+	public Date getModifiedDate() {
+		return modifiedDate;
+	}
+	public void setModifiedDate(Date modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 	public void setBidId(Integer bidId) {
 		this.bidId = bidId;

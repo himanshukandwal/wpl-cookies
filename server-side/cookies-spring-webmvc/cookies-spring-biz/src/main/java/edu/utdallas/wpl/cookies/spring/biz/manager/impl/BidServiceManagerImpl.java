@@ -64,4 +64,20 @@ public class BidServiceManagerImpl implements BidServiceManager{
 		publishedBidsRepository.delete(publishedBidsEntity);
 	}
 
+	@Override
+	public List<PublishedBids> getlatestBids(Long timeStamp) {
+		List<PublishedBidsEntity> publishedBidsEntityList = publishedBidsRepository.getAllActiveBids(timeStamp);
+		List<PublishedBids> publishedBidsList = null;
+		
+		if (publishedBidsEntityList != null) {
+			publishedBidsList = new ArrayList<>();
+			for (PublishedBidsEntity publishedBidsEntity : publishedBidsEntityList) {
+				PublishedBids publishedBids = mapper.map(publishedBidsEntity, PublishedBids.class);
+				publishedBidsList.add(publishedBids);
+			}
+		}
+
+		return publishedBidsList;
+	}
+
 }
