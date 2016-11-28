@@ -96,7 +96,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         self.bid = { owner :  self.userInfo, addressEntity: self.address, hostedDate : new Date(), activeInd: 'Y' };
 
         self.postBid = function () {
-            console.log(JSON.stringify(self.bid));
+
             $http.post('/api/postBid', self.bid).then(function (response) {
                 console.log(response.data.status);
                 self.message = false;
@@ -141,6 +141,33 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         self.userInfo = $stateParams.userInfo;
         self.bid = $stateParams.bid;
 
-        console.log('got request for : ' + self.bid);
+        self.transaction = { bid : self.bid, bidReceiver : self.userInfo, bidStatus : 'INTERESTED' };
+
+        self.bidTransactions = [];
+
+        $http.get('/api/getTransactions/' + self.bid.bidId).then(function (response) {
+            self.bidTransactions = response.data.transaction;
+        }, function (response) {
+            console.log(response.data);
+        });
+
+        self.createTransactionItem = function () {
+            self.message = false;
+
+            $http.post('/api/createTransaction', self.transaction).then(function (response) {
+                console.log(response.data.status);
+                self.message = false;
+                self.bidTransactions.push(response.data.transaction);
+
+                delete self.transaction.comments;
+                delete self.transaction.bidPrice;
+            }, function (response) {
+                console.log(response.data.status);
+                self.message = "error publishing interest !";
+
+                delete self.transaction.comments;
+                delete self.transaction.bidPrice;
+            });
+        };
 
     });

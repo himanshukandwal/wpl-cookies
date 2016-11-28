@@ -1,59 +1,65 @@
-<div class="container" style="padding-top: 60px;">
+<div class="container" style="padding-top: 60px;" ng-controller="bid-detail as bd">
     <h1 class="page-header white-stylish-text">Bid Detail</h1>
 
     <div class="row">
-        <div class="col-lg-12 col-sm-6" ng-controller="bid-detail as bids">
-            <table st-table="displayedCollection" st-safe-src="rowCollection" class="table">
+        <div class="col-lg-12 col-sm-6">
+            <table class="table">
                 <thead>
-                <tr>
-                    <th class="white-stylish-text-big" st-sort="bidId">Bid Id</th>
-                    <th class="white-stylish-text-big" st-sort="owner.firstName">Posted By</th>
-                    <th class="white-stylish-text-big" st-sort="hostedDate">Posted Date</th>
-                    <th class="white-stylish-text-big" st-sort="apartmentType">Apartment Type</th>
-                    <th class="white-stylish-text-big" st-sort="price">Price</th>
-                    <th>View</th>
-                </tr>
-                <tr>
-                    <th>
-                        <input st-search="bidId" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="owner.firstName" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="hostedDate" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="apartmentType" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="price" class="input-sm form-control" type="search"/>
-                    </th>
-                </tr>
+                    <tr>
+                        <th class="white-stylish-text-big">Bid Id</th>
+                        <th class="white-stylish-text-big">Posted By</th>
+                        <th class="white-stylish-text-big">Posted Date</th>
+                        <th class="white-stylish-text-big">Apartment Type</th>
+                        <th class="white-stylish-text-big">Price</th>
+                        <th class="white-stylish-text-big">City</th>
+                        <th class="white-stylish-text-big">State</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="row in displayedCollection">
-                    <td>{{ row.bidId }}</td>
-                    <td>{{ row.owner.firstName }}</td>
-                    <td>{{ row.hostedDate | date }}</td>
-                    <td>{{ row.apartmentType }}</td>
-                    <td>{{ row.price | currency }}</td>
-                    <td>
-                        <button type="button" ng-click="bids.selectItem(row)" class="btn btn-sm btn-danger">
-                            <i class="glyphicon glyphicon glyphicon-forward">
-                            </i>
-                        </button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>{{ bd.bid.bidId }}</td>
+                        <td>{{ bd.bid.owner.firstName }}</td>
+                        <td>{{ bd.bid.hostedDate | date }}</td>
+                        <td>{{ bd.bid.apartmentType }}</td>
+                        <td>{{ bd.bid.price | currency }}</td>
+                        <td>{{ bd.bid.addressEntity.city }}</td>
+                        <td>{{ bd.bid.addressEntity.state }}</td>
+                    </tr>
                 </tbody>
-                <!--<tfoot>-->
-                    <!--<tr>-->
-                        <!--<td colspan="5" class="text-center">-->
-                            <!--<div st-pagination="" st-items-by-page="15" st-displayed-pages="7"></div>-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                <!--</tfoot>-->
             </table>
+        </div>
+    </div>
+
+    <h3 class="page-header white-stylish-text">Bid replies:</h3>
+    <div class="row">
+        <div class="col-lg-9 col-sm-6">
+            <ul>
+                <li ng-repeat="transaction in bd.bidTransactions">
+                    <span>{{ transaction.bidReceiver.firstName }}</span>
+                    <p>Quoted Price : {{ transaction.bidPrice }}</p>
+                    <p>Comment : {{ transaction.comments }}</p>
+                    <hr/>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-9 col-sm-6">
+            <form class="form-inline" role="form" style="width: 100%">
+                <div class="form-group">
+                    <textarea rows="1" cols="50" required class="form-control" ng-model="bd.transaction.comments"  placeholder="Your comments" />
+                </div>
+                <div class="form-group">
+                    <input required class="form-control" ng-model="bd.transaction.bidPrice" type="number" placeholder="Your quote price" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" role="button" ng-click="bd.createTransactionItem()" class="btn btn-sm btn-primary" style="width: 100%">
+                        <i class="glyphicon glyphicon glyphicon-plus"/>Reply on this bid</button>
+                </div>
+                <div class="form-group text-center">
+                    <label ng-if="bd.message">{{ bd.message }}</label>
+                </div>
+            </form>
         </div>
     </div>
 </div>
