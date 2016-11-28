@@ -1,5 +1,6 @@
 package edu.utdallas.wpl.cookies.spring.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,7 +84,7 @@ public class BidRestServiceImpl implements BidRestService {
 			return ResponseEntity.ok(publishedBids);
 		}
 		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		return ResponseEntity.ok(new ArrayList<PublishedBids>());
 	}
 	
 	
