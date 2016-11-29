@@ -26,7 +26,7 @@ public class TransactionController {
 	private String webserviceUrl;
 	
 	@RequestMapping(value = "/createTransaction", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> postBid(@RequestBody Map<String, Object> transactionMap) {
+	public @ResponseBody Map<String, Object> createTransaction(@RequestBody Map<String, Object> transactionMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
@@ -36,8 +36,21 @@ public class TransactionController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/updateTransaction/{bidStatus}", method = RequestMethod.PUT)
+	public @ResponseBody Map<String, Object> updateTransaction(@PathVariable String bidStatus, @RequestBody Map<String, Object> transactionMap) {
+		Map<String,Object> model = new HashMap<String,Object>();
+		
+		// web service invocation.
+		restTemplate.put(webserviceUrl + "/updateBidStatus/" + bidStatus, transactionMap);
+				
+		TransactionInfo result = restTemplate.getForObject(webserviceUrl + "/getTransactionById/" + transactionMap.get("id"), TransactionInfo.class);
+
+		model.put("transaction", result);
+		return model;		
+	}
+	
 	@RequestMapping(value = "/getTransactions/{bidId}", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getBidById(@PathVariable Integer bidId) {
+	public @ResponseBody Map<String, Object> getTransactionsByBId(@PathVariable Integer bidId) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.

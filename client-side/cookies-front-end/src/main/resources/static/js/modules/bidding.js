@@ -145,12 +145,18 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
 
         self.bidTransactions = [];
 
+        self.isMyBid = self.bid.owner.id == self.userInfo.id;
+
         $http.get('/api/getTransactions/' + self.bid.bidId).then(function (response) {
             self.bidTransactions = response.data.transaction;
         }, function (response) {
             console.log(response.data);
         });
 
+        self.selectTransaction = function (transaction) {
+
+        };
+        
         self.createTransactionItem = function () {
             self.message = false;
 

@@ -31,20 +31,43 @@
     </div>
 
     <h3 class="page-header white-stylish-text">Bid replies:</h3>
-    <div class="row">
-        <div class="col-lg-9 col-sm-6">
-            <ul>
-                <li ng-repeat="transaction in bd.bidTransactions">
-                    <span>{{ transaction.bidReceiver.firstName }}</span>
-                    <p>Quoted Price : {{ transaction.bidPrice }}</p>
-                    <p>Comment : {{ transaction.comments }}</p>
-                    <hr/>
-                </li>
-            </ul>
+    <div class="row" ng-show="bd.bidTransactions.length">
+        <!-- left column -->
+        <div ng-hide="profile.successfulPosting" class="col-md-4 col-sm-6 col-xs-12">
+
+            <div class="text-center">
+                <img width="250" height="250" ng-src="../../images/reply-icon.png">
+            </div>
+
+        </div>
+
+        <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Reply by</th>
+                        <th>Comment</th>
+                        <th>Quoted price</th>
+                        <th ng-show="bd.isMyBid">Action</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="transaction in bd.bidTransactions">
+                    <td class="white-stylish-text">{{ transaction.bidReceiver.firstName }}</td>
+                    <td class="white-stylish-text">{{ transaction.comments }}</td>
+                    <td class="white-stylish-text">{{ transaction.bidPrice }}</td>
+                    <td ng-show="bd.isMyBid">
+                        <button type="button" ng-click="bd.selectTransaction(transaction)" class="btn btn-sm btn-danger">
+                            <i class="glyphicon glyphicon-ok">
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-9 col-sm-6">
+
+    <div class="row" ng-hide="bd.isMyBid">
+        <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
             <form class="form-inline" role="form" style="width: 100%">
                 <div class="form-group">
                     <textarea rows="1" cols="50" required class="form-control" ng-model="bd.transaction.comments"  placeholder="Your comments" />
