@@ -13,7 +13,7 @@ public interface TransactionInfoRestService {
 	
 	ResponseEntity<List<TransactionInfo>> getTransaction();
 	ResponseEntity<TransactionInfo> saveBidInterested(TransactionInfo transactionInfo,HttpServletRequest request);
-	void updateBidStatus(TransactionInfo transactionInfo,String bidStatusCode,HttpServletRequest request);
+	ResponseEntity<TransactionInfo> updateBidStatus(TransactionInfo transactionInfo,String bidStatusCode);
     ResponseEntity<String> deleteTransaction(Integer transId);
     ResponseEntity<List<TransactionInfo>>  getTransactionByBid(Integer bidId);
     ResponseEntity<TransactionInfo>  getTransactionById(Integer transId);

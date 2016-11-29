@@ -1,8 +1,21 @@
-<div class="container" style="padding-top: 60px;">
-    <h1 class="page-header white-stylish-text">My Active Bids</h1>
+<div class="container" style="padding-top: 60px;" ng-controller="all-bids as bids">
+
+    <div class="page-header row">
+        <div class="col-lg-8 col-sm-8">
+            <label class="white-stylish-text-super-big">My Active Bids</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-profile({ userInfo : bids.userInfo })">Back</button>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-logout">Log Out</button>
+        </div>
+    </div>
 
     <div class="row">
-        <div class="col-lg-12 col-sm-6" ng-controller="all-bids as bids">
+        <div class="col-lg-12 col-sm-6">
             <table st-table="displayedCollection" st-safe-src="rowCollection" class="table">
                 <thead>
                 <tr>

@@ -1,5 +1,19 @@
 <div class="container" style="padding-top: 60px;" ng-controller="edit-profile as profile">
-    <h1 class="page-header white-stylish-text">Edit Profile</h1>
+
+    <div class="page-header row">
+        <div class="col-lg-8 col-sm-8">
+            <label class="white-stylish-text-super-big">Edit Profile</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-profile({ userInfo : profile.userInfo })">Back</button>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-logout">Log Out</button>
+        </div>
+    </div>
+
     <div class="row">
         <!-- left column -->
         <div class="col-md-4 col-sm-6 col-xs-12">

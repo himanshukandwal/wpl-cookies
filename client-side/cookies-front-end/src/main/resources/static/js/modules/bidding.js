@@ -154,9 +154,10 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         });
 
         self.selectTransaction = function (transaction) {
-            console.log(JSON.stringify(transaction));
+            delete transaction.$$hashKey;
 
             $http.put('/api/updateTransaction/FINALISED', transaction).then(function () {
+                transaction.bidStatus = 'FINALISED';
                 console.log('updated status successfully.');
             }, function (response) {
                 console.log(response.data.status);

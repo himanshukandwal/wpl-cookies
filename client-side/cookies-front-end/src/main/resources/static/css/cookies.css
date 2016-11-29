@@ -27,6 +27,12 @@ hr {
     animation:scaleUp 0.5s both ease-in;
 }
 
+.white-stylish-text-super-big {
+	color: white;
+	font-family: "Apple Braille";
+	font-size: 40px;
+}
+
 .white-stylish-text {
 	color: white;
 	font-family: "Apple Braille";

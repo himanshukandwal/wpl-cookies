@@ -43,7 +43,7 @@ public class TransactionController {
 		// web service invocation.
 		restTemplate.put(webserviceUrl + "/updateBidStatus/" + bidStatus, transactionMap);
 				
-		TransactionInfo result = restTemplate.getForObject(webserviceUrl + "/getTransactionById/" + transactionMap.get("id"), TransactionInfo.class);
+		TransactionInfo result = restTemplate.getForObject(webserviceUrl + "/getTransactionById/" + transactionMap.get("tranId"), TransactionInfo.class);
 
 		model.put("transaction", result);
 		return model;		

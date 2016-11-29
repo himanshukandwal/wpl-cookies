@@ -12,6 +12,10 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
                 params : { userInfo : null },
                 templateUrl : '../../templates/registration-success.html',
                 controller : 'static-profile'
+            })
+            .state('user-logout', {
+                url : '/user-logout',
+                templateUrl : '../../templates/logout.html'
             });
     })
     .controller('registration', function($http, $state) {

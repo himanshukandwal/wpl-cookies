@@ -1,5 +1,18 @@
 <div class="container" style="padding-top: 60px;" ng-controller="bid-detail as bd">
-    <h1 class="page-header white-stylish-text">Bid Detail</h1>
+
+    <div class="page-header row">
+        <div class="col-lg-8 col-sm-8">
+            <label class="white-stylish-text-super-big">Bid Detail</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-profile({ userInfo : bd.userInfo })">Back</button>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-logout">Log Out</button>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-12 col-sm-6">
@@ -33,7 +46,7 @@
     <h3 class="page-header white-stylish-text">Bid replies:</h3>
     <div class="row" ng-show="bd.bidTransactions.length">
         <!-- left column -->
-        <div ng-hide="profile.successfulPosting" class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-4 col-sm-6 col-xs-12">
 
             <div class="text-center">
                 <img width="250" height="250" ng-src="../../images/reply-icon.png">
@@ -58,8 +71,9 @@
                     <td >
                         <img width="25" height="25" ng-show="transaction.bidStatus == 'FINALISED'" ng-src="../../images/deal-icon.png">
                         <p class="white-stylish-text" ng-show="!bd.isMyBid && transaction.bidStatus == 'INTERESTED'">Open</p>
-                        <button ng-show="bd.isMyBid && transaction.bidStatus == 'INTERESTED'" type="button" ng-click="bd.selectTransaction(transaction)"
-                                class="glyphicon glyphicon-ok">
+                        <button ng-show="bd.isMyBid && transaction.bidStatus == 'INTERESTED'" type="button" role="button" class="btn btn-sm btn-primary"
+                                ng-click="bd.selectTransaction(transaction)">
+                                <i class="glyphicon glyphicon-ok"/>
                         </button>
                     </td>
                 </tr>

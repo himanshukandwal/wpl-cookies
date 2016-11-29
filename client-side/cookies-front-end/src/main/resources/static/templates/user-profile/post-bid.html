@@ -1,6 +1,19 @@
 <div class="container" style="padding-top: 60px;" ng-controller="post-bid as profile">
-    <h1 ng-hide="profile.successfulPosting" class="page-header white-stylish-text">Post new  Bid</h1>
-    <h1 ng-show="profile.successfulPosting" class="page-header white-stylish-text">Bid posted successfully !</h1>
+
+    <div class="page-header row">
+        <div class="col-lg-8 col-sm-8">
+            <label ng-hide="profile.successfulPosting" class="white-stylish-text-super-big">Post new  Bid</label>
+            <label ng-show="profile.successfulPosting" class="white-stylish-text-super-big">Bid posted successfully !</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-profile({ userInfo : profile.userInfo })">Back</button>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-logout">Log Out</button>
+        </div>
+    </div>
 
     <div class="row">
         <!-- left column -->
