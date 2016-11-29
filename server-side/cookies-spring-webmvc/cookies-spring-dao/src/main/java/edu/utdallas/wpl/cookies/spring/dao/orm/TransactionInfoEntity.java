@@ -28,7 +28,7 @@ public class TransactionInfoEntity {
 	private UserInformationEntity bidReceiver;
 
 	@Column(name = "BID_PRICE", length = 20)
-	private String bidPrice;
+	private Float bidPrice;
 	@Column(name = "BID_STATUS", length = 20)
 	private String bidStatus;
 	@Column(name = "comments", length = 20)
@@ -77,11 +77,11 @@ public class TransactionInfoEntity {
 		this.bid = bid;
 	}
 
-	public String getBidPrice() {
+	public Float getBidPrice() {
 		return bidPrice;
 	}
 
-	public void setBidPrice(String bidPrice) {
+	public void setBidPrice(Float bidPrice) {
 		this.bidPrice = bidPrice;
 	}
 

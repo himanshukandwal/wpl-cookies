@@ -14,7 +14,7 @@ public class TransactionInfo {
 	private UserInformation bidReceiver;
 
 	
-	private String bidPrice;
+	private Float bidPrice;
 	
 	private String bidStatus;
 	
@@ -54,11 +54,11 @@ public class TransactionInfo {
 		this.bidReceiver = bidReceiver;
 	}
 
-	public String getBidPrice() {
+	public Float getBidPrice() {
 		return bidPrice;
 	}
 
-	public void setBidPrice(String bidPrice) {
+	public void setBidPrice(Float bidPrice) {
 		this.bidPrice = bidPrice;
 	}
 
