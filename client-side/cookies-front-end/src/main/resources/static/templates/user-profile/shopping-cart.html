@@ -1,0 +1,72 @@
+<div class="container" style="padding-top: 60px;" ng-controller="all-bids as bids">
+
+    <div class="page-header row">
+        <div class="col-lg-8 col-sm-8">
+            <label class="white-stylish-text-super-big">My Active Bids</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-profile({ userInfo : bids.userInfo })">Back</button>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-logout">Log Out</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-6">
+            <table st-table="displayedCollection" st-safe-src="rowCollection" class="table">
+                <thead>
+                <tr>
+                    <th class="white-stylish-text-big" st-sort="bidId">Bid Id</th>
+                    <th class="white-stylish-text-big" st-sort="owner.firstName">Posted By</th>
+                    <th class="white-stylish-text-big" st-sort="hostedDate">Posted Date</th>
+                    <th class="white-stylish-text-big" st-sort="apartmentType">Apartment Type</th>
+                    <th class="white-stylish-text-big" st-sort="price">Price</th>
+                    <th>View</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input st-search="bidId" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="owner.firstName" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="hostedDate" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="apartmentType" class="input-sm form-control" type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="price" class="input-sm form-control" type="search"/>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="row in displayedCollection | filter : mySearch">
+                    <td>{{ row.bidId }}</td>
+                    <td>{{ row.owner.firstName }}</td>
+                    <td>{{ row.hostedDate | date }}</td>
+                    <td>{{ row.apartmentType }}</td>
+                    <td>{{ row.price | currency }}</td>
+                    <td>
+                        <button type="button" ng-click="bids.selectItem(row)" class="btn btn-sm btn-danger">
+                            <i class="glyphicon glyphicon glyphicon-forward">
+                            </i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+                <!--<tfoot>-->
+                    <!--<tr>-->
+                        <!--<td colspan="5" class="text-center">-->
+                            <!--<div st-pagination="" st-items-by-page="15" st-displayed-pages="7"></div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                <!--</tfoot>-->
+            </table>
+        </div>
+    </div>
+</div>

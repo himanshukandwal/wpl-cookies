@@ -1,12 +1,16 @@
 <div class="container" style="padding-top: 60px;" ng-controller="bid-detail as bd">
 
     <div class="page-header row">
-        <div class="col-lg-8 col-sm-8">
+        <div class="col-lg-6 col-sm-6">
             <label class="white-stylish-text-super-big">Bid Detail</label>
         </div>
         <div class="col-lg-2 col-sm-2">
             <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
                     ui-sref="user-profile({ userInfo : bd.userInfo })">Back</button>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-logout">Shopping Cart</button>
         </div>
         <div class="col-lg-2 col-sm-2">
             <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
@@ -72,9 +76,27 @@
                         <img width="25" height="25" ng-show="transaction.bidStatus == 'FINALISED'" ng-src="../../images/deal-icon.png">
                         <p class="white-stylish-text" ng-show="!bd.isMyBid && transaction.bidStatus == 'INTERESTED'">Open</p>
                         <button ng-show="bd.isMyBid && transaction.bidStatus == 'INTERESTED'" type="button" role="button" class="btn btn-sm btn-primary"
-                                ng-click="bd.selectTransaction(transaction)">
+                                ng-click="bd.selectTransaction(transaction)" data-toggle="modal" data-target="#myModal">
                                 <i class="glyphicon glyphicon-ok"/>
                         </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">Item Added to Cart!</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </td>
                 </tr>
             </table>
