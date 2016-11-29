@@ -58,7 +58,7 @@ public class TransactionInfoRestServiceImpl implements TransactionInfoRestServic
 	
 	@Override
 	@RequestMapping(value = "/updateBidStatus/{bidStatusCode}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<TransactionInfo> updateBidStatus(@RequestBody  TransactionInfo finalizedBidRequest,@PathVariable String bidStatusCode,HttpServletRequest request) {
+	public  void updateBidStatus(@RequestBody  TransactionInfo finalizedBidRequest,@PathVariable String bidStatusCode,HttpServletRequest request) {
   
 		finalizedBidRequest.setBidStatus(BidStatus.valueOf(bidStatusCode).toString());
 
@@ -66,7 +66,7 @@ public class TransactionInfoRestServiceImpl implements TransactionInfoRestServic
 
 		LOG.info(" created user updated   :" + transactionInfo.getTranId());
 
-		return ResponseEntity.ok(transactionInfo);
+		
 
 	}
 
