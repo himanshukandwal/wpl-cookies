@@ -48,17 +48,18 @@
                         <th>Reply by</th>
                         <th>Comment</th>
                         <th>Quoted price</th>
-                        <th ng-show="bd.isMyBid">Action</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tr ng-repeat="transaction in bd.bidTransactions">
                     <td class="white-stylish-text">{{ transaction.bidReceiver.firstName }}</td>
                     <td class="white-stylish-text">{{ transaction.comments }}</td>
                     <td class="white-stylish-text">{{ transaction.bidPrice }}</td>
-                    <td ng-show="bd.isMyBid">
-                        <button type="button" ng-click="bd.selectTransaction(transaction)" class="btn btn-sm btn-danger">
-                            <i class="glyphicon glyphicon-ok">
-                            </i>
+                    <td >
+                        <img width="25" height="25" ng-show="transaction.bidStatus == 'FINALISED'" ng-src="../../images/deal-icon.png">
+                        <p class="white-stylish-text" ng-show="!bd.isMyBid && transaction.bidStatus == 'INTERESTED'">Open</p>
+                        <button ng-show="bd.isMyBid && transaction.bidStatus == 'INTERESTED'" type="button" ng-click="bd.selectTransaction(transaction)"
+                                class="glyphicon glyphicon-ok">
                         </button>
                     </td>
                 </tr>

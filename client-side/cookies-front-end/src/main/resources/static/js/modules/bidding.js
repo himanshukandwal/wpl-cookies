@@ -154,7 +154,14 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         });
 
         self.selectTransaction = function (transaction) {
+            console.log(JSON.stringify(transaction));
 
+            $http.put('/api/updateTransaction/FINALISED', transaction).then(function () {
+                console.log('updated status successfully.');
+            }, function (response) {
+                console.log(response.data.status);
+                self.message = "error updating user !";
+            });
         };
         
         self.createTransactionItem = function () {
