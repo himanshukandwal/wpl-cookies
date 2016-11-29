@@ -15,14 +15,26 @@ public class ShoppingInfoEntity {
 	@Column(name = "shopping_id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SHOPPING_SEQUENCE")
 	@SequenceGenerator(name = "SHOPPING_SEQUENCE", sequenceName = "SHOPPING_SEQUENCE")
-	public Integer shoppingId;
+	private Integer shoppingId;
 	@OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn (name = "TRAN_ID")
-	public TransactionInfoEntity transactionInfo;
+	private TransactionInfoEntity transactionInfo;
 	@Column(name = "QUANTITY", nullable = false)
-	public Integer quantity;
+	private Integer quantity;
 	@Column(name = "PRICE", nullable = false)
-	public Float price;
+	private Float price;
+	@Column(name="bid_id")
+	
+	private Integer bidId;
+	
+	
+	
+	public Integer getBidId() {
+		return bidId;
+	}
+	public void setBidId(Integer bidId) {
+		this.bidId = bidId;
+	}
 	public Integer getShoppingId() {
 		return shoppingId;
 	}

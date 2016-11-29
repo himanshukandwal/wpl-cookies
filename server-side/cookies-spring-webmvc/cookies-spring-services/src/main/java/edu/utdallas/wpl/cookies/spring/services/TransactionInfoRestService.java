@@ -16,5 +16,6 @@ public interface TransactionInfoRestService {
 	ResponseEntity<TransactionInfo> updateBidStatus(TransactionInfo transactionInfo,String bidStatusCode,HttpServletRequest request);
     ResponseEntity<String> deleteTransaction(Integer transId);
     ResponseEntity<List<TransactionInfo>>  getTransactionByBid(Integer bidId);
+    ResponseEntity<TransactionInfo>  getTransactionById(Integer transId);
 	
 }

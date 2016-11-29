@@ -93,6 +93,17 @@ public class TransactionInfoRestServiceImpl implements TransactionInfoRestServic
 	}
 	
 	
+	@Override
+	@RequestMapping(value = "/getTransactionById/{transId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<TransactionInfo> getTransactionById(@PathVariable Integer transId) {
+		TransactionInfo transactionInfo	=transactionManager.getTransactionsById(transId);
+		if (transactionInfo==null){
+			return ResponseEntity.ok(new TransactionInfo());
+		}
+		
+		return ResponseEntity.ok(transactionInfo);
+	}
+	
 	
 	
 }

@@ -83,6 +83,14 @@ public class TransactionServiceManagerImpl  implements TransactionServiceManager
 
 		return transactionInfoList;
 	}
+
+	@Override
+	public TransactionInfo getTransactionsById(Integer transId) {
+		
+		 TransactionInfoEntity transactionInfoEntity =transactionInfoRepository.get(transId);
+		 TransactionInfo transactionInfo = mapper.map(transactionInfoEntity, TransactionInfo.class);
+		 return transactionInfo;
+	}
 	
 	
 

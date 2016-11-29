@@ -19,6 +19,16 @@ public class TransactionInfo {
 	private String bidStatus;
 	
 	private String comments;
+	
+	private Integer quantity;
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 
 	public Integer getTranId() {
 		return tranId;

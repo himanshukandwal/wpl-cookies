@@ -34,6 +34,17 @@ public class TransactionInfoEntity {
 	@Column(name = "comments", length = 20)
 	private String comments;
 
+	@Column(name = "quantity")
+	private Integer quantity;
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
 	public String getComments() {
 		return comments;
 	}

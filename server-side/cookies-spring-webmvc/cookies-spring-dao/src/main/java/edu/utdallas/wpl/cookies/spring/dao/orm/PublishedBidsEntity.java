@@ -55,6 +55,18 @@ public class PublishedBidsEntity {
 	@Column(name = "MODIFIED_DATE")
 
 	private Float modifiedDate;
+	
+	@Column(name = "quantity")
+
+	private Integer quantity;
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 
 	public Float getModifiedDate() {
 		return modifiedDate;

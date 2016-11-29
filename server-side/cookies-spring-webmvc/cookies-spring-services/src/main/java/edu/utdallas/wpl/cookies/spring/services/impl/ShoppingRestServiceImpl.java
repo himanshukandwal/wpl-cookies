@@ -56,5 +56,7 @@ public class ShoppingRestServiceImpl implements ShoppingRestService {
 		return ResponseEntity.ok(shoppingInfo);
 
 	}
+	
+	
 
 }

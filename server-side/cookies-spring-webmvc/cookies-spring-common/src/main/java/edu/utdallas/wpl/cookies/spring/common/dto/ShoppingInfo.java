@@ -9,6 +9,18 @@ public class ShoppingInfo {
 	public Integer quantity;
 
 	public Float price;
+   
+	
+	private Integer bidId;
+	
+	
+	public Integer getBidId() {
+		return bidId;
+	}
+
+	public void setBidId(Integer bidId) {
+		this.bidId = bidId;
+	}
 
 	public Integer getShoppingId() {
 		return shoppingId;

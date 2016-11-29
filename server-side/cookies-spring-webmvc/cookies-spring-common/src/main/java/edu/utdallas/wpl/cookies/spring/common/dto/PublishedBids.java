@@ -18,8 +18,18 @@ public class PublishedBids {
 	private Address addressEntity;
 	private Float modifiedDate;
 	
+	private Integer quantity;
+	
 
 	
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 
 	public Float getModifiedDate() {
 		return modifiedDate;

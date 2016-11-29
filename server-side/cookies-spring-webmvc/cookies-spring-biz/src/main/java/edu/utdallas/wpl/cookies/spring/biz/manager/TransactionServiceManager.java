@@ -16,4 +16,6 @@ public interface TransactionServiceManager {
 	
 	public List<TransactionInfo> getTransactionsByBidId(Integer bidId);
 
+	public TransactionInfo getTransactionsById(Integer transId);
+
 }
