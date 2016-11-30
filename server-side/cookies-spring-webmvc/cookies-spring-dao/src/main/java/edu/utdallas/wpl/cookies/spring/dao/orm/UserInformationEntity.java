@@ -56,6 +56,30 @@ public class UserInformationEntity {
     @Column(name="role_id")
     
     private Integer roleId;
+    
+    @Column(name = "LAST_LOGIN")
+	private Float lastLogin;
+    
+	@Column(name = "LOCATION_NAME")
+	private String locationName;
+
+	public Float getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Float lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public String getLocationName() {
+		return locationName;
+	}
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
+    
+    
 	
     public Integer getRoleId() {
 		return roleId;
