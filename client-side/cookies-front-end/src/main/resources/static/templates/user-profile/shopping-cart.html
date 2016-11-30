@@ -1,72 +1,71 @@
-<div class="container" style="padding-top: 60px;" ng-controller="all-bids as bids">
+<div class="container" style="padding-top: 60px;" ng-controller="shopping-cart as sc">
 
     <div class="page-header row">
         <div class="col-lg-8 col-sm-8">
-            <label class="white-stylish-text-super-big">My Active Bids</label>
+            <label class="white-stylish-text-super-big">{{ sc.userInfo.firstName }}'s Shopping Cart</label>
         </div>
         <div class="col-lg-2 col-sm-2">
             <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
-                    ui-sref="user-profile({ userInfo : bids.userInfo })">Back</button>
+                    ui-sref="user-show-bid-detail({ userInfo : sc.userInfo, bid : sc.bid })">Back</button>
         </div>
         <div class="col-lg-2 col-sm-2">
             <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
-                    ui-sref="user-logout({ userInfo : bids.userInfo })">Log Out</button>
+                    ui-sref="user-logout({ userInfo : sc.userInfo })">Log Out</button>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-12 col-sm-6">
-            <table st-table="displayedCollection" st-safe-src="rowCollection" class="table">
+            <table class="table">
                 <thead>
                 <tr>
-                    <th class="white-stylish-text-big" st-sort="bidId">Bid Id</th>
-                    <th class="white-stylish-text-big" st-sort="owner.firstName">Posted By</th>
-                    <th class="white-stylish-text-big" st-sort="hostedDate">Posted Date</th>
-                    <th class="white-stylish-text-big" st-sort="apartmentType">Apartment Type</th>
-                    <th class="white-stylish-text-big" st-sort="price">Price</th>
-                    <th>View</th>
-                </tr>
-                <tr>
-                    <th>
-                        <input st-search="bidId" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="owner.firstName" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="hostedDate" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="apartmentType" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="price" class="input-sm form-control" type="search"/>
-                    </th>
+                    <th>Reply by</th>
+                    <th>Comment</th>
+                    <th>Quoted price</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr ng-repeat="row in displayedCollection | filter : mySearch">
-                    <td>{{ row.bidId }}</td>
-                    <td>{{ row.owner.firstName }}</td>
-                    <td>{{ row.hostedDate | date }}</td>
-                    <td>{{ row.apartmentType }}</td>
-                    <td>{{ row.price | currency }}</td>
-                    <td>
-                        <button type="button" ng-click="bids.selectItem(row)" class="btn btn-sm btn-danger">
-                            <i class="glyphicon glyphicon glyphicon-forward">
-                            </i>
+
+                <tr ng-repeat="transaction in sc.bidTransactions  | filter : sc.finalizedTransactionsSearch">
+                    <td class="white-stylish-text">{{ transaction.bidReceiver.firstName }}</td>
+                    <td class="white-stylish-text">{{ transaction.comments }}</td>
+                    <td class="white-stylish-text">{{ transaction.bidPrice }}</td>
+                    <td class="white-stylish-text">
+                        <input required class="form-control" min="1" max="{{ bd.bid.quantity }}" ng-model="transaction.quantity" type="number" value="{{ transaction.quantity }}"/>
+                    </td>
+                    <td >
+                        <button type="button" role="button" class="btn btn-sm btn-primary" ng-click="sc.removeTransaction(transaction)" data-toggle="modal" data-target="#myModal">
+                            <i class="glyphicon glyphicon-remove"/>
                         </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">Item Removed from the Shopping Cart!</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </td>
                 </tr>
-                </tbody>
-                <!--<tfoot>-->
-                    <!--<tr>-->
-                        <!--<td colspan="5" class="text-center">-->
-                            <!--<div st-pagination="" st-items-by-page="15" st-displayed-pages="7"></div>-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                <!--</tfoot>-->
             </table>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-sm-6">
+                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                        ng-click="sc.checkout()">Checkout Out</button>
+            </div>
         </div>
     </div>
 </div>

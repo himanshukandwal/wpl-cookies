@@ -22,7 +22,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             .state('user-show-my-bids', {
                 url : '/user-profile/user-show-my-bids',
                 templateUrl : '../../templates/user-profile/user-bids.html',
-                params : { userInfo : null },
+                params : { userInfo : null, bid : null },
                 controller : 'all-bids'
             })
             .state('user-show-bid-detail', {
@@ -34,7 +34,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             .state('user-shopping-cart', {
                 url : '/user-profile/user-shopping-cart',
                 templateUrl : '../../templates/user-profile/shopping-cart.html',
-                params : { userInfo : null },
+                params : { userInfo : null, bid : null },
                 controller : 'shopping-cart'
             });
     })
@@ -197,7 +197,34 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
     .controller('shopping-cart', function($http, $stateParams) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
+        self.bid = $stateParams.bid;
 
+        self.bidTransactions = [];
 
+        $http.get('/api/getTransactions/' + self.bid.bidId).then(function (response) {
+            self.bidTransactions = response.data.transaction;
+        }, function (response) {
+            console.log(response.data);
+        });
 
+        self.finalizedTransactionsSearch = function (transaction) {
+            return  (transaction.bidStatus == 'FINALISED') ? true : false;
+        };
+
+        self.removeTransaction = function (transaction) {
+            delete transaction.$$hashKey;
+
+            $http.put('/api/updateTransaction/INTERESTED', transaction).then(function () {
+                transaction.bidStatus = 'INTERESTED';
+                console.log('updated status successfully.');
+
+            }, function (response) {
+                console.log(response.data.status);
+                self.message = "error updating user !";
+            });
+        };
+
+        self.checkout = function () {
+            
+        }
     });

@@ -19,23 +19,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.utdallas.wpl.cookies.spring.biz.manager.ShoppingServiceManager;
 import edu.utdallas.wpl.cookies.spring.common.dto.ShoppingInfo;
 import edu.utdallas.wpl.cookies.spring.common.dto.TransactionInfo;
-import edu.utdallas.wpl.cookies.spring.common.enums.BidStatus;
 import edu.utdallas.wpl.cookies.spring.services.ShoppingRestService;
-import oracle.net.aso.s;
 
 @Controller
 @RequestMapping("/api")
 public class ShoppingRestServiceImpl implements ShoppingRestService {
-	 private static final Logger LOG = LoggerFactory.getLogger(ShoppingRestServiceImpl.class);
-	 
-	 @Autowired
-	 private ShoppingServiceManager ShoppingServiceManager;
+	private static final Logger LOG = LoggerFactory.getLogger(ShoppingRestServiceImpl.class);
+
+	@Autowired
+	private ShoppingServiceManager ShoppingServiceManager;
 
 	@Override
-	
+
 	@RequestMapping(value = "/getShoppingInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ShoppingInfo>> getShoppingInfo() {
-	
+
 		List<ShoppingInfo> shoppingInfosList = ShoppingServiceManager.getShoppingInfo();
 		if (shoppingInfosList != null) {
 			LOG.info(" The number of bid requests for user  :" + shoppingInfosList.size());
@@ -47,59 +45,51 @@ public class ShoppingRestServiceImpl implements ShoppingRestService {
 
 	@Override
 	@RequestMapping(value = "/saveShoppingInfo", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ShoppingInfo> addToShopping(@RequestBody ShoppingInfo shoppingInfoReq, HttpServletRequest request) {
-		System.out.println("inside shopping>>>>"+shoppingInfoReq.getPrice());
-		
+	public ResponseEntity<ShoppingInfo> addToShopping(@RequestBody ShoppingInfo shoppingInfoReq,
+			HttpServletRequest request) {
+		System.out.println("inside shopping>>>>" + shoppingInfoReq.getPrice());
 
 		ShoppingInfo shoppingInfo = ShoppingServiceManager.addShoppingInfo(shoppingInfoReq);
 
-		
-		
 		LOG.info(" created user with id :" + shoppingInfo.getShoppingId());
 
 		return ResponseEntity.ok(shoppingInfo);
 
 	}
-	
-	
+
 	@Override
 	@RequestMapping(value = "/checkout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ShoppingInfo>> checkOutItems(@RequestBody List<TransactionInfo> transactionInfoList, HttpServletRequest request) {
-		
-		
-		List<ShoppingInfo> shoppingInfoList =new ArrayList<>();
-        for(TransactionInfo transactionInfo :transactionInfoList){
-        	
-        ShoppingInfo shoppingInfoReq=convertTransactionToshopping(transactionInfo);
-	    ShoppingServiceManager.addShoppingInfo(shoppingInfoReq);
-		shoppingInfoList.add(shoppingInfoReq);
-		LOG.info(" created user with id :" + shoppingInfoReq.getShoppingId());
-        }
-        
-        for(TransactionInfo transactionInfo :transactionInfoList){
-        	
-        String bidPoster = transactionInfo.getBid().getOwner().getEmail();
-        String bidReceiver=transactionInfo.getBidReceiver().getEmail();
-        Integer bidId =transactionInfo.getBid().getBidId();
-            
-            }
-        
+	public ResponseEntity<List<ShoppingInfo>> checkOutItems(@RequestBody List<TransactionInfo> transactionInfoList,
+			HttpServletRequest request) {
 
-		
-		
-		
+		List<ShoppingInfo> shoppingInfoList = new ArrayList<>();
+		for (TransactionInfo transactionInfo : transactionInfoList) {
+
+			ShoppingInfo shoppingInfoReq = convertTransactionToshopping(transactionInfo);
+			ShoppingServiceManager.addShoppingInfo(shoppingInfoReq);
+			shoppingInfoList.add(shoppingInfoReq);
+			LOG.info(" created user with id :" + shoppingInfoReq.getShoppingId());
+		}
+
+		for (TransactionInfo transactionInfo : transactionInfoList) {
+
+			String bidPoster = transactionInfo.getBid().getOwner().getEmail();
+			String bidReceiver = transactionInfo.getBidReceiver().getEmail();
+			Integer bidId = transactionInfo.getBid().getBidId();
+
+		}
 
 		return ResponseEntity.ok(shoppingInfoList);
 
 	}
 
 	private ShoppingInfo convertTransactionToshopping(TransactionInfo transactionInfo) {
-		ShoppingInfo shoppingInfo =new ShoppingInfo();
+		ShoppingInfo shoppingInfo = new ShoppingInfo();
+		shoppingInfo.setTransactionInfo(transactionInfo);
 		shoppingInfo.setBidId(transactionInfo.getBid().getBidId());
 		shoppingInfo.setPrice(transactionInfo.getBidPrice());
 		shoppingInfo.setQuantity(transactionInfo.getQuantity());
 		return shoppingInfo;
 	}
-	
 
 }
