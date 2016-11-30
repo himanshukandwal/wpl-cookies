@@ -1,5 +1,20 @@
-<div class="container left" ng-controller="static-profile as profile">
-    <div class="col-lg-12" style="height:50px;"/>
+<div class="container" style="padding-top: 60px;" ng-controller="static-profile as profile">
+
+    <div class="page-header row">
+        <div class="col-lg-6 col-sm-6">
+            <label class="white-stylish-text-super-big">User Home</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <label class="white-stylish-text">Last login location: {{ profile.userInfo.locationName }}</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <label class="white-stylish-text">Last login time:       {{ profile.userInfo.lastLogin | date:'medium' }}</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-logout({ userInfo : profile.userInfo })">Log Out</button>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-3 col-sm-6">
