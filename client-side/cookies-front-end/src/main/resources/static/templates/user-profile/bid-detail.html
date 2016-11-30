@@ -9,7 +9,7 @@
                     ui-sref="user-profile({ userInfo : bd.userInfo })">Back</button>
         </div>
         <div class="col-lg-2 col-sm-2">
-            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+            <button class="btn btn-lg btn-primary" style="width: 100%" type="submit" role="button"
                     ui-sref="user-logout">Shopping Cart</button>
         </div>
         <div class="col-lg-2 col-sm-2">
@@ -28,6 +28,7 @@
                         <th class="white-stylish-text-big">Posted Date</th>
                         <th class="white-stylish-text-big">Apartment Type</th>
                         <th class="white-stylish-text-big">Price</th>
+                        <th class="white-stylish-text-big">Quantity</th>
                         <th class="white-stylish-text-big">City</th>
                         <th class="white-stylish-text-big">State</th>
                     </tr>
@@ -39,6 +40,7 @@
                         <td>{{ bd.bid.hostedDate | date }}</td>
                         <td>{{ bd.bid.apartmentType }}</td>
                         <td>{{ bd.bid.price | currency }}</td>
+                        <td>{{ bd.bid.quantity }}</td>
                         <td>{{ bd.bid.addressEntity.city }}</td>
                         <td>{{ bd.bid.addressEntity.state }}</td>
                     </tr>
@@ -65,6 +67,7 @@
                         <th>Reply by</th>
                         <th>Comment</th>
                         <th>Quoted price</th>
+                        <th>Quantity</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -72,6 +75,7 @@
                     <td class="white-stylish-text">{{ transaction.bidReceiver.firstName }}</td>
                     <td class="white-stylish-text">{{ transaction.comments }}</td>
                     <td class="white-stylish-text">{{ transaction.bidPrice }}</td>
+                    <td class="white-stylish-text">{{ transaction.quantity }}</td>
                     <td >
                         <img width="25" height="25" ng-show="transaction.bidStatus == 'FINALISED'" ng-src="../../images/deal-icon.png">
                         <p class="white-stylish-text" ng-show="!bd.isMyBid && transaction.bidStatus == 'INTERESTED'">Open</p>
@@ -88,7 +92,7 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
-                                        <h4 class="modal-title" id="myModalLabel">Item Added to Cart!</h4>
+                                        <h4 class="modal-title" id="myModalLabel">Item Added to Shopping Cart!</h4>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -104,8 +108,9 @@
     </div>
 
     <div class="row" ng-hide="bd.isMyBid">
-        <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
-            <form class="form-inline" role="form" style="width: 100%">
+
+        <div class="col-lg-12 col-sm-6">
+            <form class="form-inline" role="form">
                 <div class="form-group">
                     <textarea rows="1" cols="50" required class="form-control" ng-model="bd.transaction.comments"  placeholder="Your comments" />
                 </div>
@@ -113,13 +118,17 @@
                     <input required class="form-control" ng-model="bd.transaction.bidPrice" type="number" placeholder="Your quote price" />
                 </div>
                 <div class="form-group">
-                    <button type="submit" role="button" ng-click="bd.createTransactionItem()" class="btn btn-sm btn-primary" style="width: 100%">
+                    <input required class="form-control" min="1" max="{{ bd.bid.quantity }}" ng-model="bd.transaction.quantity" type="number" placeholder="quantity" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" role="button" ng-click="bd.createTransactionItem()" class="btn btn-sm btn-primary">
                         <i class="glyphicon glyphicon glyphicon-plus"/>Reply on this bid</button>
                 </div>
-                <div class="form-group text-center">
+                <div class="form-group">
                     <label ng-if="bd.message">{{ bd.message }}</label>
                 </div>
             </form>
         </div>
+
     </div>
 </div>

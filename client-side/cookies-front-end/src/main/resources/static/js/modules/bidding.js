@@ -182,12 +182,14 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
 
                 delete self.transaction.comments;
                 delete self.transaction.bidPrice;
+                delete self.transaction.quantity;
             }, function (response) {
                 console.log(response.data.status);
                 self.message = "error publishing interest !";
 
                 delete self.transaction.comments;
                 delete self.transaction.bidPrice;
+                delete self.transaction.quantity;
             });
         };
 
@@ -196,48 +198,6 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         var self = this;
         self.userInfo = $stateParams.userInfo;
 
-        self.transaction = { bid : self.bid, bidReceiver : self.userInfo, bidStatus : 'INTERESTED' };
 
-        self.bidTransactions = [];
-
-        self.isMyBid = self.bid.owner.id == self.userInfo.id;
-
-        $http.get('/api/getTransactions/' + self.bid.bidId).then(function (response) {
-            self.bidTransactions = response.data.transaction;
-        }, function (response) {
-            console.log(response.data);
-        });
-
-        self.selectTransaction = function (transaction) {
-            delete transaction.$$hashKey;
-
-            $http.put('/api/updateTransaction/FINALISED', transaction).then(function () {
-                transaction.bidStatus = 'FINALISED';
-                console.log('updated status successfully.');
-
-            }, function (response) {
-                console.log(response.data.status);
-                self.message = "error updating user !";
-            });
-        };
-
-        self.createTransactionItem = function () {
-            self.message = false;
-
-            $http.post('/api/createTransaction', self.transaction).then(function (response) {
-                console.log(response.data.status);
-                self.message = false;
-                self.bidTransactions.push(response.data.transaction);
-
-                delete self.transaction.comments;
-                delete self.transaction.bidPrice;
-            }, function (response) {
-                console.log(response.data.status);
-                self.message = "error publishing interest !";
-
-                delete self.transaction.comments;
-                delete self.transaction.bidPrice;
-            });
-        };
 
     });
