@@ -59,6 +59,8 @@ public class PublishedBidsEntity {
 	@Column(name = "quantity")
 
 	private Integer quantity;
+	
+	
 
 	public Integer getQuantity() {
 		return quantity;

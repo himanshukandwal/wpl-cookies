@@ -24,7 +24,6 @@ public class ShoppingInfoEntity {
 	@Column(name = "PRICE", nullable = false)
 	private Float price;
 	@Column(name="bid_id")
-	
 	private Integer bidId;
 	
 	

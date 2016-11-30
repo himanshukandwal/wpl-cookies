@@ -34,7 +34,6 @@ public  class UserInformationRestServiceImpl implements UserInformationRestServi
 		UserInformation persistedUser = userInformationServiceManager.createUserInformation(userInformation);
 		
 		LOG.info(" created user with id :" + persistedUser.getId());
-		
 		return ResponseEntity.ok(persistedUser);
 	}
 	
@@ -59,7 +58,6 @@ public  class UserInformationRestServiceImpl implements UserInformationRestServi
 	public @ResponseBody ResponseEntity updateUserInformation(@RequestBody UserInformation userInformation) {
 		if (userInformation.getId() == null || userInformationServiceManager.getUserInformation(userInformation.getId()) == null)
 			return ResponseEntity.badRequest().body("user not found");
-		
 		UserInformation updatedUserInformation = userInformationServiceManager.updateUserInformation(userInformation);
 		
 		LOG.info(" updated user with id :" + updatedUserInformation.getId());

@@ -18,6 +18,27 @@ public class UserInformation {
     private Date birthDate;
     private String sex;
     private String mobileNumber;
+    private Float lastLogin;
+    private String locationName;
+
+	public Float getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Float lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public String getLocationName() {
+		return locationName;
+	}
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
+
+	
+
     
     public Integer getId() {
 		return id;
