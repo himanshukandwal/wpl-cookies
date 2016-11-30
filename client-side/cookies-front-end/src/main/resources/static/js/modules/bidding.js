@@ -22,7 +22,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             .state('user-show-my-bids', {
                 url : '/user-profile/user-show-my-bids',
                 templateUrl : '../../templates/user-profile/user-bids.html',
-                params : { userInfo : null, bid : null },
+                params : { userInfo : null },
                 controller : 'all-bids'
             })
             .state('user-show-bid-detail', {
@@ -36,7 +36,14 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
                 templateUrl : '../../templates/user-profile/shopping-cart.html',
                 params : { userInfo : null, bid : null },
                 controller : 'shopping-cart'
+            })
+            .state('user-checkout-success', {
+                url : '/user-profile/user-checkout-success',
+                templateUrl : '../../templates/user-profile/checkout-successful.html',
+                params : { userInfo : null, bid : null, transactions : null },
+                controller : 'checkout-success'
             });
+
     })
     .controller('find-address', function ($http, $timeout, $stateParams, $state, $scope) {
         var self = this;
@@ -225,6 +232,35 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         };
 
         self.checkout = function () {
-            
-        }
+            var checkoutBidTransactions = [];
+
+            angular.forEach(self.bidTransactions, function (value, key) {
+                if (value.bidStatus == 'FINALISED')
+                    checkoutBidTransactions.push(value);
+            });
+
+            $http.post('/api/checkoutCart', self.checkoutBidTransactions).then(function (response) {
+                self.message = false;
+
+                var otherParty = [];
+                angular.forEach(response.data.transactions, function (value, key) {
+                    otherParty.push(value.bidReceiver.firstName + value.bidReceiver.lastName);
+                });
+
+                $state.go('user-checkout-success', { userInfo : self.userInfo, bid : self.bid , otherParty : otherParty });
+            }, function (response) {
+                console.log(response.data.status);
+                self.message = "error checkout items !";
+            });
+        };
+    })
+    .controller('checkout-success', function($stateParams, $timeout, $state) {
+        var self = this;
+        self.userInfo = $stateParams.userInfo;
+        self.bid = $stateParams.bid;
+        self.otherParty = $stateParams.otherParty;
+
+        $timeout(function() {
+            $state.go('user-show-my-bids', { userInfo : self.userInfo });
+        }, 5000);
     });

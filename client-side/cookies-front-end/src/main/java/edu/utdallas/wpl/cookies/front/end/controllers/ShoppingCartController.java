@@ -25,13 +25,13 @@ public class ShoppingCartController {
 	private String webserviceUrl;
 	
 	@RequestMapping(value = "/checkoutCart", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> checkoutCart(@RequestBody Map<String, Object> transactionMap) {
+	public @ResponseBody Map<String, Object> checkoutCart(@RequestBody Map<String, Object>[] transactionMaps) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		ResponseEntity<TransactionInfo> responseEntity = restTemplate.postForEntity(webserviceUrl + "/saveInterestedBid", transactionMap, TransactionInfo.class);
+		ResponseEntity<TransactionInfo[]> responseEntity = restTemplate.postForEntity(webserviceUrl + "/checkout", transactionMaps, TransactionInfo[].class);
 				
-		model.put("transaction", responseEntity.getBody());
+		model.put("transactions", responseEntity.getBody());
 		return model;
 	}
 	
