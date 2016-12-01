@@ -245,6 +245,14 @@
 				<version>1.2.16</version>
 				<scope>runtime</scope>
 			</dependency>
+			
+			<!-- Email -->
+			<dependency>
+   				 <groupId>javax.mail</groupId>
+    			<artifactId>javax.mail-api</artifactId>
+    			<version>1.4.4</version>
+			</dependency>
+			
 
 			<!-- TEST -->
 			<dependency>
