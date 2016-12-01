@@ -18,46 +18,46 @@
         <div class="col-lg-12 col-sm-6">
             <table st-table="displayedCollection" st-safe-src="rowCollection" class="table">
                 <thead>
-                <tr>
-                    <th class="white-stylish-text-big" st-sort="bidId">Bid Id</th>
-                    <th class="white-stylish-text-big" st-sort="owner.firstName">Posted By</th>
-                    <th class="white-stylish-text-big" st-sort="hostedDate">Posted Date</th>
-                    <th class="white-stylish-text-big" st-sort="apartmentType">Apartment Type</th>
-                    <th class="white-stylish-text-big" st-sort="price">Price</th>
-                    <th>View</th>
-                </tr>
-                <tr>
-                    <th>
-                        <input st-search="bidId" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="owner.firstName" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="hostedDate" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="apartmentType" class="input-sm form-control" type="search"/>
-                    </th>
-                    <th>
-                        <input st-search="price" class="input-sm form-control" type="search"/>
-                    </th>
-                </tr>
+                    <tr>
+                        <th class="white-stylish-text-big" st-sort="bidId">Bid Id</th>
+                        <th class="white-stylish-text-big" st-sort="owner.firstName">Posted By</th>
+                        <th class="white-stylish-text-big" st-sort="hostedDate">Posted Date</th>
+                        <th class="white-stylish-text-big" st-sort="apartmentType">Apartment Type</th>
+                        <th class="white-stylish-text-big" st-sort="price">Price</th>
+                        <th class="white-stylish-text-big">View</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input st-search="bidId" class="input-sm form-control" type="search"/>
+                        </th>
+                        <th>
+                            <input st-search="owner.firstName" class="input-sm form-control" type="search"/>
+                        </th>
+                        <th>
+                            <input st-search="hostedDate" class="input-sm form-control" type="search"/>
+                        </th>
+                        <th>
+                            <input st-search="apartmentType" class="input-sm form-control" type="search"/>
+                        </th>
+                        <th>
+                            <input st-search="price" class="input-sm form-control" type="search"/>
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="row in displayedCollection | filter : mySearch | filter:bids.isActiveBid ">
-                    <td>{{ row.bidId }}</td>
-                    <td>{{ row.owner.firstName }}</td>
-                    <td>{{ row.hostedDate | date }}</td>
-                    <td>{{ row.apartmentType }}</td>
-                    <td>{{ row.price | currency }}</td>
-                    <td>
-                        <button type="button" ng-click="bids.selectItem(row)" class="btn btn-sm btn-primary">
-                            <i class="glyphicon glyphicon glyphicon-forward">
-                            </i>
-                        </button>
-                    </td>
-                </tr>
+                    <tr ng-repeat="row in displayedCollection | filter : mySearch | filter:bids.isActiveBid ">
+                        <td>{{ row.bidId }}</td>
+                        <td>{{ row.owner.firstName }}</td>
+                        <td>{{ row.hostedDate | date }}</td>
+                        <td>{{ row.apartmentType }}</td>
+                        <td>{{ row.price | currency }}</td>
+                        <td>
+                            <button type="button" ng-click="bids.selectItem(row)" class="btn btn-sm btn-primary">
+                                <i class="glyphicon glyphicon glyphicon-forward">
+                                </i>
+                            </button>
+                        </td>
+                    </tr>
                 </tbody>
                 <!--<tfoot>-->
                     <!--<tr>-->

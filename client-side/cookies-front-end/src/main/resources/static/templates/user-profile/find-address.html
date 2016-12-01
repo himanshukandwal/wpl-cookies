@@ -41,7 +41,7 @@
                     </div>
 
                     <ul ng-show="searchFilter && searchFilter != ''">
-                        <li ng-repeat="address in profile.addresses | unique:'address.city' | unique:'address.state' | unique:'address.zipCode' | filter: searchFilter">
+                        <li ng-repeat="address in profile.addresses | filter: searchFilter track by $index">
                             <a ng-click="profile.selectEntity(address);">{{ address.city + ',' + address.state + ',' + address.zipCode }}</a>
                         </li>
                     </ul>

@@ -279,39 +279,50 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             $state.go('user-show-my-bids', { userInfo : self.userInfo });
         }, 5000);
     })
-    .controller('search-bids', function($http, $stateParams) {
+    .controller('search-bids', function($http, $stateParams, $scope) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
 
-        self.bidTransactions = [];
-
+        $scope.rowCollection = [];
         self.searchText = '';
 
-        $http.get('/api/getTransactions/' + self.bid.bidId).then(function (response) {
-            self.bidTransactions = response.data.transaction;
+        var completeCollection = [];
+
+        $http.get('/api/getBids').then(function (response) {
+
+            angular.forEach(response.data.bid, function (value, key) {
+                if (value.activeInd == 'Y')
+                    completeCollection.push(value);
+            });
+
+            console.log('got total results : ' + completeCollection.length);
+
         }, function (response) {
             console.log(response.data);
         });
 
         self.searchByFullTextSearch = function () {
-        };
 
-    })
-    .filter('search', function($filter){
-        return function(items, text){
-            if (!text || text.length === 0)
-                return items;
+            $scope.rowCollection = [];
 
-            // split search text on space
-            var searchTerms = text.split(' ');
+            angular.forEach(completeCollection, function (value, key) {
+                if (value.bidId.toString().toUpperCase() === self.searchText.toUpperCase()
+                    || value.comments.toUpperCase().includes(self.searchText.toUpperCase())
+                    || value.apartmentType.toUpperCase().includes(self.searchText.toUpperCase())
+                    || value.price.toString().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").includes(self.searchText)
+                    || value.owner.firstName.includes(self.searchText)
+                    || value.owner.lastName.toUpperCase().includes(self.searchText.toUpperCase())
+                    || value.owner.email.toUpperCase().includes(self.searchText.toUpperCase())
+                    || value.owner.mobileNumber.toUpperCase().includes(self.searchText.toUpperCase()))
 
-            // search for single terms.
-            // this reduces the item list step by step
-            searchTerms.forEach(function(term) {
-                if (term && term.length)
-                    items = $filter('filter')(items, term);
+                    $scope.rowCollection.push(value);
             });
 
-            return items;
+            console.log('got results : ' + $scope.rowCollection.length);
         };
+
+        self.selectItem = function (bid) {
+            $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid });
+        };
+
     });
