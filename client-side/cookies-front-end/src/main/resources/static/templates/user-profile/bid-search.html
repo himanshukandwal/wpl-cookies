@@ -1,0 +1,67 @@
+<div class="container" style="padding-top: 60px;" ng-controller="static-profile as profile">
+
+    <div class="page-header row">
+        <div class="col-lg-6 col-sm-6">
+            <label class="white-stylish-text-super-big">User Home</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <label class="white-stylish-text">Last login location: {{ profile.userInfo.locationName }}</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <label class="white-stylish-text">Last login time: {{ profile.userInfo.lastLogin | date:'medium' }}</label>
+        </div>
+        <div class="col-lg-2 col-sm-2">
+            <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
+                    ui-sref="user-logout({ userInfo : profile.userInfo })">Log Out</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-sm-6">
+
+            <div class="card hovercard">
+                <div class="cardheader">
+
+                </div>
+                <div class="avatar" ng-show="!profile.userInfo.sex || (profile.userInfo.sex && profile.userInfo.sex == 'male')">
+                    <img ng-src="../../images/user-male.jpg">
+                </div>
+                <div class="avatar" ng-show="profile.userInfo.sex && profile.userInfo.sex == 'female'">
+                    <img ng-src="../../images/user-female.jpg">
+                </div>
+                <div class="info">
+                    <div class="title">
+                        <p class="white-stylish-text">{{ profile.userInfo.firstName }}</p>
+                        <br>
+                        <p><button class="glyphicon glyphicon-pencil" type="submit" role="button" ui-sref="edit-profile({ userInfo : profile.userInfo })"/></p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-9 col-sm-6">
+
+            <div style="height:10px;"/>
+
+            <div class="activity-card centered">
+                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="find-address-post-bid({ userInfo : profile.userInfo })">Post a new Bid</button>
+            </div>
+
+            <div class="activity-card centered">
+                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="edit-profile({ userInfo : profile.userInfo })">Search Bids</button>
+            </div>
+
+            <div class="activity-card centered">
+                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="user-show-all-bids({ userInfo : profile.userInfo })">Active Bids</button>
+            </div>
+
+            <div class="activity-card centered">
+                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="user-show-my-bids({ userInfo : profile.userInfo })">My Bids</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>

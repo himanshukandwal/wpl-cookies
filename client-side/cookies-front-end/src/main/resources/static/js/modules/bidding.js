@@ -40,8 +40,14 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             .state('user-checkout-success', {
                 url : '/user-profile/user-checkout-success',
                 templateUrl : '../../templates/user-profile/checkout-successful.html',
-                params : { userInfo : null, bid : null, transactions : null },
+                params : { userInfo : null, bid : null, otherParty : null },
                 controller : 'checkout-success'
+            })
+            .state('search-bids', {
+                url : '/user-profile/search-bids',
+                params : { userInfo : null },
+                templateUrl : '../../templates/user-profile/bid-search.html',
+                controller : 'search-bids'
             });
 
     })
@@ -201,7 +207,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         };
 
     })
-    .controller('shopping-cart', function($http, $stateParams) {
+    .controller('shopping-cart', function($http, $stateParams, $state) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
         self.bid = $stateParams.bid;
@@ -235,19 +241,24 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             var checkoutBidTransactions = [];
 
             angular.forEach(self.bidTransactions, function (value, key) {
-                if (value.bidStatus == 'FINALISED')
+                if (value.bidStatus == "FINALISED")
                     checkoutBidTransactions.push(value);
             });
 
-            $http.post('/api/checkoutCart', self.checkoutBidTransactions).then(function (response) {
+            $http.post('/api/checkoutCart', checkoutBidTransactions).then(function (response) {
                 self.message = false;
 
                 var otherParty = [];
                 angular.forEach(response.data.transactions, function (value, key) {
-                    otherParty.push(value.bidReceiver.firstName + value.bidReceiver.lastName);
+                    otherParty.push(value.transactionInfo.bidReceiver.firstName + value.transactionInfo.bidReceiver.lastName);
                 });
 
-                $state.go('user-checkout-success', { userInfo : self.userInfo, bid : self.bid , otherParty : otherParty });
+                var uniqueList = otherParty.filter(function(item, pos) {
+                    return otherParty.indexOf(item) == pos;
+                }).join(", ");
+
+                console.log('checked-out successfully !');
+                $state.go('user-checkout-success', { userInfo : self.userInfo, bid : self.bid , otherParty : uniqueList });
             }, function (response) {
                 console.log(response.data.status);
                 self.message = "error checkout items !";
@@ -263,4 +274,40 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         $timeout(function() {
             $state.go('user-show-my-bids', { userInfo : self.userInfo });
         }, 5000);
+    })
+    .controller('search-bids', function($http, $stateParams) {
+        var self = this;
+        self.userInfo = $stateParams.userInfo;
+
+        self.bidTransactions = [];
+
+        self.searchText = '';
+
+        $http.get('/api/getTransactions/' + self.bid.bidId).then(function (response) {
+            self.bidTransactions = response.data.transaction;
+        }, function (response) {
+            console.log(response.data);
+        });
+
+        self.searchByFullTextSearch = function () {
+        };
+
+    })
+    .filter('search', function($filter){
+        return function(items, text){
+            if (!text || text.length === 0)
+                return items;
+
+            // split search text on space
+            var searchTerms = text.split(' ');
+
+            // search for single terms.
+            // this reduces the item list step by step
+            searchTerms.forEach(function(term) {
+                if (term && term.length)
+                    items = $filter('filter')(items, term);
+            });
+
+            return items;
+        };
     });

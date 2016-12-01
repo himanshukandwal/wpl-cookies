@@ -2,7 +2,7 @@ angular.module('userProfileModule', ['ui.router', 'biddingModule'])
     .config (function ($stateProvider) {
         $stateProvider
             .state('edit-profile', {
-                url : '/edit-profile',
+                url : '/user-profile/edit',
                 params : { userInfo : null },
                 templateUrl : '../../templates/user-profile/edit-profile.html',
             });

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import edu.utdallas.wpl.cookies.front.end.config.CustomRestController;
-import edu.utdallas.wpl.cookies.spring.common.dto.TransactionInfo;
+import edu.utdallas.wpl.cookies.spring.common.dto.ShoppingInfo;
 
 @CustomRestController
 public class ShoppingCartController {
@@ -29,7 +29,7 @@ public class ShoppingCartController {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		ResponseEntity<TransactionInfo[]> responseEntity = restTemplate.postForEntity(webserviceUrl + "/checkout", transactionMaps, TransactionInfo[].class);
+		ResponseEntity<ShoppingInfo[]> responseEntity = restTemplate.postForEntity(webserviceUrl + "/checkout", transactionMaps, ShoppingInfo[].class);
 				
 		model.put("transactions", responseEntity.getBody());
 		return model;

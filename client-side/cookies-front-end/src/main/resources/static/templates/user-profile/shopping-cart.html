@@ -35,7 +35,7 @@
                         <input required class="form-control" min="1" max="{{ bd.bid.quantity }}" ng-model="transaction.quantity" type="number" value="{{ transaction.quantity }}"/>
                     </td>
                     <td >
-                        <button type="button" role="button" class="btn btn-sm btn-primary" ng-click="sc.removeTransaction(transaction)" data-toggle="modal" data-target="#myModal">
+                        <button type="button" role="button" class="btn btn-sm btn-danger" ng-click="sc.removeTransaction(transaction)" data-toggle="modal" data-target="#myModal">
                             <i class="glyphicon glyphicon-remove"/>
                         </button>
 
@@ -64,8 +64,15 @@
         <div class="row">
             <div class="col-lg-12 col-sm-6">
                 <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
-                        ng-click="sc.checkout()">Checkout Out</button>
+                        ng-click="sc.checkout()">Checkout Cart</button>
             </div>
         </div>
+
+        <div class="row" ng-show="sc.message">
+            <div class="col-lg-12 col-sm-6">
+                <label>{{ sc.message }}</label>
+            </div>
+        </div>
+
     </div>
 </div>
