@@ -148,6 +148,10 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             });
         }
 
+        self.isActiveBid = function (bid) {
+            return bid.activeInd == 'Y';
+        };
+
         self.selectItem = function (bid) {
             $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid });
         };
