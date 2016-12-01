@@ -24,9 +24,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import edu.utdallas.wpl.cookies.spring.biz.manager.BidServiceManager;
 import edu.utdallas.wpl.cookies.spring.biz.manager.ShoppingServiceManager;
+import edu.utdallas.wpl.cookies.spring.common.dto.PublishedBids;
 import edu.utdallas.wpl.cookies.spring.common.dto.ShoppingInfo;
 import edu.utdallas.wpl.cookies.spring.common.dto.TransactionInfo;
+import edu.utdallas.wpl.cookies.spring.dao.orm.PublishedBidsEntity;
+import edu.utdallas.wpl.cookies.spring.dao.repository.PublishedBidsRepository;
 import edu.utdallas.wpl.cookies.spring.services.ShoppingRestService;
 
 @Controller
@@ -36,6 +40,9 @@ public class ShoppingRestServiceImpl implements ShoppingRestService {
 
 	@Autowired
 	private ShoppingServiceManager ShoppingServiceManager;
+	
+	@Autowired
+	private BidServiceManager bidServiceManager;
 
 	@Override
 
@@ -75,6 +82,11 @@ public class ShoppingRestServiceImpl implements ShoppingRestService {
 
 			ShoppingInfo shoppingInfoReq = convertTransactionToshopping(transactionInfo);
 			ShoppingInfo shoppingInfoRes=ShoppingServiceManager.addShoppingInfo(shoppingInfoReq);
+			
+			PublishedBids publishedBids=bidServiceManager.getBidRequest(shoppingInfoRes.getBidId());
+			publishedBids.setActiveInd("N");
+			bidServiceManager.updateBids(publishedBids);
+			
 			shoppingInfoList.add(shoppingInfoRes);
 			LOG.info(" created user with id :" + shoppingInfoRes.getShoppingId());
 		}

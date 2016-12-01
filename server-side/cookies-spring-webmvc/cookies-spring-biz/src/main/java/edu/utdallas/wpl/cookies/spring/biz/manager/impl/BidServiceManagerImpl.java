@@ -80,4 +80,18 @@ public class BidServiceManagerImpl implements BidServiceManager{
 		return publishedBidsList;
 	}
 
+	@Override
+	public PublishedBids getBidRequest(Integer bidId) {
+		PublishedBidsEntity publishedBidsEntity =publishedBidsRepository.get(bidId);
+		PublishedBids publishedBids = mapper.map(publishedBidsEntity, PublishedBids.class);
+		
+		return publishedBids;
+	}
+
+	@Override
+	public void updateBids(PublishedBids publishedBids) {
+		// TODO Auto-generated method stub
+		publishedBidsRepository.update(mapper.map(publishedBids, PublishedBidsEntity.class));
+	}
+
 }
