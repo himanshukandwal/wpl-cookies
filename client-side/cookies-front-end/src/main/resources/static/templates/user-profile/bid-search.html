@@ -28,12 +28,12 @@
                 <div class="form-group">
                     <input class="col-lg-8" type="search" ng-model="bids.searchText" placeholder="Search"/>
                     <div class="col-lg-3">
-                        <button class="btn btn-lg btn-primary glyphicon glyphicon-search" type="submit" role="button"/>
+                        <button class="btn btn-sm btn-primary glyphicon glyphicon-search" type="submit" role="button"/>
                     </div>
                 </div>
             </form>
 
-            <table ng-show="bids.searchText.length > 0" st-table="displayedCollection" st-safe-src="rowCollection" class="table">
+            <table ng-show="bids.tableShow && bids.searchText.length > 0" st-table="displayedCollection" st-safe-src="rowCollection" class="table">
                 <thead>
                     <tr>
                         <th class="white-stylish-text" st-sort="bidId">Bid Id</th>

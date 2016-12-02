@@ -112,7 +112,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         self.successfulPosting = false;
 
         self.apartmentTypes = [ '1 BHK', '2 BHK', '3 BHK', 'House' ];
-        self.bid = { owner :  self.userInfo, addressEntity: self.address, hostedDate : new Date(), activeInd: 'Y' };
+        self.bid = { owner :  self.userInfo, addressEntity: self.address, hostedDate : new Date(), activeInd: 'Y', modifiedDate : new Date().getTime() };
 
         self.postBid = function () {
 
@@ -138,19 +138,91 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
 
         $scope.rowCollection = [];
 
-        if (localStorage.getItem('bids')) {
+        if (localStorage.getItem('all-bids')) {
+            console.log('getting delta bids !');
+
+            var loadTime = 5000, //Load the data every second
+                loadPromise; //Pointer to the promise created by the Angular $timout service
+
+            var generate_bids = function() {
+                console.log('fetching new sequence');
+
+                $http.get('/api/getBids/' + localStorage.getItem('all-bids-access-time')).then(function (response) {
+
+                    localStorage.setItem('all-bids-access-time', new Date().getTime());
+
+                    var existing_bids = JSON.parse(localStorage.getItem('all-bids'));
+
+                    if (response.data.bid.length > 0) {
+
+                        // update existing data and add new one.
+                        angular.forEach(response.data.bid, function (value, key) {
+                            console.log('new data : [' + key + "] : [" + JSON.stringify(value) + "]");
+                            existing_bids[value.bidId] = value;
+                        });
+
+                        localStorage.setItem('all-bids', JSON.stringify(existing_bids));
+                    }
+
+                    $scope.rowCollection = [];
+
+                    angular.forEach(existing_bids, function (value, key) {
+                        $scope.rowCollection.push(value);
+                    });
+
+                    next_generation();
+                }, function (response) {
+                    console.log(response.data);
+                });
+            };
+
+            var cancelNextLoad = function() {
+                $timeout.cancel(loadPromise);
+            };
+
+            var next_generation = function(mill) {
+                mill = mill || loadTime;
+
+                //Always make sure the last timeout is cleared before starting a new one
+                cancelNextLoad();
+                $timeout(generate_bids, mill);
+            };
+
+            //Start polling the data from the server
+            generate_bids();
+
+            //Always clear the timeout when the view is destroyed, otherwise it will keep polling
+            $scope.$on('$routeChangeStart', function (scope, next, current) {
+                if (next.$$route.controller != "Your Controller Name") {
+                    cancelNextLoad;// clear interval here
+                }
+            });
 
         } else {
-            $http.get('/api/getBids').then(function (response) {
-                $scope.rowCollection = response.data.bid;
+            console.log('getting all bids !');
+
+            $http.get('/api/getBids/').then(function (response) {
+                var existing_bids = {};
+                $scope.rowCollection = [];
+
+                localStorage.setItem('all-bids-access-time', new Date().getTime());
+
+                if (response.data.bid.length > 0) {
+                    // update existing data and add new one.
+                    angular.forEach(response.data.bid, function (value, key) {
+                        existing_bids[value.bidId] = value;
+                    });
+
+                    angular.forEach(existing_bids, function (value, key) {
+                        $scope.rowCollection.push(value);
+                    });
+
+                    localStorage.setItem('all-bids', JSON.stringify(existing_bids));
+                }
             }, function (response) {
                 console.log(response.data);
             });
         }
-
-        self.isActiveBid = function (bid) {
-            return bid.activeInd == 'Y';
-        };
 
         self.selectItem = function (bid) {
             $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid });
@@ -279,7 +351,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             $state.go('user-show-my-bids', { userInfo : self.userInfo });
         }, 5000);
     })
-    .controller('search-bids', function($http, $stateParams, $scope) {
+    .controller('search-bids', function($http, $stateParams, $scope, $state) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
 
@@ -289,14 +361,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         var completeCollection = [];
 
         $http.get('/api/getBids').then(function (response) {
-
-            angular.forEach(response.data.bid, function (value, key) {
-                if (value.activeInd == 'Y')
-                    completeCollection.push(value);
-            });
-
-            console.log('got total results : ' + completeCollection.length);
-
+            completeCollection = response.data.bid;
         }, function (response) {
             console.log(response.data);
         });
@@ -306,6 +371,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             $scope.rowCollection = [];
 
             angular.forEach(completeCollection, function (value, key) {
+
                 if (value.bidId.toString().toUpperCase() === self.searchText.toUpperCase()
                     || value.comments.toUpperCase().includes(self.searchText.toUpperCase())
                     || value.apartmentType.toUpperCase().includes(self.searchText.toUpperCase())
@@ -313,12 +379,13 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
                     || value.owner.firstName.includes(self.searchText)
                     || value.owner.lastName.toUpperCase().includes(self.searchText.toUpperCase())
                     || value.owner.email.toUpperCase().includes(self.searchText.toUpperCase())
-                    || value.owner.mobileNumber.toUpperCase().includes(self.searchText.toUpperCase()))
+                    || (value.owner.mobileNumber && value.owner.mobileNumber.toUpperCase().includes(self.searchText.toUpperCase())))
 
                     $scope.rowCollection.push(value);
             });
 
             console.log('got results : ' + $scope.rowCollection.length);
+            self.tableShow = $scope.rowCollection.length > 0;
         };
 
         self.selectItem = function (bid) {

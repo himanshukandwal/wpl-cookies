@@ -9,4 +9,4 @@ server:
       enabled: true
       mime-types: text/html,text/css,application/javascript,application/json
 services:
-    url:  https://localhost:8443/cookies-spring-webmvc/api/
+    url:  http://localhost:8080/cookies-spring-webmvc/api/

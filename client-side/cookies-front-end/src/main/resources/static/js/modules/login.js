@@ -39,7 +39,39 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
 
                 $http.post('/api/createUser', self.user).then(function (response) {
                     self.message = false;
-                    $state.go('registration-success', { userInfo : response.data.userInfo });
+                    self.userInfo = response.data.userInfo;
+
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+
+                            new google.maps.Geocoder().geocode({'location': { lat: parseFloat(position.coords.latitude), lng: parseFloat(position.coords.longitude) }},
+                                function(results, status) {
+                                    if (status === 'OK') {
+                                        if (results[1]) {
+                                            console.log(results[1].formatted_address);
+
+                                            self.userInfo.locationName = results[1].formatted_address;
+                                            self.userInfo.lastLogin = parseFloat(new Date().getTime());
+
+                                            $http.put('/api/updateUser', self.userInfo).then(function () {
+                                                console.log("successfully updated user data.");
+                                            }, function (response) {
+                                                console.log(response.data.status);
+                                                self.message = "error updating user !";
+                                            });
+
+                                        } else {
+                                            console.log('No results found');
+                                        }
+                                    } else {
+                                        console.log('Geocoder failed due to: ' + status);
+                                    }
+                                }
+                            );
+                        });
+                    }
+
+                    $state.go('registration-success', { userInfo : self.userInfo });
                 }, function (response) {
                     console.log(response.data);
                     self.message = "error creating user !";

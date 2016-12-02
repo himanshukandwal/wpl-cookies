@@ -13,6 +13,7 @@ import edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity;
 
 @Repository
 public class PublishedBidsRepository extends GenericDAORepositoryImpl<PublishedBidsEntity, Integer> {
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -40,11 +41,8 @@ public class PublishedBidsRepository extends GenericDAORepositoryImpl<PublishedB
 	@SuppressWarnings("unchecked")
 	public List<PublishedBidsEntity> getAllActiveBids(Long timestamp) {
 		
-	
-
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PublishedBidsEntity.class);
 		criteria.add(Restrictions.gt("modifiedDate", timestamp.floatValue()));
-		
 		
 		List<PublishedBidsEntity> informations = (List<PublishedBidsEntity>) criteria.list();
 		if (informations == null || informations.isEmpty())

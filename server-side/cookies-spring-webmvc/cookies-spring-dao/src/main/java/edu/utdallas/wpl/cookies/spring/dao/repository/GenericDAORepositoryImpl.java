@@ -22,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional(propagation = Propagation.REQUIRED)
 @SuppressWarnings({ "unchecked" })
-@Cacheable("cookiecache") 
 public class GenericDAORepositoryImpl<T, PK extends Serializable>  implements IDAORepository<T, PK> {
 	
 	@Autowired

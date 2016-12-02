@@ -16,12 +16,8 @@ public class PublishedBids {
 	private Date fromDate;
 	private Date toDate;
 	private Address addressEntity;
-	private Float modifiedDate;
-	
+	private Float modifiedDate;	
 	private Integer quantity;
-	
-
-	
 
 	public Integer getQuantity() {
 		return quantity;
