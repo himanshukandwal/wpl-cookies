@@ -1,7 +1,12 @@
 server:
-    port: 9000    
-      compression:
-        enabled: true
-        mime-types: text/html,text/css,application/javascript,application/json
+    port: 9000     
+    ssl:
+      key-store: keystore.p12
+      key-store-password: Cookies123
+      keyStoreType: PKCS12
+      keyAlias: tomcat
+    compression:
+      enabled: true
+      mime-types: text/html,text/css,application/javascript,application/json
 services:
     url:  http://localhost:8080/cookies-spring-webmvc/api/
