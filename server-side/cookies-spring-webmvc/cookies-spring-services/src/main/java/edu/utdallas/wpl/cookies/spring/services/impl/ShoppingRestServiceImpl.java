@@ -29,8 +29,6 @@ import edu.utdallas.wpl.cookies.spring.biz.manager.ShoppingServiceManager;
 import edu.utdallas.wpl.cookies.spring.common.dto.PublishedBids;
 import edu.utdallas.wpl.cookies.spring.common.dto.ShoppingInfo;
 import edu.utdallas.wpl.cookies.spring.common.dto.TransactionInfo;
-import edu.utdallas.wpl.cookies.spring.dao.orm.PublishedBidsEntity;
-import edu.utdallas.wpl.cookies.spring.dao.repository.PublishedBidsRepository;
 import edu.utdallas.wpl.cookies.spring.services.ShoppingRestService;
 
 @Controller
@@ -98,12 +96,11 @@ public class ShoppingRestServiceImpl implements ShoppingRestService {
 			Integer bidId = transactionInfo.getBid().getBidId();
 			System.out.println("Bid poster>"+bidPoster);
 			System.out.println("Bid receiver>"+bidReceiver+" bid id "+bidId);
-		//	sendMail(from, password, bidPoster, bidReciver);
-
+			
+			sendMail("wpl.admn@gmail.com", "passwordWpl", bidPoster, bidReceiver);
 		}
 
 		return ResponseEntity.ok(shoppingInfoList);
-
 	}
 
 	private ShoppingInfo convertTransactionToshopping(TransactionInfo transactionInfo) {
