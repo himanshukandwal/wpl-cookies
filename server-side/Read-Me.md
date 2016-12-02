@@ -8,4 +8,7 @@
                clientAuth="false" sslProtocol="TLS" />
                
                
-# In ce
+# In case of Errors regarding Java permissions, add the following line in catalina.properties:
+    permission java.security.AllPermission;
+    
+    Note: Add this in WEB APPLICATION PERMISSIONS
