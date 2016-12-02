@@ -1,5 +1,7 @@
 package edu.utdallas.wpl.cookies.spring.dao.orm;
 
+import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 
 @Entity(name = "address")
-public class AddressEntity {
+public class AddressEntity implements Serializable{
 
     @Id
     @Basic(optional = false)

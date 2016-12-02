@@ -1,5 +1,6 @@
 package edu.utdallas.wpl.cookies.spring.dao.orm;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -14,7 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity(name = "userinfo")
-public class UserInformationEntity {
+public class UserInformationEntity implements Serializable{
 	
     @Id
     @Basic(optional = false)

@@ -1,5 +1,6 @@
 package edu.utdallas.wpl.cookies.spring.dao.orm;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -13,7 +14,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity(name = "published_bids_info")
-public class PublishedBidsEntity {
+public class PublishedBidsEntity implements Serializable {
 
 	@Id
 	@Column(name = "BID_ID", nullable = false)

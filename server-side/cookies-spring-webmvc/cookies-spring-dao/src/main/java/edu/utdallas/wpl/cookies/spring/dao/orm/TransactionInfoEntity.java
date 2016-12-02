@@ -1,5 +1,7 @@
 package edu.utdallas.wpl.cookies.spring.dao.orm;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 @Entity(name = "transaction_info")
-public class TransactionInfoEntity {
+public class TransactionInfoEntity implements Serializable{
 
 	@Id
 	@Column(name = "TRAN_ID", nullable = false)

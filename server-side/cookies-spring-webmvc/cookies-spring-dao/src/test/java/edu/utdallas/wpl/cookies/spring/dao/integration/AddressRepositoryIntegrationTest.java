@@ -45,9 +45,9 @@ public class AddressRepositoryIntegrationTest {
 	@Test
 	public void testCreateAddress() {
 		
-	List<AddressEntity>	 addressEntities=addressRepository.getAll();
+	/*List<AddressEntity>	 addressEntities=addressRepository.getAll();
 	System.out.println(hibenateTemplate.getSessionFactory().getCurrentSession());
-	System.out.println("size is "+addressEntities.size());
+	System.out.println("size is "+addressEntities.size());*/
 	//FullTextSession fullTestSession = Search.getFullTextSession(hibenateTemplate.getSessionFactory().getCurrentSession());
 		
 	
@@ -61,6 +61,10 @@ public class AddressRepositoryIntegrationTest {
 		addressEntity.setCity("Richardson");
 		addressEntity.setState("Texas");*/
 		//addressRepository.save(addressEntity);
+		System.out.println("calling without cache>>>.");
+		AddressEntity addressEntity =addressRepository.get(624);
+		System.out.println("calling from cache>>>>>");
+		AddressEntity addressEntity2 =addressRepository.get(624);
 		
 	}
 	

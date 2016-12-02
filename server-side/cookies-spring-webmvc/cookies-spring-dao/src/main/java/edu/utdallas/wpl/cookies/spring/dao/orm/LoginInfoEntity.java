@@ -1,5 +1,6 @@
 package edu.utdallas.wpl.cookies.spring.dao.orm;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,7 +10,7 @@ import javax.persistence.IdClass;
 
 @Entity(name = "login_info")
 @IdClass(LoginInfoEntityPk.class)
-public class LoginInfoEntity {
+public class LoginInfoEntity implements Serializable{
 	
 	@Id
 	private UserInformationEntity user;

@@ -1,11 +1,5 @@
 package edu.utdallas.wpl.cookies.spring.dao.repository;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.hibernate.Criteria;

@@ -1,5 +1,7 @@
 package edu.utdallas.wpl.cookies.spring.dao.orm;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 @Entity(name = "shoppingtable")
-public class ShoppingInfoEntity {
+public class ShoppingInfoEntity implements Serializable {
 	@Id
 	@Column(name = "shopping_id", nullable = false)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SHOPPING_SEQUENCE")

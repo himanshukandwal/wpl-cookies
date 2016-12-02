@@ -1,5 +1,7 @@
 package edu.utdallas.wpl.cookies.spring.dao.orm;
 
+import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,7 +18,7 @@ import javax.persistence.SequenceGenerator;
 import edu.utdallas.wpl.cookies.spring.dao.orm.enums.ApartmentType;
 
 @Entity(name = "apartment_info")
-public class ApartmentEntity {
+public class ApartmentEntity implements Serializable{
 
 	@Id
     @Basic(optional = false)
