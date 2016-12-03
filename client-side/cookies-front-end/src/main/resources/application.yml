@@ -1,12 +1,12 @@
 server:
     port: 9000     
-#    ssl:
-#      key-store: keystore.p12
-#      key-store-password: Cookies123
-#      keyStoreType: PKCS12
-#      keyAlias: tomcat
+    ssl:
+      key-store: /Users/Heman/Documents/workstation/Developement_Studio/Java_Laboratory/wpl-cookies/backend-side/keys/cookies-server.jks
+      key-store-password: Cookies123
+      keyStoreType: JKS
+      keyAlias: tomcat
     compression:
       enabled: true
       mime-types: text/html,text/css,application/javascript,application/json
 services:
-    url:  http://localhost:8080/cookies-spring-webmvc/api/
+    url:  https://localhost:8443/cookies-spring-webmvc/api/
