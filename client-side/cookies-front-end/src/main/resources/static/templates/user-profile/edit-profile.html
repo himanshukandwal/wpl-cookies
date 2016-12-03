@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">First name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" ng-model="profile.userInfo.firstName" type="text" >
+                        <input required class="form-control" ng-model="profile.userInfo.firstName" type="text" >
                     </div>
                 </div>
 
@@ -56,21 +56,21 @@
                 <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Last Name:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" ng-model="profile.userInfo.lastName" type="text">
+                        <input required class="form-control" ng-model="profile.userInfo.lastName" type="text">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-3 control-label white-stylish-text">Sex:</label>
                     <div class="col-md-8">
-                        <select ng-model="profile.userInfo.sex" ng-options="x for x in profile.gender"/>
+                        <select required ng-model="profile.userInfo.sex" ng-options="x for x in profile.gender"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Email:</label>
                     <div class="col-lg-8">
-                        <input class="form-control" ng-model="profile.userInfo.email" type="text">
+                        <input required class="form-control" ng-model="profile.userInfo.email" type="text">
                     </div>
                 </div>
                 <!--  <div class="form-group">
@@ -82,7 +82,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label white-stylish-text">Password:</label>
                     <div class="col-md-8">
-                        <input class="form-control" ng-model="profile.userInfo.password" type="password">
+                        <input required class="form-control" ng-model="profile.userInfo.password" type="password">
                     </div>
                 </div>
 
