@@ -111,7 +111,6 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
                         if (status === 'OK') {
                             if (results[1]) {
                                 console.log(results[1].formatted_address);
-
                                 self.userInfo.locationName = results[1].formatted_address;
                                 self.userInfo.lastLogin = parseFloat(new Date().getTime());
 

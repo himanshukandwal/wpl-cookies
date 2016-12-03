@@ -12,7 +12,7 @@
 	<logger name="net.sf.ehcache" level="ALL"/> 
 	
 
-	<root level="ALL">
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>
 

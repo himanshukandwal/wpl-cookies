@@ -112,9 +112,11 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         self.successfulPosting = false;
 
         self.apartmentTypes = [ '1 BHK', '2 BHK', '3 BHK', 'House' ];
-        self.bid = { owner :  self.userInfo, addressEntity: self.address, hostedDate : new Date(), activeInd: 'Y', modifiedDate : new Date().getTime() };
+        self.bid = { owner :  self.userInfo, addressEntity: self.address, activeInd: 'Y' };
 
         self.postBid = function () {
+            self.bid.modifiedDate =  new Date().getTime();
+            self.bid.hostedDate =  new Date().getTime();
 
             $http.post('/api/postBid', self.bid).then(function (response) {
                 console.log(response.data.status);
@@ -132,103 +134,17 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         };
 
     })
-    .controller('all-bids', function($http, $stateParams, $state, $timeout, $scope) {
+    .controller('all-bids', function($http, $stateParams, $state, $timeout, $scope, Poller) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
 
-        $scope.rowCollection = [];
-
-        if (localStorage.getItem('all-bids')) {
-            console.log('getting delta bids !');
-
-            var loadTime = 5000, //Load the data every second
-                loadPromise; //Pointer to the promise created by the Angular $timout service
-
-            var generate_bids = function() {
-                console.log('fetching new sequence');
-
-                $http.get('/api/getBids/' + localStorage.getItem('all-bids-access-time')).then(function (response) {
-
-                    localStorage.setItem('all-bids-access-time', new Date().getTime());
-
-                    var existing_bids = JSON.parse(localStorage.getItem('all-bids'));
-
-                    if (response.data.bid.length > 0) {
-
-                        // update existing data and add new one.
-                        angular.forEach(response.data.bid, function (value, key) {
-                            console.log('new data : [' + key + "] : [" + JSON.stringify(value) + "]");
-                            existing_bids[value.bidId] = value;
-                        });
-
-                        localStorage.setItem('all-bids', JSON.stringify(existing_bids));
-                    }
-
-                    $scope.rowCollection = [];
-
-                    angular.forEach(existing_bids, function (value, key) {
-                        $scope.rowCollection.push(value);
-                    });
-
-                    next_generation();
-                }, function (response) {
-                    console.log(response.data);
-                });
-            };
-
-            var cancelNextLoad = function() {
-                $timeout.cancel(loadPromise);
-            };
-
-            var next_generation = function(mill) {
-                mill = mill || loadTime;
-
-                //Always make sure the last timeout is cleared before starting a new one
-                cancelNextLoad();
-                $timeout(generate_bids, mill);
-            };
-
-            //Start polling the data from the server
-            generate_bids();
-
-            //Always clear the timeout when the view is destroyed, otherwise it will keep polling
-            $scope.$on('$routeChangeStart', function (scope, next, current) {
-                if (next.$$route.controller != "Your Controller Name") {
-                    cancelNextLoad;// clear interval here
-                }
-            });
-
-        } else {
-            console.log('getting all bids !');
-
-            $http.get('/api/getBids/').then(function (response) {
-                var existing_bids = {};
-                $scope.rowCollection = [];
-
-                localStorage.setItem('all-bids-access-time', new Date().getTime());
-
-                if (response.data.bid.length > 0) {
-                    // update existing data and add new one.
-                    angular.forEach(response.data.bid, function (value, key) {
-                        existing_bids[value.bidId] = value;
-                    });
-
-                    angular.forEach(existing_bids, function (value, key) {
-                        $scope.rowCollection.push(value);
-                    });
-
-                    localStorage.setItem('all-bids', JSON.stringify(existing_bids));
-                }
-            }, function (response) {
-                console.log(response.data);
-            });
-        }
+        $scope.rowCollection = Poller.data.collection;
 
         self.selectItem = function (bid) {
             $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid });
         };
 
-        $scope.mySearch = function (bid) { return  (bid.owner.id == self.userInfo.id) ? true : false; };
+        self.mySearch = function (bid) { return  (bid.owner.id == self.userInfo.id) ? true : false; };
 
     })
     .controller('bid-detail', function($http, $stateParams) {
@@ -392,4 +308,83 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid });
         };
 
+    })
+    .run(function(Poller) {})
+    .factory('Poller', function($http, $timeout) {
+        var data = { collection: [] };
+
+        var rowCollection = [];
+
+        var poller = function() {
+
+            if (localStorage.getItem('all-bids')) {
+                console.log('getting delta bids !');
+
+                var loadTime = 5000; //Load the data every second
+
+                $http.get('/api/getBids/' + localStorage.getItem('all-bids-access-time')).then(function (response) {
+
+                    var existing_bids = JSON.parse(localStorage.getItem('all-bids'));
+
+                    if (response.data.bid.length > 0) {
+
+                        // update existing data and add new one.
+                        angular.forEach(response.data.bid, function (value, key) {
+                            console.log('new data : [' + key + "] : [" + JSON.stringify(value) + "]");
+                            existing_bids[value.bidId] = value;
+                        });
+
+                        localStorage.setItem('all-bids', JSON.stringify(existing_bids));
+                        localStorage.setItem('all-bids-access-time', new Date().getTime());
+
+                    }
+
+                    rowCollection = [];
+
+                    angular.forEach(existing_bids, function (value, key) {
+                        rowCollection.push(value);
+                    });
+
+                    console.log("bids data size : " + rowCollection.length);
+
+                    data.collection = rowCollection;
+
+                }, function (response) {
+                    console.log(response.data);
+                });
+
+            } else {
+                console.log('getting all bids !');
+
+                $http.get('/api/getBids/').then(function (response) {
+                    var existing_bids = {};
+                    rowCollection = [];
+
+                    localStorage.setItem('all-bids-access-time', new Date().getTime());
+
+                    if (response.data.bid.length > 0) {
+
+                        // update existing data and add new one.
+                        angular.forEach(response.data.bid, function (value, key) {
+                            existing_bids[value.bidId] = value;
+                        });
+
+                        angular.forEach(existing_bids, function (value, key) {
+                            rowCollection.push(value);
+                        });
+
+                        data.collection = rowCollection;
+
+                        localStorage.setItem('all-bids', JSON.stringify(existing_bids));
+                    }
+                }, function (response) {
+                    console.log(response.data);
+                });
+            }
+
+            $timeout(poller, loadTime);
+        };
+        poller();
+
+        return {  data: data };
     });
