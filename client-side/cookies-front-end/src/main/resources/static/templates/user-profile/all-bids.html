@@ -45,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="row in rowCollection">
+                    <tr ng-repeat="row in displayedCollection">
                         <td>{{ row.bidId }}</td>
                         <td>{{ row.owner.firstName }}</td>
                         <td>{{ row.hostedDate | date }}</td>
@@ -59,13 +59,13 @@
                         </td>
                     </tr>
                 </tbody>
-                <!--<tfoot>-->
-                <!--<tr>-->
-                <!--<td colspan="5" class="text-center">-->
-                <!--<div st-pagination="" st-items-by-page="15" st-displayed-pages="7"></div>-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--</tfoot>-->
+                <tfoot>
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <div st-pagination="" st-items-by-page="10" st-displayed-pages="7"></div>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>

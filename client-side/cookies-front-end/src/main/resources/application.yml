@@ -1,9 +1,9 @@
 server:
     port: 9000     
     ssl:
-      key-store: keystore.p12
+      key-store: /Users/Heman/Documents/workstation/Developement_Studio/Java_Laboratory/wpl-cookies/backend-side/keys/cookies-server.jks
       key-store-password: Cookies123
-      keyStoreType: PKCS12
+      keyStoreType: JKS
       keyAlias: tomcat
     compression:
       enabled: true
