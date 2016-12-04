@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import edu.utdallas.wpl.cookies.spring.dao.orm.UserInformationEntity;
@@ -21,6 +22,7 @@ public class UserInformationRepository extends GenericDAORepositoryImpl<UserInfo
 	}
 
 	@SuppressWarnings("unchecked")
+	 @Cacheable(cacheNames="cookiecache")
 	public UserInformationEntity getUserInformationByEmail(String email) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserInformationEntity.class);
 		criteria.add(Restrictions.eq("email", email));

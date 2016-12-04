@@ -28,7 +28,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<executions>
-					<!-- States that both integration-test and verify goals of the Failsafe
+					<!-- States that both integration-test and verify goals of the Failsafe 
 						Maven plugin are executed. -->
 					<execution>
 						<id>integration-tests</id>
@@ -181,12 +181,16 @@
 			<artifactId>log4j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-       
-        <dependency>
+
+		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+		</dependency>
+
 		<!-- TEST -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -243,15 +247,16 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
 		</dependency>
-		
+
 		<dependency>
-		<groupId>net.sf.ehcache</groupId>
-		<artifactId>ehcache</artifactId>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			</dependency>
+		</dependency>
+
 	</dependencies>
 
 </project>

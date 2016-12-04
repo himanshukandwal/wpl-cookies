@@ -70,11 +70,11 @@ public  class AddressRestServiceImpl implements AddressRestService {
 			return new ResponseEntity<Address>(HttpStatus.NOT_FOUND);
 		
 		else {
-			Address persistedAddress = addressServiceManager.updateAddress(address);
+			 addressServiceManager.updateAddress(address);
 			
-			LOG.info("updated address with id : " + persistedAddress.getId());
+			LOG.info("updated address with id : " + address.getId());
 			
-			return ResponseEntity.ok(persistedAddress);
+			return ResponseEntity.ok(address);
 		}
 	}
 

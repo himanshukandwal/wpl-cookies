@@ -42,8 +42,8 @@ public class AddressServiceManagerImpl implements AddressServiceManager {
 	}
 
 	@Override
-	public Address updateAddress(Address address) {
-		return mapper.map(addressRepository.save(mapper.map(address, AddressEntity.class)), Address.class);
+	public void updateAddress(Address address) {
+		addressRepository.update(mapper.map(address, AddressEntity.class));
 	}
 
 	@Override

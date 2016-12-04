@@ -12,7 +12,7 @@ public interface AddressServiceManager {
 	
 	public Address getAddress(Integer id);
 	
-	public Address updateAddress(Address address);
+	public void updateAddress(Address address);
 	
 	public void deleteAddress(Address address);
 	

@@ -8,6 +8,7 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
@@ -35,6 +36,7 @@ public class GenericDAORepositoryImpl<T, PK extends Serializable>  implements ID
 
 	@Override
 	@Transactional
+	@Cacheable(cacheNames="cookiecache")
     public T save(T newInstance) {
 		PK id = (PK) hibernateTemplate.save(newInstance);
         return (T) get(id);
@@ -42,18 +44,21 @@ public class GenericDAORepositoryImpl<T, PK extends Serializable>  implements ID
 
     @Override
     @Transactional (readOnly = true)
+    @Cacheable(cacheNames="cookiecache")
     public T get(PK id) {
     	return (T) hibernateTemplate.get(type, id);
     }
 
     @Override
     @Transactional
+	@CacheEvict(beforeInvocation=true,allEntries=true,cacheNames="cookiecache")
     public void update(T transientObject) {
     	hibernateTemplate.update(transientObject);
     }
 
     @Override
     @Transactional
+	@CacheEvict(beforeInvocation=true,allEntries=true,cacheNames="cookiecache")
     public void delete(T persistentObject) {
     	hibernateTemplate.delete(persistentObject);
     }

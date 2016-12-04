@@ -1,9 +1,11 @@
 package edu.utdallas.wpl.cookies.spring.common.dto;
 
+import java.io.Serializable;
+
 /**
  *  @author Himanshu Kandwal, Anirudha KV, Srinivas
  */
-public class Address {
+public class Address implements Serializable {
 
     private Integer id;
     private String line;
