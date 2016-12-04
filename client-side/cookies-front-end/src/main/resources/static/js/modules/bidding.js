@@ -55,34 +55,6 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         var self = this;
         self.userInfo = $stateParams.userInfo;
 
-        if (localStorage.getItem('registered-addresses')) {
-            console.log("retrieving from local storage");
-            self.addresses = localStorage.getItem('registered-addresses');
-        } else {
-            console.log("retrieving from rest service");
-            $http.get('/api/addresses').then(function (response) {
-                self.addresses = response.data.addresses;
-                console.log('got addresses : ' + self.addresses);
-            }, function (response) {
-                self.addresses = [];
-                console.log('error getting addresses ' + response.data);
-            });
-
-            var tempFilterText = '',
-                filterTextTimeout;
-
-            $scope.$watch('searchText', function (val) {
-                if (filterTextTimeout)
-                    $timeout.cancel(filterTextTimeout);
-
-                tempFilterText = val;
-                filterTextTimeout = $timeout(function () {
-                    $scope.filterText = tempFilterText;
-                }, 250); // delay 250 ms
-            });
-            localStorage.setItem('registered-addresses', self.addresses);
-        };
-
         self.newAddress = { countryCode : 'US' };
 
         self.states = [ 'AL' , 'AK' , 'AZ' , 'AR' , 'CA' , 'CO' , 'CT' , 'DE' , 'FL' , 'GA' , 'HI' , 'ID' , 'IL' , 'IN' , 'IA' , 'KS' , 'KY' , 'LA' ,

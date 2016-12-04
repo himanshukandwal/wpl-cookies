@@ -2,8 +2,7 @@
 
     <div class="page-header row">
         <div class="col-lg-8 col-sm-8">
-            <label ng-hide="profile.toCreateAddress" class="white-stylish-text-super-big">Find Address</label>
-            <label ng-show="profile.toCreateAddress" class="white-stylish-text-super-big">Create a new Address</label>
+            <label class="white-stylish-text-super-big">Create a new Address</label>
         </div>
         <div class="col-lg-2 col-sm-2">
             <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
@@ -19,38 +18,16 @@
         <!-- left column -->
         <div class="col-md-4 col-sm-6 col-xs-12">
 
-            <div ng-hide="profile.toCreateAddress" class="text-center">
-                <img class="avatar img-circle img-thumbnail" ng-src="../../images/address-search.png">
-            </div>
-
-            <div ng-show="profile.toCreateAddress" class="text-center">
+            <div class="text-center">
                 <img class="avatar img-circle img-thumbnail" ng-src="../../images/address-create.png">
             </div>
 
         </div>
 
         <!-- edit form column -->
-        <div class="col-md-8 col-sm-6 col-xs-12 personal-info" ng-init="profile.toCreateAddress = false;">
+        <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
 
-            <div ng-hide="profile.toCreateAddress" auto-close="outsideClick">
-                <label class="col-md-3 control-label white-stylish-text-big">Locate Address:</label>
-
-                <div class="col-md-8" role="menu">
-                    <div class="bar">
-                        <input type="search" ng-model="searchFilter" placeholder="Search" style="width: 100%"/>
-                    </div>
-
-                    <ul ng-show="searchFilter && searchFilter != ''">
-                        <li ng-repeat="address in profile.addresses | filter: searchFilter track by $index">
-                            <a ng-click="profile.selectEntity(address);">{{ address.city + ',' + address.state + ',' + address.zipCode }}</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <label class="white-stylish-text" ng-click="profile.toCreateAddress = true">can't find address, create one</label>
-            </div>
-
-            <form ng-show="profile.toCreateAddress" class="form-horizontal" role="form" ng-submit="profile.createAddress()">
+            <form class="form-horizontal" role="form" ng-submit="profile.createAddress()">
 
                 <div class="form-group">
                     <label class="col-lg-3 control-label white-stylish-text">Address line:</label>
