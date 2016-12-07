@@ -100,6 +100,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
                 var existing_bids = JSON.parse(localStorage.getItem('all-bids'));
                 existing_bids[response.data.bid.bidId] = response.data.bid;
                 localStorage.setItem('all-bids', JSON.stringify(existing_bids));
+                localStorage.setItem('posted-recently', true);
 
                 $timeout(function() {
                     $state.go('user-profile', { userInfo : self.userInfo, token : self.token });
@@ -117,13 +118,26 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         self.userInfo = $stateParams.userInfo;
         self.token = $stateParams.token;
 
-        $scope.rowCollection = Poller.data.collection;
+        $scope.rowCollection = [];
+
+        if (localStorage.getItem('posted-recently')) {
+            var existing_bids = JSON.parse(localStorage.getItem('all-bids'));
+
+            angular.forEach(existing_bids, function (value, key) {
+                $scope.rowCollection.push(value);
+            });
+
+            localStorage.removeItem('posted-recently');
+        } else
+            $scope.rowCollection = Poller.data.collection;
 
         self.selectItem = function (bid) {
             $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid, token : self.token });
         };
 
         self.mySearch = function (bid) { return  (bid.owner.id == self.userInfo.id) ? true : false; };
+
+        self.otherSearch = function (bid) { return  (bid.owner.id != self.userInfo.id) ? true : false; };
 
     })
     .controller('bid-detail', function($http, $stateParams) {
@@ -257,7 +271,18 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         $scope.rowCollection = [];
         self.searchText = '';
 
-        var completeCollection = Poller.data.collection;
+        var completeCollection = [];
+
+        if (localStorage.getItem('posted-recently')) {
+            var existing_bids = JSON.parse(localStorage.getItem('all-bids'));
+
+            angular.forEach(existing_bids, function (value, key) {
+                completeCollection.push(value);
+            });
+
+            localStorage.removeItem('posted-recently');
+        } else
+            completeCollection = Poller.data.collection;
 
         self.searchByFullTextSearch = function () {
 
@@ -286,6 +311,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         };
 
     })
+    .run(function(Poller) {})
     .factory('Poller', function($http, $timeout) {
         var data = { collection: [] };
 

@@ -45,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="row in displayedCollection">
+                    <tr ng-repeat="row in displayedCollection | bids.otherSearch ">
                         <td>{{ row.bidId }}</td>
                         <td>{{ row.owner.firstName }}</td>
                         <td>{{ row.hostedDate | date }}</td>

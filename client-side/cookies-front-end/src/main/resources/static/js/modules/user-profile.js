@@ -11,8 +11,6 @@ angular.module('userProfileModule', ['ui.router', 'biddingModule'])
         var self = this;
         self.userInfo = $stateParams.userInfo;
         self.token = $stateParams.token;
-
-        angular.module('biddingModule').run(function(Poller) {});
     })
     .controller('edit-profile', function($http, $state, $stateParams) {
         var self = this;
