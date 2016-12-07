@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,15 +30,14 @@ public class ApplicationController {
 		return model;
 	}
 	
-	@RequestMapping(value = "/contactus" , method = RequestMethod.POST)
-	public Map<String,Object> saveContactUs(@RequestBody Map<String, Object> userInformationMap){
+	@RequestMapping(value = "/contactus/{token}" , method = RequestMethod.POST)
+	public Map<String,Object> saveContactUs(@PathVariable String token, @RequestBody Map<String, Object> userInformationMap){
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
 		//UserInformation result = restTemplate.getForObject(webserviceUrl + "/userlogin/"+email+"/"+password, UserInformation.class);
-	    System.out.println("FirstName>>>>>>>>>>> "+userInformationMap.get("firstName"));
+	    System.out.println("FirstName>>>>>>>>>>> " + userInformationMap.get("firstName"));
 		model.put("status", "success");
-		//model.put("userInfo", new Object());
 		return model;
 	}
 

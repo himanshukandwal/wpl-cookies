@@ -1,5 +1,5 @@
 <div class="container centered" ng-controller="static-profile as profile">
     <h1>Congratulations {{ profile.userInfo.firstName }}, Registration Successful !</h1>
     <hr>
-    <p><a class="btn btn-lg btn-primary" ui-sref="user-profile({ userInfo : profile.userInfo })" role="button">Continue to Website</a></p>
+    <p><a class="btn btn-lg btn-primary" ui-sref="user-profile({ userInfo : profile.userInfo, token : profile.token })" role="button">Continue to Website</a></p>
 </div>

@@ -6,11 +6,11 @@
         </div>
         <div class="col-lg-2 col-sm-2">
             <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"
-                    ui-sref="user-profile({ userInfo : bd.userInfo })">Back</button>
+                    ui-sref="user-profile({ userInfo : bd.userInfo, token : bd.token })">Back</button>
         </div>
         <div ng-show="bd.isMyBid" class="col-lg-2 col-sm-2">
             <button class="btn btn-lg btn-primary" style="width: 100%" type="submit" role="button"
-                    ui-sref="user-shopping-cart({ userInfo : bd.userInfo , bid : bd.bid })">Shopping Cart</button>
+                    ui-sref="user-shopping-cart({ userInfo : bd.userInfo , bid : bd.bid, token : bd.token })">Shopping Cart</button>
         </div>
         <div class="col-lg-2 col-sm-2">
             <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button"

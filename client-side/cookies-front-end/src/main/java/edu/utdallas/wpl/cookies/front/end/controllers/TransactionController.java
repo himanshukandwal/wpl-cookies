@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,36 +28,49 @@ public class TransactionController {
 	@Value("${services.url}")
 	private String webserviceUrl;
 	
-	@RequestMapping(value = "/createTransaction", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> createTransaction(@RequestBody Map<String, Object> transactionMap) {
+	@RequestMapping(value = "/createTransaction/{token}", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> createTransaction(@PathVariable String token, @RequestBody Map<String, Object> transactionMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.add("token", token);
+		
+		HttpEntity<Map<String, Object>> httpRequestEntity = new HttpEntity<Map<String, Object>>(transactionMap, requestHeaders);
+
 		// web service invocation.
-		ResponseEntity<TransactionInfo> responseEntity = restTemplate.postForEntity(webserviceUrl + "/saveInterestedBid", transactionMap, TransactionInfo.class);
-				
+		ResponseEntity<TransactionInfo> responseEntity = restTemplate.exchange(webserviceUrl + "/saveInterestedBid", HttpMethod.POST, httpRequestEntity, TransactionInfo.class);
+						
 		model.put("transaction", responseEntity.getBody());
 		return model;
 	}
 	
-	@RequestMapping(value = "/updateTransaction/{bidStatus}", method = RequestMethod.PUT)
-	public @ResponseBody Map<String, Object> updateTransaction(@PathVariable String bidStatus, @RequestBody Map<String, Object> transactionMap) {
+	@RequestMapping(value = "/updateTransaction/{bidStatus}/{token}", method = RequestMethod.PUT)
+	public @ResponseBody Map<String, Object> updateTransaction(@PathVariable String bidStatus, @PathVariable String token, @RequestBody Map<String, Object> transactionMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.add("token", token);
+		
+		HttpEntity<Map<String, Object>> httpRequestEntity = new HttpEntity<Map<String, Object>>(transactionMap, requestHeaders);
+		
 		// web service invocation.
-		restTemplate.put(webserviceUrl + "/updateBidStatus/" + bidStatus, transactionMap);
+		ResponseEntity<TransactionInfo> responseEntity = restTemplate.exchange(webserviceUrl + "/updateBidStatus/" + bidStatus, HttpMethod.PUT, httpRequestEntity, TransactionInfo.class);
 				
-		TransactionInfo result = restTemplate.getForObject(webserviceUrl + "/getTransactionById/" + transactionMap.get("tranId"), TransactionInfo.class);
-
-		model.put("transaction", result);
+		model.put("transaction", responseEntity.getBody());
 		return model;		
 	}
 	
-	@RequestMapping(value = "/getTransactions/{bidId}", method = RequestMethod.GET)
-	public @ResponseBody Map<String, Object> getTransactionsByBId(@PathVariable Integer bidId) {
+	@RequestMapping(value = "/getTransactions/{bidId}/{token}", method = RequestMethod.GET)
+	public @ResponseBody Map<String, Object> getTransactionsByBId(@PathVariable Integer bidId, @PathVariable String token) {
 		Map<String,Object> model = new HashMap<String,Object>();
+
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.add("token", token);
+		
+		HttpEntity<Map<String, Object>> httpRequestEntity = new HttpEntity<Map<String, Object>>(requestHeaders);
 		
 		// web service invocation.
-		ResponseEntity<TransactionInfo[]> responseEntity = restTemplate.getForEntity(webserviceUrl + "/getTransactionByBid/" + bidId, TransactionInfo[].class);
+		ResponseEntity<TransactionInfo[]> responseEntity = restTemplate.exchange(webserviceUrl + "/getTransactionByBid/" + bidId, HttpMethod.GET, httpRequestEntity, TransactionInfo[].class);
 				
 		model.put("transaction", responseEntity.getBody());
 		return model;

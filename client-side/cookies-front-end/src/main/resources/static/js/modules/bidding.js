@@ -3,49 +3,49 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         $stateProvider
             .state('find-address-post-bid', {
                 url : '/user-profile/find-address-for-new-bid',
-                params : { userInfo : null },
+                params : { userInfo : null, token : null },
                 templateUrl : '../../templates/user-profile/find-address.html',
                 controller : 'find-address'
             })
             .state('user-post-bid', {
                 url : '/user-profile/new-bid',
                 templateUrl : '../../templates/user-profile/post-bid.html',
-                params : { userInfo : null, address : null },
+                params : { userInfo : null, address : null, token : null },
                 controller : 'post-bid'
             })
             .state('user-show-all-bids', {
                 url : '/user-profile/user-show-all-bids',
                 templateUrl : '../../templates/user-profile/all-bids.html',
-                params : { userInfo : null },
+                params : { userInfo : null, token : null },
                 controller : 'all-bids'
             })
             .state('user-show-my-bids', {
                 url : '/user-profile/user-show-my-bids',
                 templateUrl : '../../templates/user-profile/user-bids.html',
-                params : { userInfo : null },
+                params : { userInfo : null, token : null },
                 controller : 'all-bids'
             })
             .state('user-show-bid-detail', {
                 url : '/user-profile/user-show-bid-detail',
                 templateUrl : '../../templates/user-profile/bid-detail.html',
-                params : { userInfo : null, bid : null },
+                params : { userInfo : null, bid : null, token : null },
                 controller : 'bid-detail'
             })
             .state('user-shopping-cart', {
                 url : '/user-profile/user-shopping-cart',
                 templateUrl : '../../templates/user-profile/shopping-cart.html',
-                params : { userInfo : null, bid : null },
+                params : { userInfo : null, bid : null, token : null },
                 controller : 'shopping-cart'
             })
             .state('user-checkout-success', {
                 url : '/user-profile/user-checkout-success',
                 templateUrl : '../../templates/user-profile/checkout-successful.html',
-                params : { userInfo : null, bid : null, otherParty : null },
+                params : { userInfo : null, bid : null, otherParty : null, token : null },
                 controller : 'checkout-success'
             })
             .state('search-bids', {
                 url : '/user-profile/search-bids',
-                params : { userInfo : null },
+                params : { userInfo : null, token : null },
                 templateUrl : '../../templates/user-profile/bid-search.html',
                 controller : 'search-bids'
             });
@@ -54,6 +54,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
     .controller('find-address', function ($http, $timeout, $stateParams, $state, $scope) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
+        self.token = $stateParams.token;
 
         self.newAddress = { countryCode : 'US' };
 
@@ -63,9 +64,9 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
 
         self.createAddress = function () {
             console.log(JSON.stringify(self.newAddress));
-            $http.post('/api/address', self.newAddress).then(function (response) {
+            $http.post('/api/address/' + self.token, self.newAddress).then(function (response) {
                 self.message = false;
-                $state.go('user-post-bid', { userInfo : self.userInfo, address : response.data.address });
+                $state.go('user-post-bid', { userInfo : self.userInfo, address : response.data.address, token : self.token });
             }, function (response) {
                 console.log(response.data.status);
                 self.message = "error posting user !";
@@ -80,6 +81,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         var self = this;
         self.userInfo = $stateParams.userInfo;
         self.address = $stateParams.address;
+        self.token = $stateParams.token;
 
         self.successfulPosting = false;
 
@@ -90,13 +92,17 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             self.bid.modifiedDate =  new Date().getTime();
             self.bid.hostedDate =  new Date().getTime();
 
-            $http.post('/api/postBid', self.bid).then(function (response) {
+            $http.post('/api/postBid/' + self.token, self.bid).then(function (response) {
                 console.log(response.data.status);
                 self.message = false;
                 self.successfulPosting = true;
 
+                var existing_bids = JSON.parse(localStorage.getItem('all-bids'));
+                existing_bids[response.data.bid.bidId] = response.data.bid;
+                localStorage.setItem('all-bids', JSON.stringify(existing_bids));
+
                 $timeout(function() {
-                    $state.go('user-profile', { userInfo : self.userInfo });
+                    $state.go('user-profile', { userInfo : self.userInfo, token : self.token });
                 }, 3000);
 
             }, function (response) {
@@ -109,11 +115,12 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
     .controller('all-bids', function($http, $stateParams, $state, $timeout, $scope, Poller) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
+        self.token = $stateParams.token;
 
         $scope.rowCollection = Poller.data.collection;
 
         self.selectItem = function (bid) {
-            $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid });
+            $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid, token : self.token });
         };
 
         self.mySearch = function (bid) { return  (bid.owner.id == self.userInfo.id) ? true : false; };
@@ -122,6 +129,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
     .controller('bid-detail', function($http, $stateParams) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
+        self.token = $stateParams.token;
         self.bid = $stateParams.bid;
 
         self.transaction = { bid : self.bid, bidReceiver : self.userInfo, bidStatus : 'INTERESTED' };
@@ -130,7 +138,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
 
         self.isMyBid = self.bid.owner.id == self.userInfo.id;
 
-        $http.get('/api/getTransactions/' + self.bid.bidId).then(function (response) {
+        $http.get('/api/getTransactions/' + self.bid.bidId + '/' + self.token).then(function (response) {
             self.bidTransactions = response.data.transaction;
         }, function (response) {
             console.log(response.data);
@@ -139,7 +147,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         self.selectTransaction = function (transaction) {
             delete transaction.$$hashKey;
 
-            $http.put('/api/updateTransaction/FINALISED', transaction).then(function () {
+            $http.put('/api/updateTransaction/FINALISED/' + self.token, transaction).then(function () {
                 transaction.bidStatus = 'FINALISED';
                 console.log('updated status successfully.');
 
@@ -152,7 +160,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         self.createTransactionItem = function () {
             self.message = false;
 
-            $http.post('/api/createTransaction', self.transaction).then(function (response) {
+            $http.post('/api/createTransaction/' + self.token, self.transaction).then(function (response) {
                 console.log(response.data.status);
                 self.message = false;
                 self.bidTransactions.push(response.data.transaction);
@@ -174,11 +182,12 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
     .controller('shopping-cart', function($http, $stateParams, $state) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
+        self.token = $stateParams.token;
         self.bid = $stateParams.bid;
 
         self.bidTransactions = [];
 
-        $http.get('/api/getTransactions/' + self.bid.bidId).then(function (response) {
+        $http.get('/api/getTransactions/' + self.bid.bidId + '/' + self.token).then(function (response) {
             self.bidTransactions = response.data.transaction;
         }, function (response) {
             console.log(response.data);
@@ -191,7 +200,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         self.removeTransaction = function (transaction) {
             delete transaction.$$hashKey;
 
-            $http.put('/api/updateTransaction/INTERESTED', transaction).then(function () {
+            $http.put('/api/updateTransaction/INTERESTED/' + self.token, transaction).then(function () {
                 transaction.bidStatus = 'INTERESTED';
                 console.log('updated status successfully.');
 
@@ -209,7 +218,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
                     checkoutBidTransactions.push(value);
             });
 
-            $http.post('/api/checkoutCart', checkoutBidTransactions).then(function (response) {
+            $http.post('/api/checkoutCart/' + self.token, checkoutBidTransactions).then(function (response) {
                 self.message = false;
 
                 var otherParty = [];
@@ -222,7 +231,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
                 }).join(", ");
 
                 console.log('checked-out successfully !');
-                $state.go('user-checkout-success', { userInfo : self.userInfo, bid : self.bid , otherParty : uniqueList });
+                $state.go('user-checkout-success', { userInfo : self.userInfo, bid : self.bid , otherParty : uniqueList, token : self.token });
             }, function (response) {
                 console.log(response.data.status);
                 self.message = "error checkout items !";
@@ -232,27 +241,23 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
     .controller('checkout-success', function($stateParams, $timeout, $state) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
+        self.token = $stateParams.token;
         self.bid = $stateParams.bid;
         self.otherParty = $stateParams.otherParty;
 
         $timeout(function() {
-            $state.go('user-show-my-bids', { userInfo : self.userInfo });
+            $state.go('user-show-my-bids', { userInfo : self.userInfo, token : self.token });
         }, 5000);
     })
-    .controller('search-bids', function($http, $stateParams, $scope, $state) {
+    .controller('search-bids', function($http, $stateParams, $scope, $state, Poller) {
         var self = this;
         self.userInfo = $stateParams.userInfo;
+        self.token = $stateParams.token;
 
         $scope.rowCollection = [];
         self.searchText = '';
 
-        var completeCollection = [];
-
-        $http.get('/api/getBids').then(function (response) {
-            completeCollection = response.data.bid;
-        }, function (response) {
-            console.log(response.data);
-        });
+        var completeCollection = Poller.data.collection;
 
         self.searchByFullTextSearch = function () {
 
@@ -277,11 +282,10 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         };
 
         self.selectItem = function (bid) {
-            $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid });
+            $state.go('user-show-bid-detail', { userInfo : self.userInfo, bid : bid, token : self.token });
         };
 
     })
-    .run(function(Poller) {})
     .factory('Poller', function($http, $timeout) {
         var data = { collection: [] };
 
@@ -292,9 +296,9 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             if (localStorage.getItem('all-bids')) {
                 console.log('getting delta bids !');
 
-                var loadTime = 5000; //Load the data every second
+                var loadTime = 60000; //Load the data every second
 
-                $http.get('/api/getBids/' + localStorage.getItem('all-bids-access-time')).then(function (response) {
+                $http.get('/api/getBids/' + localStorage.getItem('all-bids-access-time') + '/Y29va2llcywxNDgxMzQzNjE0NTUx').then(function (response) {
 
                     var existing_bids = JSON.parse(localStorage.getItem('all-bids'));
 
@@ -328,7 +332,7 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
             } else {
                 console.log('getting all bids !');
 
-                $http.get('/api/getBids/').then(function (response) {
+                $http.get('/api/getBids/Y29va2llcywxNDgxMzQzNjE0NTUx').then(function (response) {
                     var existing_bids = {};
                     rowCollection = [];
 
@@ -358,5 +362,5 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
         };
         poller();
 
-        return {  data: data };
+        return {  data : data };
     });

@@ -33,7 +33,7 @@
                     <div class="title">
                         <p class="white-stylish-text">{{ profile.userInfo.firstName }}</p>
                         <br>
-                        <p><button class="glyphicon glyphicon-pencil" type="submit" role="button" ui-sref="edit-profile({ userInfo : profile.userInfo })"/></p>
+                        <p><button class="glyphicon glyphicon-pencil" type="submit" role="button" ui-sref="edit-profile({ userInfo : profile.userInfo, token : profile.token })"/></p>
                     </div>
                 </div>
 
@@ -46,19 +46,19 @@
             <div style="height:10px;"/>
 
             <div class="activity-card centered">
-                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="find-address-post-bid({ userInfo : profile.userInfo })">Post a new Bid</button>
+                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="find-address-post-bid({ userInfo : profile.userInfo, token : profile.token })">Post a new Bid</button>
             </div>
 
             <div class="activity-card centered">
-                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="search-bids({ userInfo : profile.userInfo })">Search Bids</button>
+                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="search-bids({ userInfo : profile.userInfo, token : profile.token })">Search Bids</button>
             </div>
 
             <div class="activity-card centered">
-                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="user-show-all-bids({ userInfo : profile.userInfo })">Active Bids</button>
+                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="user-show-all-bids({ userInfo : profile.userInfo, token : profile.token })">Active Bids</button>
             </div>
 
             <div class="activity-card centered">
-                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="user-show-my-bids({ userInfo : profile.userInfo })">My Bids</button>
+                <button class="btn btn-lg btn-primary" style="width: 80%" type="submit" role="button" ui-sref="user-show-my-bids({ userInfo : profile.userInfo, token : profile.token })">My Bids</button>
             </div>
 
         </div>

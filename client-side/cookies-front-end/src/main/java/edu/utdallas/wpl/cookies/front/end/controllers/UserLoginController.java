@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +30,11 @@ public class UserLoginController {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		UserInformation result = restTemplate.postForObject(webserviceUrl + "/userinfo", userInformationMap, UserInformation.class);
+		ResponseEntity<UserInformation> resultEntity = restTemplate.postForEntity(webserviceUrl + "/userinfo", userInformationMap, UserInformation.class);
 		
-		model.put("status", (result != null) ? "success" : "failure");
-		model.put("userInfo", result);
+		model.put("status", (resultEntity.getBody() != null) ? "success" : "failure");
+		model.put("userInfo", resultEntity.getBody());
+		model.put("userToken", resultEntity.getHeaders().get("X-Cookies-Token"));
 		return model;
 	}
 	
@@ -41,10 +43,11 @@ public class UserLoginController {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
 		// web service invocation.
-		UserInformation result = restTemplate.getForObject(webserviceUrl + "/userinfo/"+email+"/"+password, UserInformation.class);
+		ResponseEntity<UserInformation> resultEntity = restTemplate.getForEntity(webserviceUrl + "/userinfo/" + email + "/" + password, UserInformation.class);
 	    
 		model.put("status", "success");
-		model.put("userInfo", result);
+		model.put("userInfo", resultEntity.getBody());
+		model.put("userToken", resultEntity.getHeaders().get("X-Cookies-Token"));
 		return model;
 	}
 	

@@ -5,6 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,34 +28,49 @@ public class BidsController {
 	@Value("${services.url}")
 	private String webserviceUrl;
 	
-	@RequestMapping(value = "/postBid", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> postBid(@RequestBody Map<String, Object> bidMap) {
+	@RequestMapping(value = "/postBid/{token}", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> postBid(@PathVariable String token, @RequestBody Map<String, Object> bidMap) {
 		Map<String,Object> model = new HashMap<String,Object>();
+
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.add("token", token);
 		
+		HttpEntity<Map<String, Object>> httpRequestEntity = new HttpEntity<Map<String, Object>>(bidMap, requestHeaders);
+
 		// web service invocation.
-		ResponseEntity<PublishedBids> responseEntity = restTemplate.postForEntity(webserviceUrl + "/addBidRequest", bidMap, PublishedBids.class);
+		ResponseEntity<PublishedBids> responseEntity = restTemplate.exchange(webserviceUrl + "/addBidRequest", HttpMethod.POST, httpRequestEntity, PublishedBids.class);
 				
 		model.put("bid", responseEntity.getBody());
 		return model;
 	}
 	
-	@RequestMapping(value = "/getBids")
-	public @ResponseBody Map<String, Object> getAllBids() {
+	@RequestMapping(value = "/getBids/{token}")
+	public @ResponseBody Map<String, Object> getAllBids(@PathVariable String token) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.add("token", token);
+		
+		HttpEntity<Map<String, Object>> httpRequestEntity = new HttpEntity<Map<String, Object>>(requestHeaders);
+
 		// web service invocation.
-		ResponseEntity<PublishedBids[]> responseEntity = restTemplate.getForEntity(webserviceUrl + "/getBids", PublishedBids[].class);
+		ResponseEntity<PublishedBids[]> responseEntity = restTemplate.exchange(webserviceUrl + "/getBids", HttpMethod.GET, httpRequestEntity, PublishedBids[].class);
 				
 		model.put("bid", responseEntity.getBody());
 		return model;
 	}
 	
-	@RequestMapping(value = "/getBids/{timestamp}")
-	public @ResponseBody Map<String, Object> getAllBids(@PathVariable Long timestamp) {
+	@RequestMapping(value = "/getBids/{timestamp}/{token}")
+	public @ResponseBody Map<String, Object> getAllBids(@PathVariable Long timestamp, @PathVariable String token) {
 		Map<String,Object> model = new HashMap<String,Object>();
 		
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.add("token", token);
+		
+		HttpEntity<Map<String, Object>> httpRequestEntity = new HttpEntity<Map<String, Object>>(requestHeaders);
+
 		// web service invocation.
-		ResponseEntity<PublishedBids[]> responseEntity = restTemplate.getForEntity(webserviceUrl + "/getActiveBids/" + timestamp, PublishedBids[].class);
+		ResponseEntity<PublishedBids[]> responseEntity = restTemplate.exchange(webserviceUrl + "/getActiveBids/" + timestamp, HttpMethod.GET, httpRequestEntity, PublishedBids[].class);
 				
 		model.put("bid", responseEntity.getBody());
 		return model;

@@ -3,13 +3,13 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
         $stateProvider
             .state('user-profile', {
                 url : '/user-profile',
-                params : { userInfo : null },
+                params : { userInfo : null, token : null },
                 templateUrl : '../../templates/user-profile/user-profile.html',
                 controller : 'static-profile'
             })
             .state('registration-success', {
                 url : '/reg-success',
-                params : { userInfo : null },
+                params : { userInfo : null, token : null },
                 templateUrl : '../../templates/registration-success.html',
                 controller : 'static-profile'
             })
@@ -40,6 +40,7 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
                 $http.post('/api/createUser', self.user).then(function (response) {
                     self.message = false;
                     self.userInfo = response.data.userInfo;
+                    self.token = response.data.userToken;
 
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function(position) {
@@ -71,7 +72,7 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
                         });
                     }
 
-                    $state.go('registration-success', { userInfo : self.userInfo });
+                    $state.go('registration-success', { userInfo : self.userInfo, token : self.token });
                 }, function (response) {
                     console.log(response.data);
                     self.message = "error creating user !";
@@ -91,7 +92,7 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
             } else {
                 $http.get('/api/checkLogin/' + self.user.email + "/" + self.user.password).then(function (response) {
                     self.message = false;
-                    $state.go('user-profile', { userInfo : response.data.userInfo });
+                    $state.go('user-profile', { userInfo : response.data.userInfo, token : response.data.userToken });
                 }, function (response) {
                     console.log(response.data.status);
                     self.message = "Invalid login or password!";
