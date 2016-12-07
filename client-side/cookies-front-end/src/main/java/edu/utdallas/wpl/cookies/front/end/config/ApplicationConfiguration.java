@@ -61,7 +61,6 @@ public class ApplicationConfiguration {
 
 			@Override
 			public void customize(Connector connector) {
-
 				connector.setPort(tlsPort);
 				connector.setSecure(true);
 				connector.setScheme("https");
