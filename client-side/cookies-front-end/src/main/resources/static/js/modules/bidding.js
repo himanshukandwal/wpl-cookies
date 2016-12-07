@@ -273,16 +273,11 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
 
         var completeCollection = [];
 
-        if (localStorage.getItem('posted-recently')) {
-            var existing_bids = JSON.parse(localStorage.getItem('all-bids'));
-
-            angular.forEach(existing_bids, function (value, key) {
-                completeCollection.push(value);
-            });
-
-            localStorage.removeItem('posted-recently');
-        } else
-            completeCollection = Poller.data.collection;
+        $http.get('/api/getBids/' + self.token).then(function (response) {
+            completeCollection = response.data.bid;
+        }, function (response) {
+            console.log(response.data);
+        });
 
         self.searchByFullTextSearch = function () {
 
@@ -314,15 +309,13 @@ angular.module('biddingModule', ['ui.router', 'angular.filter', 'ngAnimate', 'sm
     .run(function(Poller) {})
     .factory('Poller', function($http, $timeout) {
         var data = { collection: [] };
-
+        var loadTime = 30000; //Load the data every second
         var rowCollection = [];
 
         var poller = function() {
 
             if (localStorage.getItem('all-bids')) {
                 console.log('getting delta bids !');
-
-                var loadTime = 60000; //Load the data every second
 
                 $http.get('/api/getBids/' + localStorage.getItem('all-bids-access-time') + '/Y29va2llcywxNDgxMzQzNjE0NTUx').then(function (response) {
 

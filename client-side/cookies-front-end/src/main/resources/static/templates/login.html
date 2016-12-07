@@ -17,8 +17,8 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12" >
-                            <div ng-show="!isRegistration">
-                                <form id="login-form" ng-submit="login.checkValidLogin()" ng-controller="login as login">
+                            <div ng-show="!isRegistration" ng-controller="login as login">
+                                <form id="login-form" ng-submit="login.checkValidLogin()" >
                                     <div class="form-group">
                                         <input type="email" required name="email" tabindex="1" class="form-control" placeholder="Email" ng-model="login.user.email">
                                     </div>
@@ -48,9 +48,13 @@
                                         <!--</div>-->
                                     <!--</div>-->
                                 </form>
+                                <hr>
+
+                                <button class="btn btn-lg btn-primary" type="submit" role="button" ng-click="login.fbLogin()">Log me in with facebook</button>
+
                             </div>
-                            <div ng-show="isRegistration">
-                                <form id="register-form" ng-submit="registration.submitDetails()" ng-controller="registration as registration" >
+                            <div ng-show="isRegistration" ng-controller="registration as registration">
+                                <form id="register-form" ng-submit="registration.submitDetails()" >
                                     <div class="form-group">
                                         <input type="text" required name="firstName" tabindex="1" class="form-control" placeholder="First name" ng-model="registration.user.firstName">
                                     </div>

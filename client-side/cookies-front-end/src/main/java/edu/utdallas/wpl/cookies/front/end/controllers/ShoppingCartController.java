@@ -18,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 
 import edu.utdallas.wpl.cookies.front.end.config.CustomRestController;
 import edu.utdallas.wpl.cookies.spring.common.dto.ShoppingInfo;
-import edu.utdallas.wpl.cookies.spring.common.dto.TransactionInfo;
 
 @CustomRestController
 public class ShoppingCartController {

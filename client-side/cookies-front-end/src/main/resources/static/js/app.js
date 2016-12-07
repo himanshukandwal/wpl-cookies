@@ -51,4 +51,34 @@ angular.module('app', ['ui.router', 'loginModule'])
                 $state.go('contact-success');
             });
 		}
-	});
+	})
+    .factory('facebookService', function($q) {
+        return {
+            getMyLastName: function() {
+                var deferred = $q.defer();
+                FB.api('/me', {
+                    fields: 'first_name'
+                }, function(response) {
+                    if (!response || response.error) {
+                        deferred.reject('Error occured');
+                    } else {
+                        deferred.resolve(response);
+                    }
+                });
+                return deferred.promise;
+            },
+            getMyLastName: function() {
+                var deferred = $q.defer();
+                FB.api('/me', {
+                    fields: 'last_name'
+                }, function(response) {
+                    if (!response || response.error) {
+                        deferred.reject('Error occured');
+                    } else {
+                        deferred.resolve(response);
+                    }
+                });
+                return deferred.promise;
+            }
+        }
+    });

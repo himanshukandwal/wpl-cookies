@@ -98,6 +98,23 @@ angular.module('loginModule', ['ui.router', 'userProfileModule'])
                     self.message = "Invalid login or password!";
                 });
             }
+        };
+
+        self.fbLogin = function () {
+            console.log('logging in with facebook !');
+
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    alert('Success!');
+                } else {
+                    alert('Login Failed!');
+                }
+            });
+
+            // FB.getLoginStatus(function(response) {
+            //     console.log(response);
+            //     console.log(facebookService.getMyLastName());
+            // });
         }
     })
     .controller('logout', function($http, $stateParams) {

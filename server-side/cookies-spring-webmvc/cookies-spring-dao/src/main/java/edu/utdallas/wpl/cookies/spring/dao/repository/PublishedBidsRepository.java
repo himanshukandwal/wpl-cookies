@@ -26,6 +26,7 @@ public class PublishedBidsRepository extends GenericDAORepositoryImpl<PublishedB
 	}
 
 	@SuppressWarnings("unchecked")
+	@Cacheable(cacheNames = "cookiecache")
 	public List<PublishedBidsEntity> getAllBidRequestes(Integer userId) {
 		UserInformationEntity userInformationEntity = userInformationRepository.get(userId);
 		
