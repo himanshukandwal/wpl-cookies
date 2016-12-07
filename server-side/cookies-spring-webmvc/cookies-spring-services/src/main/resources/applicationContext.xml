@@ -23,14 +23,14 @@
 	<context:annotation-config />
 	
 	<context:component-scan base-package="edu.utdallas.wpl.cookies.spring.services" />
-	
+
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-		<property name="cacheManager" ref="ehcache"/>
+		<property name="cacheManager" ref="ehcache" />
 	</bean>
-	
+
 	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:ehcache.xml"/>
-		<property name="shared" value="true"/>
-	 </bean>
+		<property name="configLocation" value="classpath:ehcache.xml" />
+		<property name="shared" value="true" />
+	</bean>
 	
 </beans>

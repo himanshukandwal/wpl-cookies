@@ -13,10 +13,13 @@ import edu.utdallas.wpl.cookies.spring.dao.orm.TransactionInfoEntity;
 
 @Repository
 public class TransactionInfoRepository extends GenericDAORepositoryImpl<TransactionInfoEntity, Integer> {
+	
 	@Autowired
 	private SessionFactory sessionFactory;
+	
 	@Autowired
 	private PublishedBidsRepository publishedBidsRepository;
+	
 	public TransactionInfoRepository() {
 		super(TransactionInfoEntity.class);
 	}
@@ -35,6 +38,4 @@ public class TransactionInfoRepository extends GenericDAORepositoryImpl<Transact
 			return informations;
 	}
 	
-	
-
 }

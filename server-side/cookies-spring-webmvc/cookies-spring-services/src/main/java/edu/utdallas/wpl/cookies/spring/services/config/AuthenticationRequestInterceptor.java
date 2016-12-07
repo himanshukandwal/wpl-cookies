@@ -1,6 +1,7 @@
 package edu.utdallas.wpl.cookies.spring.services.config;
 
 import java.util.Base64;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,12 +21,19 @@ public class AuthenticationRequestInterceptor extends HandlerInterceptorAdapter 
 		
 		boolean result = false;
 		if (request.getHeader("token") != null) {
-			if (new String(Base64.getDecoder().decode(request.getHeader("token"))).equals("cookies"))
+			String decodedToken = new String(Base64.getDecoder().decode(request.getHeader("token")));
+			
+			String token = decodedToken.split(",")[0];
+			long timestamp = Long.valueOf(decodedToken.split(",")[1]);
+			
+			if (token.equals("cookies") && new Date(timestamp).after(new Date()))
 				result = true;
+			else
+				System.out.println("token expired, It was issued on " + new Date(timestamp));
 		}
 		
 		System.out.println("authenticated as " + result);
 		return result;
 	}
-	
+
 }

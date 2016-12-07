@@ -10,7 +10,6 @@ public class LoginInfoRepository  extends GenericDAORepositoryImpl<LoginInfoEnti
 
 	public LoginInfoRepository() {
 		super(LoginInfoEntity.class);
-		
 	}
 
 }

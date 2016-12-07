@@ -10,7 +10,6 @@ public class BidHistoryRepository  extends GenericDAORepositoryImpl<BidHistoryEn
 
 	public BidHistoryRepository() {
 		super(BidHistoryEntity.class);
-		
 	}
 
 }

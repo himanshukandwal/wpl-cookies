@@ -16,18 +16,19 @@ public class UserInformationRepository extends GenericDAORepositoryImpl<UserInfo
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	public UserInformationRepository() {
 		super(UserInformationEntity.class);
 	}
 
 	@SuppressWarnings("unchecked")
-	 @Cacheable(cacheNames="cookiecache")
+	@Cacheable(cacheNames = "cookiecache")
 	public UserInformationEntity getUserInformationByEmail(String email) {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserInformationEntity.class);
 		criteria.add(Restrictions.eq("email", email));
-		
+
 		List<UserInformationEntity> informations = (List<UserInformationEntity>) criteria.list();
+		
 		if (informations == null || informations.isEmpty())
 			return null;
 		else

@@ -16,10 +16,7 @@ public interface IDAORepository<T, PK extends Serializable> {
     void delete(T persistentObject);
 
     Integer count();
-    
-
+  
     List<T> findByExample(T example);
-    
-    
     
 }
