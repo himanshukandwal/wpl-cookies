@@ -17,10 +17,13 @@
        http://www.springframework.org/schema/cache/spring-cache-3.2.xsd">
 
 	<import resource="classpath:businessContext.xml" />
-	 <cache:annotation-driven />
+	
+	<cache:annotation-driven />
+	
 	<context:annotation-config />
-
+	
 	<context:component-scan base-package="edu.utdallas.wpl.cookies.spring.services" />
+	
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
 		<property name="cacheManager" ref="ehcache"/>
 	</bean>
@@ -28,8 +31,6 @@
 	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:ehcache.xml"/>
 		<property name="shared" value="true"/>
-	
 	 </bean>
 	
-
 </beans>

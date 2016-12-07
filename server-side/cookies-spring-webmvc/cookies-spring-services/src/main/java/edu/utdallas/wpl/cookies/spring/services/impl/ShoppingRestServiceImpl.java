@@ -11,12 +11,10 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -46,38 +44,33 @@ public class ShoppingRestServiceImpl implements ShoppingRestService {
 
 	@RequestMapping(value = "/getShoppingInfo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ShoppingInfo>> getShoppingInfo() {
-
 		List<ShoppingInfo> shoppingInfosList = ShoppingServiceManager.getShoppingInfo();
-		if (shoppingInfosList != null) {
-			LOG.info(" The number of bid requests for user  :" + shoppingInfosList.size());
-			return ResponseEntity.ok(shoppingInfosList);
-		}
+		
+		if (shoppingInfosList == null) 
+			shoppingInfosList = new ArrayList<>();
 
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		LOG.info(" The number of bid requests for user  :" + shoppingInfosList.size());
+		return ResponseEntity.ok(shoppingInfosList);
 	}
 
 	@Override
 	@RequestMapping(value = "/saveShoppingInfo", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ShoppingInfo> addToShopping(@RequestBody ShoppingInfo shoppingInfoReq,
-			HttpServletRequest request) {
-		System.out.println("inside shopping>>>>" + shoppingInfoReq.getPrice());
+	public ResponseEntity<ShoppingInfo> addToShopping(@RequestBody ShoppingInfo shoppingInfo) {
+		System.out.println("inside shopping>>>>" + shoppingInfo.getPrice());
 
-		ShoppingInfo shoppingInfo = ShoppingServiceManager.addShoppingInfo(shoppingInfoReq);
+		ShoppingInfo persistedShoppingInfo = ShoppingServiceManager.addShoppingInfo(shoppingInfo);
 
-		LOG.info(" created user with id :" + shoppingInfo.getShoppingId());
+		LOG.info(" created shopping summary with id :" + persistedShoppingInfo.getShoppingId());
 
 		return ResponseEntity.ok(shoppingInfo);
-
 	}
 
 	@Override
 	@RequestMapping(value = "/checkout", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ShoppingInfo>> checkOutItems(@RequestBody List<TransactionInfo> transactionInfoList,
-			HttpServletRequest request) {
-
+	public ResponseEntity<List<ShoppingInfo>> checkOutItems(@RequestBody List<TransactionInfo> transactionInfoList) {
 		List<ShoppingInfo> shoppingInfoList = new ArrayList<>();
+		
 		for (TransactionInfo transactionInfo : transactionInfoList) {
-
 			ShoppingInfo shoppingInfoReq = convertTransactionToshopping(transactionInfo);
 			ShoppingInfo shoppingInfoRes=ShoppingServiceManager.addShoppingInfo(shoppingInfoReq);
 			
@@ -90,7 +83,6 @@ public class ShoppingRestServiceImpl implements ShoppingRestService {
 		}
 
 		for (TransactionInfo transactionInfo : transactionInfoList) {
-
 			String bidPoster = transactionInfo.getBid().getOwner().getEmail();
 			String bidReceiver = transactionInfo.getBidReceiver().getEmail();
 			Integer bidId = transactionInfo.getBid().getBidId();
@@ -132,7 +124,7 @@ public class ShoppingRestServiceImpl implements ShoppingRestService {
             mimeMessage.addRecipient(RecipientType.TO, toAddress);
 			mimeMessage.setSubject("Your BID Receipt from Cookies");
 			String messageIntro = "<div style=\"color:black;\"><br>Hi </br></div>";
-			String messgeToBidPoster= "<div><body> <br>Thank you very much for purchasing the items through cookie bidding service</br></body></div>";
+			String messgeToBidPoster= "<div><body> <br>Thank you very much for purchasing the items through cookie bidding service.</br></body></div>";
 			String messageSalutaion="<br></br><div><body> Thanks And Regards,<br> cookie admin</br></body></div>";
 			mimeMessage.setContent(messageIntro+messgeToBidPoster+messageSalutaion, "text/html");
  
@@ -141,48 +133,35 @@ public class ShoppingRestServiceImpl implements ShoppingRestService {
 			InternetAddress toAddress2 = new InternetAddress();
 			toAddress2.setAddress(bidReciver);
 			mimeMessage2.addRecipient(RecipientType.TO, toAddress2);
-			mimeMessage2.setSubject("Congrats!");
+			mimeMessage2.setSubject("Congratulations!");
 			
 			
 			sendMessageToBidAgents(session2, host, from,password,bidPoster,mimeMessage);
-			String messageToBidReciver ="<div><body> <br> Congrats your Item has beeen purchased.Thank you very much for posting Item through cookie bidding service</br></body></div>";
+			String messageToBidReciver ="<div><body> <br> Congrats your Item has beeen purchased.Thank you very much for posting Item through cookie bidding service.</br></body></div>";
 			mimeMessage2.setContent(messageIntro+messageToBidReciver+messageSalutaion, "text/html");
 			sendMessageToBidAgents(session2,host,from, password,bidReciver, mimeMessage2);
-			
-			
-			
+
 			return true;
 		} catch (AddressException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return false;
-
 	}
 	
-	
-	
-	
-	
-	
-	private static void sendMessageToBidAgents(Session session, String host, String from,String password, String bidPoster,
-			MimeMessage mimeMessage) {
-		
-		Transport transport;
+	private static void sendMessageToBidAgents(Session session, String host, String from, String password, String bidPoster, MimeMessage mimeMessage) {
 		try {
-			transport = session.getTransport("smtp");
-		
-		transport.connect(host, from, password);
-		transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
-		transport.close();
-		} catch ( MessagingException e) {
-			// TODO Auto-generated catch block
+			Transport transport = session.getTransport("smtp");
+
+			transport.connect(host, from, password);
+			transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
+			transport.close();
+			
+		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
 	}
-	
 	
 }

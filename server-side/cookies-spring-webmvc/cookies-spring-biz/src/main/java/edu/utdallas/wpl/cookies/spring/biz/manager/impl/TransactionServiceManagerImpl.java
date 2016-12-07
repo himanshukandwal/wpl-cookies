@@ -11,27 +11,27 @@ import edu.utdallas.wpl.cookies.spring.biz.manager.TransactionServiceManager;
 import edu.utdallas.wpl.cookies.spring.common.dto.TransactionInfo;
 import edu.utdallas.wpl.cookies.spring.dao.orm.TransactionInfoEntity;
 import edu.utdallas.wpl.cookies.spring.dao.repository.TransactionInfoRepository;
+
 @Service
 public class TransactionServiceManagerImpl  implements TransactionServiceManager{
 
 	@Autowired
-	TransactionInfoRepository transactionInfoRepository;
+	private TransactionInfoRepository transactionInfoRepository;
+	
 	@Autowired
 	private Mapper mapper;
+	
 	@Override
 	public TransactionInfo addTransaction(TransactionInfo transactionInfo) {
-
-		return mapper.map(transactionInfoRepository.save(mapper.map(transactionInfo, TransactionInfoEntity.class)),
-				TransactionInfo.class);
-
+		return mapper.map(transactionInfoRepository.save(mapper.map(transactionInfo, TransactionInfoEntity.class)), TransactionInfo.class);
 	}
 
 	@Override
 	public List<TransactionInfo> getTranscation() {
-		
 		List<TransactionInfoEntity> transactionInfoEntityList = transactionInfoRepository.getAll();
 	
 		List<TransactionInfo> transactionInfoList = null;
+		
 		if (transactionInfoEntityList != null) {
 			transactionInfoList = new ArrayList<>();
 			for (TransactionInfoEntity transactionInfoEntity : transactionInfoEntityList) {
@@ -45,26 +45,18 @@ public class TransactionServiceManagerImpl  implements TransactionServiceManager
 
 	@Override
 	public TransactionInfo updateTransaction(TransactionInfo transactionInfo) {
-		
 		transactionInfoRepository.update(mapper.map(transactionInfo, TransactionInfoEntity.class));
-
 		return transactionInfo;
-		
 	}
 
 	@Override
 	public Integer deleteTransaction(Integer transId) {
-		
-		TransactionInfoEntity transactionInfoEntity =transactionInfoRepository.get(transId);
-		if(transactionInfoEntity !=null){
+		TransactionInfoEntity transactionInfoEntity = transactionInfoRepository.get(transId);
+		if (transactionInfoEntity != null) {
 			transactionInfoRepository.delete(transactionInfoEntity);
 			return 0;
 		}
 		return -1;
-		
-		
-		
-		
 	}
 
 	@Override
@@ -86,12 +78,9 @@ public class TransactionServiceManagerImpl  implements TransactionServiceManager
 
 	@Override
 	public TransactionInfo getTransactionsById(Integer transId) {
-		
-		 TransactionInfoEntity transactionInfoEntity =transactionInfoRepository.get(transId);
+		 TransactionInfoEntity transactionInfoEntity = transactionInfoRepository.get(transId);
 		 TransactionInfo transactionInfo = mapper.map(transactionInfoEntity, TransactionInfo.class);
 		 return transactionInfo;
 	}
 	
-	
-
 }

@@ -90,7 +90,6 @@ public class BidServiceManagerImpl implements BidServiceManager{
 
 	@Override
 	public void updateBids(PublishedBids publishedBids) {
-		// TODO Auto-generated method stub
 		publishedBidsRepository.update(mapper.map(publishedBids, PublishedBidsEntity.class));
 	}
 

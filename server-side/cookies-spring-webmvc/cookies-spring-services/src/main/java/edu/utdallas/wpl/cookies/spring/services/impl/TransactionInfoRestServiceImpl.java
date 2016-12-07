@@ -3,8 +3,6 @@ package edu.utdallas.wpl.cookies.spring.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,25 +24,27 @@ import edu.utdallas.wpl.cookies.spring.services.TransactionInfoRestService;
 @Controller
 @RequestMapping("/api")
 public class TransactionInfoRestServiceImpl implements TransactionInfoRestService {
+	
 	private static final Logger LOG = LoggerFactory.getLogger(TransactionInfoRestService.class);
+	
 	@Autowired
 	private TransactionServiceManager transactionManager;
+	
 	@Override
 	@RequestMapping(value = "/getTransactions", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<List<TransactionInfo>> getTransaction() {
-
 		List<TransactionInfo> transactionInfoList = transactionManager.getTranscation();
-		if (transactionInfoList != null) {
-			LOG.info(" The number of bid requests for user  :" + transactionInfoList.size());
-			return ResponseEntity.ok(transactionInfoList);
-		}
-
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		
+		if (transactionInfoList == null) 
+			transactionInfoList = new ArrayList<>();
+		
+		LOG.info(" The number of bid requests for user  :" + transactionInfoList.size());
+		return ResponseEntity.ok(transactionInfoList);
 	}
 
 	@Override
 	@RequestMapping(value = "/saveInterestedBid", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<TransactionInfo> saveBidInterested(@RequestBody  TransactionInfo interstedBidRequest,HttpServletRequest request) {
+	public @ResponseBody ResponseEntity<TransactionInfo> saveBidInterested(@RequestBody TransactionInfo interstedBidRequest) {
 		TransactionInfo transactionInfo = transactionManager.addTransaction(interstedBidRequest);
 
 		LOG.info(" created user with id :" + transactionInfo.getTranId());
@@ -54,7 +54,7 @@ public class TransactionInfoRestServiceImpl implements TransactionInfoRestServic
 	
 	@Override
 	@RequestMapping(value = "/updateBidStatus/{bidStatusCode}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<TransactionInfo> updateBidStatus(@RequestBody TransactionInfo finalizedBidRequest,@PathVariable String bidStatusCode) {
+	public ResponseEntity<TransactionInfo> updateBidStatus(@RequestBody TransactionInfo finalizedBidRequest, @PathVariable String bidStatusCode) {
 		finalizedBidRequest.setBidStatus(BidStatus.valueOf(bidStatusCode).toString());
 		
 		TransactionInfo transactionInfo = transactionManager.updateTransaction(finalizedBidRequest);
@@ -67,10 +67,10 @@ public class TransactionInfoRestServiceImpl implements TransactionInfoRestServic
 	@Override
 	@RequestMapping(value = "/deleteTransaction/{transId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> deleteTransaction(@PathVariable Integer transId) {
-		Integer returnCode =transactionManager.deleteTransaction(transId);
-		if(returnCode==-1){
+		Integer returnCode = transactionManager.deleteTransaction(transId);
+		
+		if (returnCode == -1)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-		}
 		
 		return ResponseEntity.ok("success");
 	}
@@ -78,26 +78,24 @@ public class TransactionInfoRestServiceImpl implements TransactionInfoRestServic
 	@Override
 	@RequestMapping(value = "/getTransactionByBid/{bidId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<TransactionInfo>> getTransactionByBid(@PathVariable Integer bidId) {
-		List<TransactionInfo> transactionInfoList	=transactionManager.getTransactionsByBidId(bidId);
-		if (transactionInfoList==null){
-			return ResponseEntity.ok(new ArrayList<TransactionInfo>());
-		}
+		List<TransactionInfo> transactionInfoList = transactionManager.getTransactionsByBidId (bidId);
 		
+		if (transactionInfoList == null) 
+			transactionInfoList = new ArrayList<>();
+		
+		LOG.info(" The number of bids by bidId " + bidId + " requests for user  :" + transactionInfoList.size());
 		return ResponseEntity.ok(transactionInfoList);
 	}
-	
 	
 	@Override
 	@RequestMapping(value = "/getTransactionById/{transId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TransactionInfo> getTransactionById(@PathVariable Integer transId) {
-		TransactionInfo transactionInfo	=transactionManager.getTransactionsById(transId);
-		if (transactionInfo==null){
-			return ResponseEntity.ok(new TransactionInfo());
-		}
+		TransactionInfo transactionInfo	= transactionManager.getTransactionsById(transId);
+		
+		if (transactionInfo == null) 
+			transactionInfo = new TransactionInfo();
 		
 		return ResponseEntity.ok(transactionInfo);
 	}
-	
-	
 	
 }

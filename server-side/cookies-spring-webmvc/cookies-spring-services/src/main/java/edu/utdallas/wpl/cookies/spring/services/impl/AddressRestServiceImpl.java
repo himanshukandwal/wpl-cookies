@@ -33,7 +33,6 @@ public  class AddressRestServiceImpl implements AddressRestService {
 	@Override
 	@RequestMapping(value = "/address", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Address> createAddress(@RequestBody Address address, HttpServletRequest request) {
-		
 		Address persistedAddress = addressServiceManager.createAddress(address);
 
 		LOG.info("created address with id : " + persistedAddress.getId());
@@ -51,9 +50,6 @@ public  class AddressRestServiceImpl implements AddressRestService {
 		return ResponseEntity.ok(addressServiceManager.getAddresses());
 	}
 
-	
-	
-	
 	@Override
 	@RequestMapping(value = "/address/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<Address> getAddress(@PathVariable Integer id) {
@@ -66,16 +62,14 @@ public  class AddressRestServiceImpl implements AddressRestService {
 		if (null == address.getId())
 			return new ResponseEntity<Address>(HttpStatus.BAD_REQUEST);
 		
-		else if (addressServiceManager.getAddress(address.getId()) == null)
+		if (addressServiceManager.getAddress(address.getId()) == null)
 			return new ResponseEntity<Address>(HttpStatus.NOT_FOUND);
 		
-		else {
-			 addressServiceManager.updateAddress(address);
-			
-			LOG.info("updated address with id : " + address.getId());
-			
-			return ResponseEntity.ok(address);
-		}
+		addressServiceManager.updateAddress(address);
+		
+		LOG.info("updated address with id : " + address.getId());
+		
+		return ResponseEntity.ok(address);
 	}
 
 	@Override
@@ -84,10 +78,10 @@ public  class AddressRestServiceImpl implements AddressRestService {
 		if (null == id)
 			return ResponseEntity.badRequest().body("address id is empty");
 		
-		else if (addressServiceManager.getAddress(id) == null)
+		if (addressServiceManager.getAddress(id) == null)
 			return ResponseEntity.badRequest().body("address not found");
-		else 
-			addressServiceManager.deleteAddress(addressServiceManager.getAddress(id));
+		
+		addressServiceManager.deleteAddress(addressServiceManager.getAddress(id));
 		
 		LOG.info("deleted address with id : " + id);
 		

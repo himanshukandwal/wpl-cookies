@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -46,12 +45,11 @@ public class BidRestServiceImpl implements BidRestService {
 	public ResponseEntity<List<PublishedBids>> viewMyBidRequests(@PathVariable Integer userId) {
 		List<PublishedBids> publishedBids = bidServiceManager.getBidRequests(userId);
 		
-		if (publishedBids != null) {
-			LOG.info(" The number of bid requests for user  :" + publishedBids.size());
-			return ResponseEntity.ok(publishedBids);
-		}
+		if (publishedBids == null) 
+			publishedBids = new ArrayList<>();
 		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		LOG.info(" The number of bid requests for user  :" + publishedBids.size());
+		return ResponseEntity.ok(publishedBids);
 	}
 	
 	@Override
@@ -65,27 +63,23 @@ public class BidRestServiceImpl implements BidRestService {
 	public ResponseEntity<List<PublishedBids>> viewAllBidRequests() {
 		List<PublishedBids> publishedBids = bidServiceManager.getBidRequests();
 		
-		if (publishedBids != null) {
-			LOG.info(" The number of bid requests for user  :" + publishedBids.size());
-			return ResponseEntity.ok(publishedBids);
-		}
+		if (publishedBids == null) 
+			publishedBids = new ArrayList<>();
 		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		LOG.info(" The number of bid requests for user  :" + publishedBids.size());
+		return ResponseEntity.ok(publishedBids);
 	}
-	
 	
 	@Override
 	@RequestMapping(value ="/getActiveBids/{timestamp}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PublishedBids>> viewAllActiveBids(@PathVariable Long timestamp) {
 		List<PublishedBids> publishedBids = bidServiceManager.getlatestBids(timestamp);
 		
-		if (publishedBids != null) {
-			LOG.info(" The number of bid requests for user  :" + publishedBids.size());
-			return ResponseEntity.ok(publishedBids);
-		}
+		if (publishedBids == null) 
+			publishedBids = new ArrayList<>();
 		
-		return ResponseEntity.ok(new ArrayList<PublishedBids>());
+		LOG.info(" The number of bid requests for user  :" + publishedBids.size());
+		return ResponseEntity.ok(publishedBids);
 	}
-	
 	
 }

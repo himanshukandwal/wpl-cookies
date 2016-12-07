@@ -9,7 +9,6 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-
 	<import resource="classpath:applicationContext.xml" />
 
 	<mvc:annotation-driven>
@@ -28,5 +27,13 @@
 		<mvc:mapping path="/api/**" allowed-origins="*"
 		allowed-methods="GET, PUT,POST,DELETE" allowed-headers="*" />
 	</mvc:cors>
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/api/userinfo/**"/>
+			<bean class="edu.utdallas.wpl.cookies.spring.services.config.AuthenticationRequestInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 
 </beans>
